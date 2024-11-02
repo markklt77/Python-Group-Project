@@ -1,1 +1,16 @@
-/* TODO: Add sitewide styles */
+body, #root {
+    background-color: black;
+    margin: unset;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    height: 65px;
+    width: 100%;
+}

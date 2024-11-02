@@ -1,18 +1,18 @@
 import { NavLink } from "react-router-dom";
+import { FaSpotify } from "react-icons/fa6";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation() {
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-
-      <li>
-        <ProfileButton />
-      </li>
-    </ul>
+    <nav>
+      <div className="logo-container">
+        <NavLink to="/">
+          <FaSpotify className="logo"/>
+        </NavLink>
+      </div>
+      <ProfileButton />
+    </nav>
   );
 }
 
