@@ -1,5 +1,6 @@
 body, #root {
     background-color: black;
+    font-family: "Roboto";
     margin: unset;
     position: fixed;
     top: 0;
