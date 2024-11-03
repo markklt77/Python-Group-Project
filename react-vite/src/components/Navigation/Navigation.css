@@ -1,3 +1,26 @@
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 26px;
+}
+
+.logo {
+  color: white;
+  font-size: 33px;
+}
+
+#profile {
+  font-size: 40px;
+  color: white;
+}
+
+.profile-button {
+  background-color: unset;
+  border: unset;
+}
+
 .profile-dropdown {
+  background-color: grey;
   position: absolute;
 }
