@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from .like import likes
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -13,6 +13,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+
+    albums = db.relationship("Album", back_populates="user")
+    songs = db.relationship("Song", back_populates="user")
+    likes = db.relationship("Like", back_populates="user")
+
 
     @property
     def password(self):
@@ -31,9 +36,3 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
-
-
-    songs = db.relationship('Song', back_populates='user')
-    albums = db.relationship('Album', back_populates='user')
-    playlists = db.relationship('Playlist', back_populates='user')
-    likes_user = db.relationship('Song', secondary=likes, back_populates='user_likes')

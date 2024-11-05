@@ -1,9 +1,11 @@
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
+class Like(db.Model):
+    __tablename__ = "likes"
+    id = db.Column(db.Integer, primary_key=True)
+    artist_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    song_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("songs.id")), nullable=False)
+    liked_at = db.Column(db.DateTime, server_default=db.func.now())
 
-likes = db.Table(
-    'likes',
-    db.Model.metadata,
-    db.Column('song_id', db.Integer, db.ForeignKey("songs.id"), nullable=False),
-    db.Column('user_id', db.Integer, db.ForeignKey("user.id"), nullable=False)
-)
+    user = db.relationship("User", back_populates="likes")
+    song = db.relationship("Song", back_populates="likes")

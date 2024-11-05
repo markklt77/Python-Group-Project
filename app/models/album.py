@@ -1,14 +1,13 @@
-from .db import db
-from .album_songs import album_song
-
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class Album(db.Model):
-    __tablename__= 'albums'
+    __tablename__ = "albums"
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
-    userId = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    title = db.Column(db.String, nullable=False)
+    artist_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-
-    user = db.relationship('User', back_populates='albums')
-    song = db.relationship('Song', secondary=album_song, back_populates='album')
+    user = db.relationship("User", back_populates="albums")
+    songs = db.relationship("Song", secondary="album_songs", back_populates="albums")
