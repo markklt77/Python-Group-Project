@@ -1,14 +1,9 @@
-from .db import db
-from .playlist_songs import playlist_song
-
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class Playlist(db.Model):
-    __tablename__ = 'playlists'
-
+    __tablename__ = "playlists"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    userId = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
 
-
-    user = db.relationship('User', back_populates='playlists')
-    song = db.relationship('Song', secondary=playlist_song, back_populates='playlist')
+    songs = db.relationship("Song", secondary="playlist_songs", back_populates="playlists")
