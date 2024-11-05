@@ -7,6 +7,3 @@ class PlaylistSong(db.Model):
     playlist_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("playlists.id")), nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("songs.id")), nullable=False)
     added_at = db.Column(db.DateTime, server_default=db.func.now())
-
-    # playlist = db.relationship("Playlist", back_populates="songs")
-    # song = db.relationship("Song", back_populates="playlists")
