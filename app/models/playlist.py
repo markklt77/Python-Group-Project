@@ -7,3 +7,14 @@ class Playlist(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
 
     songs = db.relationship("Song", secondary="playlist_songs", back_populates="playlists")
+
+    def to_dict(self):
+        """
+        Convert the Playlist instance to a dictionary format.
+        """
+        return {
+            "id": self.id,
+            "name": self.name,
+            "user_id": self.user_id,
+            "songs": [song.to_dict() for song in self.songs]
+        }
