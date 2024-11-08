@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .db import db, add_prefix_for_prod
 
 class Song(db.Model):
     __tablename__ = "songs"
@@ -17,10 +17,8 @@ class Song(db.Model):
     playlists = db.relationship("Playlist", secondary="playlist_songs", back_populates="songs")
     likes = db.relationship("Like", back_populates="song", cascade="all, delete-orphan")
 
+
     def to_dict(self):
-        """
-        Convert the Song instance to a dictionary format.
-        """
         return {
             "id": self.id,
             "title": self.title,
@@ -28,6 +26,5 @@ class Song(db.Model):
             "artist_id": self.artist_id,
             "genre": self.genre,
             "created_at": self.created_at,
-            "updated_at": self.updated_at,
-
+            "updated_at": self.updated_at
         }
