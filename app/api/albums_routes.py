@@ -55,4 +55,4 @@ def add_song(albumId, songId):
         )
 
 
-    return [duo for duo in duos]
+    return hi
