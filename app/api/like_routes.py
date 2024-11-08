@@ -9,7 +9,7 @@ like_routes = Blueprint('likes', __name__)
 @login_required
 def likes():
     """
-    Comment goes here
+    A logged in user can like a song
     """
     artistId = request.JSON["artistId"]
     songId = request.JSON["songId"]
@@ -23,7 +23,7 @@ def likes():
 @login_required
 def like(id):
     """
-    Comment goes here
+    A logged in user can unlike a song
     """
     like = Like.query.filter_by(id=id).delete()
     return {'message': "Successfully deleted"}
