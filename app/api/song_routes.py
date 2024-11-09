@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from ..models.song import db, Song
 
@@ -46,7 +46,7 @@ def editSong(songId):
     user_id = current_user.id
 
     if not song.artist_id == user_id:
-        raise Exception("Unauthorized")
+        return {'errors': {'message': 'Unauthorized'}}, 401
 
     data = request.json
 
@@ -73,7 +73,7 @@ def deleteSong(songId):
     user_id = current_user.id
 
     if not song.artist_id == user_id:
-        raise Exception("Unauthorized")
+        return {'errors': {'message': 'Unauthorized'}}, 401
 
     db.session.delete(song)
     db.session.commit()
