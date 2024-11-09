@@ -1,7 +1,7 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import current_user, login_required
 from sqlalchemy.orm import joinedload
-from ..models import db, Like, Song
+from ..models import db, Song
 
 bp = Blueprint('songs', __name__, url_prefix='/songs')
 
