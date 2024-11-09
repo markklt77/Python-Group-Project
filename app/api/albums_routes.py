@@ -14,7 +14,6 @@ def album_home():
     Get all albums
     """
     albums = Album.query.all()
-    print(albums)
     return {'albums': [album.to_dict() for album in albums]}
 
 
@@ -30,7 +29,11 @@ def specific_album(id):
         db.session.commit()
         return album.to_dict()
 
-    return album.to_dict()
+    songs = [song.song_id for song in AlbumSong.query.filter_by(album_id=id)]
+    easy_album = album.to_dict()
+
+    easy_album['songs'] = songs
+    return easy_album
 
 @album_routes.route('/create-album', methods=['GET', 'POST'])
 @login_required
