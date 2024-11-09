@@ -1,14 +1,19 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
-from ..models.song import db, Song
+from sqlalchemy.orm import joinedload
+from ..models import db, Like, Song
 
 bp = Blueprint('songs', __name__, url_prefix='/songs')
 
 
 @bp.route('/')
 def songs():
-    songs = Song.query.all()
-    return [song.to_dict() for song in songs]
+    songs = Song.query.options(joinedload(Song.likes)).all()
+
+    for song in songs:
+        print(song)
+    # return [song.to_dict() for song in songs]
+    return { "message": "Whoo Hoo"}
 
 
 @bp.route('/<songId>')
@@ -16,7 +21,7 @@ def songId(songId):
     song = Song.query.get(songId)
 
     if not song:
-        raise Exception("Couldn't find song")
+        return {'errors': {'message': "Couldn't find song"}}, 404
 
     return song.to_dict()
 
@@ -41,7 +46,7 @@ def editSong(songId):
     song = Song.query.get(songId)
 
     if not song:
-        raise Exception("Couldn't find song")
+        return {'errors': {'message': "Couldn't find song"}}, 404
 
     user_id = current_user.id
 
@@ -62,13 +67,14 @@ def editSong(songId):
     return song.to_dict()
 
 
+# May have a bug
 @bp.route('/<songId>', methods=['DELETE'])
 @login_required
 def deleteSong(songId):
     song = Song.query.get(songId)
 
     if not song:
-        raise Exception("Couldn't find song")
+        return {'errors': {'message': "Couldn't find song"}}, 401
 
     user_id = current_user.id
 
