@@ -10,8 +10,6 @@ bp = Blueprint('songs', __name__, url_prefix='/songs')
 def songs():
     songs = Song.query.options(joinedload(Song.likes)).all()
 
-    for song in songs:
-        print(song)
     return [song.to_dict() for song in songs]
 
 

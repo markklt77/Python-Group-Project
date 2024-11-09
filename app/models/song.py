@@ -25,6 +25,7 @@ class Song(db.Model):
             "url": self.url,
             "artist_id": self.artist_id,
             "genre": self.genre,
+            "likes": self.likes,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
