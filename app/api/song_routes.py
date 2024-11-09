@@ -12,8 +12,7 @@ def songs():
 
     for song in songs:
         print(song)
-    # return [song.to_dict() for song in songs]
-    return { "message": "Whoo Hoo"}
+    return [song.to_dict() for song in songs]
 
 
 @bp.route('/<songId>')
