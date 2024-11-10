@@ -17,7 +17,7 @@ def album_home():
     return {'albums': [album.to_dict() for album in albums]}
 
 
-@album_routes.route('/<int:id>', methods=['GET','PATCH'])
+@album_routes.route('/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def specific_album(id):
     """
     Get a specific album and or update the album title
@@ -29,22 +29,30 @@ def specific_album(id):
         db.session.commit()
         return album.to_dict()
 
+    if request.method == 'DELETE':
+        if album.artist_id == current_user.id:
+            db.session.delete(album)
+            db.session.commit()
+            jsonify({"message": "Deleted album"})
+            return redirect('/api/albums')
+
     songs = [song.song_id for song in AlbumSong.query.filter_by(album_id=id)]
     easy_album = album.to_dict()
 
     easy_album['songs'] = songs
     return easy_album
 
-@album_routes.route('/create-album', methods=['GET', 'POST'])
+@album_routes.route('/create-album', methods=['GET','POST'])
 @login_required
 def create_album():
     """
     Create an album for the current user
     """
     form = AlbumForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         album = Album(
-            title=form.data['title'],
+            title=form.data["title"],
             artist_id=int(current_user.id)
         )
         db.session.add(album)
@@ -54,7 +62,7 @@ def create_album():
     return render_template('albums.html', form=form)
 
 
-@album_routes.route('/<int:albumId>/add-song/<int:songId>', methods=['GET', 'POST'])
+@album_routes.route('/<int:albumId>/add-song/<int:songId>', methods=['POST'])
 @login_required
 def add_song(albumId, songId):
     """
@@ -85,7 +93,7 @@ def add_song(albumId, songId):
     return jsonify({'message': f'{song.title} added to {album.to_dict()["title"]}'})
 
 
-@album_routes.route('/<int:albumId>/remove-song/<int:songId>', methods=['GET','DELETE'])
+@album_routes.route('/<int:albumId>/remove-song/<int:songId>', methods=['DELETE'])
 @login_required
 def remove_song(albumId, songId):
     """
