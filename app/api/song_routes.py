@@ -3,17 +3,17 @@ from flask_login import current_user, login_required
 from sqlalchemy.orm import joinedload
 from ..models import db, Song
 
-bp = Blueprint('songs', __name__, url_prefix='/songs')
+song_routes = Blueprint('songs', __name__, url_prefix='/songs')
 
 
-@bp.route('/')
+@song_routes.route('/')
 def songs():
     songs = Song.query.options(joinedload(Song.likes)).all()
 
     return [song.to_dict() for song in songs]
 
 
-@bp.route('/<songId>')
+@song_routes.route('/<int:songId>')
 def songId(songId):
     song = Song.query.get(songId)
 
@@ -23,7 +23,7 @@ def songId(songId):
     return song.to_dict()
 
 
-@bp.route('/', methods=["POST"])
+@song_routes.route('/', methods=["POST"])
 @login_required
 def addSong():
     user_id = current_user.id
@@ -37,7 +37,7 @@ def addSong():
     return song.to_dict()
 
 
-@bp.route('/<songId>', methods=["PUT"])
+@song_routes.route('/<int:songId>', methods=["PUT"])
 @login_required
 def editSong(songId):
     song = Song.query.get(songId)
@@ -64,14 +64,13 @@ def editSong(songId):
     return song.to_dict()
 
 
-# May have a bug
-@bp.route('/<songId>', methods=['DELETE'])
+@song_routes.route('/<int:songId>', methods=['DELETE'])
 @login_required
 def deleteSong(songId):
     song = Song.query.get(songId)
 
     if not song:
-        return {'errors': {'message': "Couldn't find song"}}, 401
+        return {'errors': {'message': "Couldn't find song"}}, 404
 
     user_id = current_user.id
 
