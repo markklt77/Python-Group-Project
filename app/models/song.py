@@ -19,13 +19,15 @@ class Song(db.Model):
 
 
     def to_dict(self):
+        dict_likes = [like.to_dict() for like in self.likes]
+        
         return {
             "id": self.id,
             "title": self.title,
             "url": self.url,
             "artist_id": self.artist_id,
             "genre": self.genre,
-            "likes": self.likes,
+            "likes": dict_likes,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }

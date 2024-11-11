@@ -8,6 +8,9 @@ song_routes = Blueprint('songs', __name__, url_prefix='/songs')
 
 @song_routes.route('/')
 def songs():
+    """
+    Get all songs
+    """
     songs = Song.query.options(joinedload(Song.likes)).all()
 
     return [song.to_dict() for song in songs]
@@ -15,7 +18,10 @@ def songs():
 
 @song_routes.route('/<int:songId>')
 def songId(songId):
-    song = Song.query.get(songId)
+    """
+    Get a specific song by id
+    """
+    song = Song.query.options(joinedload(Song.likes)).get(songId)
 
     if not song:
         return {'errors': {'message': "Couldn't find song"}}, 404
@@ -26,6 +32,9 @@ def songId(songId):
 @song_routes.route('/', methods=["POST"])
 @login_required
 def addSong():
+    """
+    A logged in user can add a song
+    """
     user_id = current_user.id
     data = request.json
     data["artist_id"] = user_id
@@ -40,6 +49,9 @@ def addSong():
 @song_routes.route('/<int:songId>', methods=["PUT"])
 @login_required
 def editSong(songId):
+    """
+    A logged in user can edit/update a song
+    """
     song = Song.query.get(songId)
 
     if not song:
@@ -67,6 +79,9 @@ def editSong(songId):
 @song_routes.route('/<int:songId>', methods=['DELETE'])
 @login_required
 def deleteSong(songId):
+    """
+    A logged in user can delete their owned songs
+    """
     song = Song.query.get(songId)
 
     if not song:
