@@ -15,6 +15,21 @@ def get_user_playlists():
     playlists = Playlist.query.filter_by(user_id=current_user.id).all()
     return {'playlists': [playlist.to_dict() for playlist in playlists]}
 
+@playlist_routes.route('/<int:playlist_id>', methods=['GET'])
+@login_required
+def get_playlist_by_id(playlist_id):
+    """
+    Get a single playlist by ID if it belongs to the current user
+    """
+    # Query for the playlist and ensure it belongs to the current user
+    playlist = Playlist.query.filter_by(id=playlist_id, user_id=current_user.id).first()
+
+    if not playlist:
+        return jsonify({'error': 'Playlist not found'}), 404
+
+    return jsonify(playlist.to_dict()), 200
+
+
 
 @playlist_routes.route('/', methods=['POST'])
 @login_required
