@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import db, Playlist, PlaylistSong, Song
+from app.forms import PlaylistForm, AddSongToPlaylistForm
 
 
 playlist_routes = Blueprint('playlists', __name__)
@@ -39,23 +40,40 @@ def create_playlist():
     """
 
     #returns data as python dictionary
-    data = request.get_json()
+    # data = request.get_json()
 
-    if not data.get('name'):
-        return {'error': 'Playlist name is required'}, 400
+    # if not data.get('name'):
+    #     return {'error': 'Playlist name is required'}, 400
 
-
-    playlist = Playlist(
-        name=data['name'],
-        user_id=current_user.id
-    )
+    # playlist = Playlist(
+    #     name=data['name'],
+    #     user_id=current_user.id
+    # )
 
     # Add the playlist to the db
-    db.session.add(playlist)
-    db.session.commit()
+    # db.session.add(playlist)
+    # db.session.commit()
 
-    # Return the newly created playlist data
-    return jsonify(playlist.to_dict()), 201
+    # # Return the newly created playlist data
+    # return jsonify(playlist.to_dict()), 201
+
+    form = PlaylistForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        playlist = Playlist(
+            name=form.data['name'],
+            user_id=current_user.id
+            )
+
+        db.session.add(playlist)
+        db.session.commit()
+
+        return jsonify(playlist.to_dict()), 201
+    else:
+        return jsonify(form.errors), 400
+
+
 
 @playlist_routes.route('/<int:playlist_id>', methods=['DELETE'])
 @login_required
@@ -80,36 +98,79 @@ def delete_playlist(playlist_id):
     # Return a success message
     return jsonify({'message': 'Playlist deleted successfully'}), 200
 
-@playlist_routes.route('/<int:playlist_id>/songs', methods=['POST'])
+@playlist_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['POST'])
 @login_required
-def add_song_to_playlist(playlist_id):
+def add_song_to_playlist(playlist_id, song_id):
     """
     Add a song to an existing playlist.
     """
     # Get the song ID from the request body
-    data = request.get_json()
-    song_id = data.get('song_id')
+    # data = request.get_json()
+    # song_id = data.get('song_id')
 
     # make sure the playlist exists and belongs to the current user
+    # playlist = Playlist.query.filter_by(id=playlist_id, user_id=current_user.id).first()
+    # if not playlist:
+    #     return jsonify({'error': 'Playlist not found'}), 404
+
+    # Check if the playlist belongs to the current user
+    #if playlist.user_id != current_user.id:
+    #    return jsonify({'error': 'You do not have permission to add songs to this playlist'}), 403
+
+    # make sure the song exists
+    # song = Song.query.get(song_id)
+    # if not song:
+    #     return jsonify({'error': 'Song not found'}), 404
+
+    # Add the song to the playlist by creating a new entry in the PlaylistSong join table
+    # playlist_song = PlaylistSong(playlist_id=playlist_id, song_id=song_id)
+    # db.session.add(playlist_song)
+    # db.session.commit()
+
+    # Return success response with updated playlist data
+    # return jsonify({'message': 'Song added to playlist', 'playlist': playlist.to_dict()}), 201
+
+    #USING FORMS
+    # form = AddSongToPlaylistForm()
+    # form['csrf_token'].data = request.cookies['csrf_token']
+
+    # if form.validate_on_submit():
+    #     song_id = form.data['song_id']
+
+    #     playlist = Playlist.query.filter_by(id=playlist_id, user_id=current_user.id).first()
+    #     if not playlist:
+    #         return jsonify({'error': 'Playlist not found'}), 404
+
+    #     song = Song.query.get(song_id)
+    #     if not song:
+    #         return jsonify({'error': 'Song not found'}), 404
+
+    #     playlist_song = PlaylistSong(
+    #         playlist_id=playlist_id,
+    #         song_id=song_id
+    #     )
+    #     db.session.add(playlist_song)
+    #     db.session.commit()
+
+    #     return jsonify({'message': 'Song added to playlist', 'playlist': playlist.to_dict()}), 201
+
+    # else:
+    #     return jsonify(form.errors), 400
+
+    #USING URL PARAMS
+
     playlist = Playlist.query.filter_by(id=playlist_id, user_id=current_user.id).first()
     if not playlist:
         return jsonify({'error': 'Playlist not found'}), 404
 
-    # Check if the playlist belongs to the current user
-    if playlist.user_id != current_user.id:
-        return jsonify({'error': 'You do not have permission to add songs to this playlist'}), 403
-
-    # make sure the song exists
     song = Song.query.get(song_id)
     if not song:
         return jsonify({'error': 'Song not found'}), 404
 
-    # Add the song to the playlist by creating a new entry in the PlaylistSong join table
     playlist_song = PlaylistSong(playlist_id=playlist_id, song_id=song_id)
     db.session.add(playlist_song)
     db.session.commit()
 
-    # Return success response with updated playlist data
     return jsonify({'message': 'Song added to playlist', 'playlist': playlist.to_dict()}), 201
 
 @playlist_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])

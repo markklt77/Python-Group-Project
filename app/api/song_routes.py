@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from sqlalchemy.orm import joinedload
 from ..models import db, Like, Song
 from ..aws_helper import allowed_file, get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from app.forms import SongForm
 
 bp = Blueprint('songs', __name__, url_prefix='/songs')
 
@@ -23,7 +24,7 @@ def songId(songId):
 
     return song.to_dict()
 
-
+#TESTING FORM
 @bp.route('/upload-song')
 @login_required
 def upload_song_form():
@@ -43,66 +44,105 @@ def addSong():
     # return song.to_dict()
 
     #AWS TESTING
-    user_id = current_user.id
-    data = request.form.to_dict()
-    file = request.files.get('file')
+    form = SongForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    # user_id = current_user.id
+    # data = request.form.to_dict()
+    # file = request.files.get('file')
 
-    #does the file exist and is it allowed?
-    if not file or not allowed_file(file.filename):
-        return {"errors": "Invalid file type or no file uploaded"}, 400
+    if form.validate_on_submit():
+        file = form.file.data
+        #does the file exist and is it allowed?
+        if not allowed_file(file.filename):
+            return {"errors": "Invalid file type"}, 400
 
-    title = data.get("title")
-    genre = data.get("genre")
+        # title = data.get("title")
+        # genre = data.get("genre")
 
-    if not title:
-        return {"errors": "Title is required"}, 400
-    if not genre:
-        return {"errors": "Genre is required"}, 400
+        file.filename = get_unique_filename(file.filename)
+        upload_response = upload_file_to_s3(file)
 
-    file.filename = get_unique_filename(file.filename)
-    upload_response = upload_file_to_s3(file)
+        # Handle errors during upload
+        if "errors" in upload_response:
+            return jsonify(upload_response), 400
 
-    # Handle errors during upload
-    if "errors" in upload_response:
-        return jsonify(upload_response), 400
+        song = Song(
+            title=form.title.data,
+            artist_id=current_user.id,
+            url=upload_response["url"],
+            genre=form.genre.data
+        )
 
-    song = Song(
-        title=data.get("title"),
-        artist_id=user_id,
-        url=upload_response["url"],
-        genre=data.get("genre")
-    )
+        db.session.add(song)
+        db.session.commit()
 
-    db.session.add(song)
-    db.session.commit()
-
-    return song.to_dict(), 201
+        return song.to_dict(), 201
+    else:
+        return jsonify(form.errors), 400
 
 @bp.route('/<songId>', methods=["PUT"])
 @login_required
 def editSong(songId):
+    # song = Song.query.get(songId)
+
+    # if not song:
+    #     return {'errors': {'message': "Couldn't find song"}}, 404
+
+    # user_id = current_user.id
+
+    # if not song.artist_id == user_id:
+    #     return {'errors': {'message': 'Unauthorized'}}, 401
+
+    # data = request.json
+
+    # if data["title"]:
+    #     song.title = data["title"]
+
+    # if data["url"]:
+    #     song.url = data["url"]
+
+    # song.genre = data["genre"]
+
+    # db.session.commit()
+    # return song.to_dict()
+
     song = Song.query.get(songId)
 
     if not song:
         return {'errors': {'message': "Couldn't find song"}}, 404
 
-    user_id = current_user.id
-
-    if not song.artist_id == user_id:
+    if song.artist_id != current_user.id:
         return {'errors': {'message': 'Unauthorized'}}, 401
 
-    data = request.json
+    form = SongForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
 
-    if  data["title"]:
-        song.title = data["title"]
+    if form.validate_on_submit():
 
-    if data["url"]:
-        song.url = data["url"]
+        if form.title.data:
+            song.title = form.title.data
 
-    song.genre = data["genre"]
 
-    db.session.commit()
-    return song.to_dict()
+        if form.genre.data:
+            song.genre = form.genre.data
+
+        # handle file upload if a new file is submitted.... should users even be able to do this?
+        if form.file.data:
+            file = form.file.data
+            file.filename = get_unique_filename(file.filename)
+            upload_response = upload_file_to_s3(file)
+
+            if "errors" in upload_response:
+                return jsonify(upload_response), 400
+
+            song.url = upload_response["url"]
+
+
+        db.session.commit()
+        return song.to_dict(), 200
+
+    else:
+        return jsonify(form.errors), 400
 
 
 # May have a bug
