@@ -10,11 +10,10 @@
     - Swap for kwargs
 6. Cannot delete like
 
-
 # albums
 
-2. ? Cannot view songs on "/albums/albumId" ?
-3. Cannot remove album
+2. ? Cannot view songs on "/albums/albumId" ? - 
+3. Cannot remove album - may not be a bug
 4. Getting 404 instead of 401 - add song to album that doesn't belong to you
 5. Getting 404 when trying to add any song to album
 

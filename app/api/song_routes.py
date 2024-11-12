@@ -46,6 +46,7 @@ def addSong():
     return song.to_dict()
 
 
+# Maybe change PUT to PATCH
 @song_routes.route('/<int:songId>', methods=["PUT"])
 @login_required
 def editSong(songId):
@@ -64,11 +65,12 @@ def editSong(songId):
 
     data = request.json
 
+    # Define error handlers
     if  data["title"]:
         song.title = data["title"]
 
-    if data["url"]:
-        song.url = data["url"]
+    # if data["url"]:
+    #     song.url = data["url"]
 
     song.genre = data["genre"]
 
