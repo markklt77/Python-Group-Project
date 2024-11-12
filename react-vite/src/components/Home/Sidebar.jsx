@@ -1,5 +1,5 @@
 import { FiPlus } from "react-icons/fi";
-import Collection from "./Collection";
+import Collection from "../Collection/Collection";
 
 function Sidebar() {
     return (
