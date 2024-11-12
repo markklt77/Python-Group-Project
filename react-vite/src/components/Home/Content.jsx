@@ -1,4 +1,4 @@
-import Song from "./Songs";
+import Song from "../Song/";
 
 function Content() {
     return (
