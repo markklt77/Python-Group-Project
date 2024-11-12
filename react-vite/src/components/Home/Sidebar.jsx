@@ -1,5 +1,5 @@
 import { FiPlus } from "react-icons/fi";
-import Collection from "../Collection/Collection";
+import AlbumTile from "../Albums/AlbumTile";
 
 function Sidebar() {
     return (
@@ -19,7 +19,7 @@ function Sidebar() {
                 </div>
             </div>
             <div>
-                <Collection />
+                <AlbumTile />
             </div>
         </>
     )

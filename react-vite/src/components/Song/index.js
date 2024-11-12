@@ -1,3 +1,3 @@
-import Song from "./Song.jsx"
+import Song from "./Song";
 
 export default Song;

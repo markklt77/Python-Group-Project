@@ -1,8 +1,10 @@
+import "./song.css"
+
 function Song() {
     return (
-        <>
-            <p>This will render a single list item for a song</p>
-        </>
+        <div>
+            Will render a single song
+        </div>
     )
 }
 

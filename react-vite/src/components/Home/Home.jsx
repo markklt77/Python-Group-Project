@@ -1,15 +1,20 @@
-import Sidebar from "./Sidebar";
-import Content from "./Content";
+import { useSelector } from "react-redux"
+import SongTile from "../SongTile";
 import "./home.css"
 
 function Home() {
+    const allSongsFlat = useSelector(state => state.songs.all)
+    const arrSongs = Object.values(allSongsFlat)
+
     return (
-        <div className="layout">
-            <div className="sidebar">
-                <Sidebar />
+        <div className="content">
+            <div className="content-header">
+                <h1>All Songs</h1>
             </div>
-            <div className="content">
-                <Content />
+            <div>
+                {arrSongs.map((song) => (
+                    <SongTile key={`song${song.id}`} />
+                ))}
             </div>
         </div>
     )
