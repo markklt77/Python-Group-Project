@@ -174,7 +174,7 @@ def deleteSong(songId):
     return {"message": "Song deleted successfully"}, 200
 
 # Like a Song
-@bp.route('/<int:songId>/likes/', methods=['POST'])
+@song_routes.route('/<int:songId>/likes/', methods=['POST'])
 @login_required
 def likes():
     """
@@ -187,7 +187,7 @@ def likes():
     return {'message': "Success"}
 
 # Unlike a Song
-@bp.route('/<int:songId>/likes/<int:likeId>', methods=['DELETE'])
+@song_routes.route('/<int:songId>/likes/<int:likeId>', methods=['DELETE'])
 @login_required
 def like(likeId):
     """
