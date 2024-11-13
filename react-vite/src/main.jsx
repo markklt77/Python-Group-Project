@@ -6,6 +6,7 @@ import configureStore from "./redux/store";
 import { router } from "./router";
 import * as sessionActions from "./redux/session";
 import * as songActions from "./redux/songs"
+import * as albumActions from "./redux/albums"
 import "./index.css";
 
 const store = configureStore();
@@ -14,6 +15,7 @@ if (import.meta.env.MODE !== "production") {
   window.store = store;
   window.sessionActions = sessionActions;
   window.songActions = songActions;
+  window.albumActions = albumActions
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
