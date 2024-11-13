@@ -1,8 +1,14 @@
-function SongTile() {
+import "./song-tile.css"
+
+function SongTile({ song, number }) {
+    const date = new Date(song.created_at)
     return (
-        <>
-            <p>This will render a single list item for a song</p>
-        </>
+        <div className="song-tile">
+            <p>{number}</p>
+            <p>{song.title}</p>
+            <p>{song.album.title}</p>
+            <p>{date.getMonth()}</p>
+        </div>
     )
 }
 

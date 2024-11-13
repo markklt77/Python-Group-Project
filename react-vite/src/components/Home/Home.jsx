@@ -12,8 +12,12 @@ function Home() {
                 <h1>All Songs</h1>
             </div>
             <div>
-                {arrSongs.map((song) => (
-                    <SongTile key={`song${song.id}`} />
+                {arrSongs.map((song, i) => (
+                    <SongTile
+                        song={song}
+                        number={i+1}
+                        key={`song${song.id}`}
+                    />
                 ))}
             </div>
         </div>

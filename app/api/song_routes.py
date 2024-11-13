@@ -175,7 +175,7 @@ def deleteSong(songId):
     return {"message": "Song deleted successfully"}, 200
 
 # Like a Song
-@song_routes.route('/<songId>/likes', methods=['POST'])
+@song_routes.route('/<int:songId>/likes/', methods=['POST'])
 @login_required
 def likes(songId):
     """
@@ -191,21 +191,21 @@ def likes(songId):
     return {'message': "Success"}, 200
 
 # Unlike a Song
-@song_routes.route('/<songId>/likes/<likeId>', methods=['DELETE'])
+@song_routes.route('/<int:songId>/likes/<int:likeId>', methods=['DELETE'])
 @login_required
 def like(songId, likeId):
     """
     A logged in user can unlike a song
     """
-    like = Like.query.get(likeId)
-    print("flag", like)
+    like = Like.query.filter_by(id=likeId)
+
     if not like:
         return {"error": {"Like not found"}}, 404
-    
+
     if like.artist_id != current_user.id:
         return {"error": {"You do not have permission to delete this like"}}, 403
-    
+
     db.session.delete(like)
     db.session.commit()
-    
+
     return {'message': "Successfully deleted"}, 200
