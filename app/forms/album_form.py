@@ -8,4 +8,4 @@ from app.models import Album
 
 class AlbumForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    submit = SubmitField('Create Album')
+    submit = SubmitField('Submit')
