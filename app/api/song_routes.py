@@ -13,6 +13,7 @@ def songs():
     """
     Get all songs
     """
+    print("inside all songs")
     songs = Song.query.options(joinedload(Song.likes)).all()
 
     return [song.to_dict() for song in songs]
@@ -174,27 +175,30 @@ def deleteSong(songId):
     return {"message": "Song deleted successfully"}, 200
 
 # Like a Song
-@song_routes.route('/<int:songId>/likes/', methods=['POST'])
+@song_routes.route('/<songId>/likes', methods=['POST'])
 @login_required
-def likes():
+def likes(songId):
     """
     A logged in user can like a song
     """
+    print("flag", request)
     artistId = current_user.id
-    newLike = Like(artistId, songId)
+    print(songId)
+    newLike = Like(artist_id=artistId, song_id=songId)
+    print(newLike)
     db.session.add(newLike)
     db.session.commit()
-    return {'message': "Success"}
+    return {'message': "Success"}, 200
 
 # Unlike a Song
-@song_routes.route('/<int:songId>/likes/<int:likeId>', methods=['DELETE'])
+@song_routes.route('/<songId>/likes/<likeId>', methods=['DELETE'])
 @login_required
-def like(likeId):
+def like(songId, likeId):
     """
     A logged in user can unlike a song
     """
-    like = Like.query.filter_by(id=likeId)
-    
+    like = Like.query.get(likeId)
+    print("flag", like)
     if not like:
         return {"error": {"Like not found"}}, 404
     
