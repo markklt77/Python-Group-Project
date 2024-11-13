@@ -20,13 +20,20 @@ class Song(db.Model):
 
     def to_dict(self):
         dict_likes = [like.to_dict() for like in self.likes]
-        
+
+        if self.albums:
+            dict_albums = [album.to_dict() for album in self.albums]
+            album = dict_albums[0]
+        else:
+            album = { 'title': 'None' }
+
         return {
             "id": self.id,
             "title": self.title,
             "url": self.url,
             "artist_id": self.artist_id,
             "genre": self.genre,
+            "album": album,
             "likes": dict_likes,
             "created_at": self.created_at,
             "updated_at": self.updated_at

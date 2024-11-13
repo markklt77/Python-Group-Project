@@ -1,0 +1,11 @@
+.song-tile {
+    display: grid;
+    grid-template-columns: 50px 33% 33% 33%;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+}
+
+.song-tile > p {
+    margin: 0 10px;
+}
