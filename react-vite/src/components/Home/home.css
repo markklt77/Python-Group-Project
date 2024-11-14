@@ -2,9 +2,10 @@
     color: rgb(170, 170, 170);
     display: grid;
     grid-template-columns: 30% 70%;
+    max-height: 96%;
     position: fixed;
     top: 65px;
-    bottom: 0;
+    bottom: 81px;
     left: 0;
     right: 0;
 }
@@ -13,8 +14,8 @@
 .content {
     background-color: rgb(21, 21, 21);
     border-radius: 10px;
-    height: 100%;
-    width: 97%;
+    max-height: 100%;
+    width: 99%;
     margin: 0 5px;
 }
 
@@ -63,4 +64,10 @@ background-color: rgb(54, 58, 121);
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     height: 200px;
+}
+
+.container-song-tile {
+    width: auto;
+    max-height: 100%;
+    overflow: scroll;
 }
