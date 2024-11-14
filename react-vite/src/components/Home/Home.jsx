@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux"
 import SongTile from "../SongTile";
+// import Song from "../Song"
 import "./home.css"
 
 function Home() {
@@ -18,6 +19,11 @@ function Home() {
                         number={i+1}
                         key={`song${song.id}`}
                     />
+                    // <Song
+                    //     song={song}
+                    //     number={i+1}
+                    //     key={`song${song.id}`}
+                    // />
                 ))}
             </div>
         </div>

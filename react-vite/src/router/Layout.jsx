@@ -6,6 +6,7 @@ import { thunkAuthenticate } from "../redux/session";
 import { getAllSongs } from "../redux/songs";
 import Navigation from "../components/Navigation/Navigation";
 import Sidebar from "../components/Home/Sidebar";
+import Playback from "../components/Playback/Playback";
 import "../components/Home/home.css"
 
 export default function Layout() {
@@ -25,9 +26,11 @@ export default function Layout() {
           <div className="sidebar">
             <Sidebar />
           </div>
-          
+
           {isLoaded && <Outlet />}
         </div>
+
+        <Playback />
 
         <Modal />
       </ModalProvider>
