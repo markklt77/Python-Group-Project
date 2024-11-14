@@ -1,25 +1,83 @@
 import { FiPlus } from "react-icons/fi";
 import AlbumTile from "../Albums/AlbumTile";
+import { useEffect, useRef, useState } from "react";
+import PlaylistTile from "../Playlists/PlaylistTile";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
 
 function Sidebar() {
+    const [album, setAlbum] = useState(false)
+    const [playlist, setPlaylist] = useState(true)
+    const [showForms, setShowForms] = useState(false)
+    const ulRef = useRef()
+
+
+
+    const isAlbum = () => {
+        setAlbum(true)
+        setPlaylist(false)
+    }
+    const isPlaylist = () => {
+        setPlaylist(true)
+        setAlbum(false)
+    }
+
+    const toggleMenu = (e) => {
+        e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+        setShowForms(!showForms);
+    };
+
+
+    useEffect(() => {
+        if (!showForms) return;
+
+        const closeForm = (e) => {
+            if (ulRef.current && !ulRef.current.contains(e.target)) {
+                setShowForms(false);
+            }
+        };
+
+        document.addEventListener('click', closeForm);
+
+        return () => document.removeEventListener('click', closeForm)
+    }, [showForms])
+
+    const closeForm = () => setShowForms(false)
+
     return (
         <>
             <div className="head-container">
                 <div className="side-head">
                     <h3>Library</h3>
-                    <FiPlus className="faplus"/>
+                    <FiPlus onClick={toggleMenu} className="faplus" />
+
+                    {showForms && (
+                        <div>
+                        <OpenModalMenuItem
+                            itemText='Create Album'
+                            onItemClick={closeForm}
+                            modalComponent={<AlbumFormModal />}
+                        />
+                        </div>
+                    )}
+
                 </div>
                 <div className="side-filters">
-                    <button className="filter-buttons">
+                    <button onClick={isPlaylist} className="filter-buttons">
                         Playlists
                     </button>
-                    <button className="filter-buttons">
+                    <button onClick={isAlbum} className="filter-buttons">
                         Albums
                     </button>
                 </div>
             </div>
             <div>
-                <AlbumTile />
+                {album === true ? (
+                    <AlbumTile />
+                ) : (
+                    <PlaylistTile />
+                )}
+
             </div>
         </>
     )
