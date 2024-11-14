@@ -1,9 +1,13 @@
 import "./song.css"
 
-function Song() {
+function Song({ song }) {
+    const handleClick = () => {
+        console.log(song.url)
+    }
+
     return (
         <div>
-            Will render a single song
+            <button onClick={handleClick}>Play</button>
         </div>
     )
 }
