@@ -1,4 +1,5 @@
 import { CiCirclePlus } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
 import "./song-tile.css"
 
 function SongTile({ song, number }) {
@@ -19,7 +20,10 @@ function SongTile({ song, number }) {
             </p>
             <div className="plus-button">
                 <CiCirclePlus />
+                <FaHeart className="like-button"/>
+                <span className="likes-count">likes</span>
             </div>
+            
         </div>
     )
 }

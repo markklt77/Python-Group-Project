@@ -19,9 +19,20 @@
 .plus-button {
     font-size: 20px;
     text-align: center;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 #num {
     text-align: center;
     margin: 0 10px;
+}
+
+.like-button:hover {
+    color: rgb(54, 58, 121);
+}
+
+.likes-count {
+    font-size: 12px;
+    align-self: center;
 }
