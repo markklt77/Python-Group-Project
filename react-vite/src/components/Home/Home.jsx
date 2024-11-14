@@ -11,7 +11,7 @@ function Home() {
             <div className="content-header">
                 <h1>All Songs</h1>
             </div>
-            <div>
+            <div className="container-song-tile">
                 {arrSongs.map((song, i) => (
                     <SongTile
                         song={song}

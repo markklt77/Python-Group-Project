@@ -1,11 +1,27 @@
+.container-song-tile {
+    padding: 0 15px;
+}
+
 .song-tile {
-    display: grid;
-    grid-template-columns: 50px 33% 33% 33%;
     align-items: center;
+    box-sizing: border-box;
+    border-radius: 7px;
+    display: grid;
+    grid-template-columns: 50px 31% 31% 16% 15%;
     height: 60px;
     width: 100%;
 }
 
-.song-tile > p {
+.song-tile:hover {
+    background-color: rgba(77, 77, 77, 0.315);
+}
+
+.plus-button {
+    font-size: 20px;
+    text-align: center;
+}
+
+#num {
+    text-align: center;
     margin: 0 10px;
 }
