@@ -17,7 +17,11 @@ function Playback() {
             </div>
 
             <figure className="audio-playback">
-                <audio controls src={url}></audio>
+                <audio
+                    controls
+                    src={url}
+                    autoPlay
+                ></audio>
             </figure>
         </div>
     )
