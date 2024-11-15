@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { CiCirclePlus } from "react-icons/ci";
 import "./playback.css"
 
 function Playback() {
@@ -7,7 +8,15 @@ function Playback() {
 
     return (
         <div className="footer">
-            <figure>
+            <div className="display-song">
+                <h3>{selectedSong.title}</h3>
+
+                <div className="plus-button">
+                    <CiCirclePlus />
+                </div>
+            </div>
+
+            <figure className="audio-playback">
                 <audio controls src={url}></audio>
             </figure>
         </div>

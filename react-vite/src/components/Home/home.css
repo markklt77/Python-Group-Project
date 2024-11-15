@@ -14,23 +14,27 @@
 .content {
     background-color: rgb(21, 21, 21);
     border-radius: 10px;
-    max-height: 100%;
+    box-sizing: border-box;
+    max-height: 99%;
     width: 99%;
     margin: 0 5px;
+}
+
+.content {
+    overflow: auto;
 }
 
 .head-container {
     background-color: rgb(20, 20, 20);
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    padding-bottom: 15px;
 }
 
 .side-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 18px;
+    margin: 25px 18px;
 }
 
 .faplus {
@@ -68,6 +72,5 @@ background-color: rgb(54, 58, 121);
 
 .container-song-tile {
     width: auto;
-    max-height: 100%;
-    overflow: scroll;
+    height: 99%;
 }
