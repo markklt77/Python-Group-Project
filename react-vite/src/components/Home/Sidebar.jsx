@@ -51,7 +51,7 @@ function Sidebar() {
                     <h3>Library</h3>
                     <FiPlus onClick={toggleMenu} className="faplus" />
 
-                    {showForms && (
+                    {showForms && album && (
                         <div>
                         <OpenModalMenuItem
                             itemText='Create Album'
