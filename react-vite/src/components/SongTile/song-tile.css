@@ -28,6 +28,11 @@
     margin: 0 10px;
 }
 
+/* .like-button .liked {
+    color: rgb(54, 58, 121);
+    
+} */
+
 .like-button:hover {
     color: rgb(54, 58, 121);
 }

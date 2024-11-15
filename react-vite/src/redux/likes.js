@@ -15,13 +15,13 @@ const removeLike = songId => ({
 })
 
 //Thunks
-export const likeSong = (songId, payload) => async dispatch => {
+export const likeSong = (songId) => async dispatch => {
     const res = await fetch(`/api/songs/${songId}/likes`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        
     });
 
     if (res.ok) {
@@ -50,8 +50,9 @@ const initialState = {};
 const likesReducer = (state = initialState, action) => {
     let newState
     switch (action.type) {
-        case LIKE_SONG:
-            newState = {}
-            
+        default:
+            return state;
     }
 }
+
+export default likesReducer;

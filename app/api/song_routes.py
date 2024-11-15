@@ -182,12 +182,14 @@ def likes(songId):
     A logged in user can like a song
     """
     artistId = current_user.id
+    like = Like.query.filter_by(artist_id=artistId, song_id=songId).first()
+    
+    if not like:
+        newLike = Like(artist_id=artistId, song_id=songId)
 
-    newLike = Like(artist_id=artistId, song_id=songId)
-
-    db.session.add(newLike)
-    db.session.commit()
-    return {'message': "Success"}, 200
+        db.session.add(newLike)
+        db.session.commit()
+        return {'message': "Success"}, 200
 
 # Unlike a Song
 @song_routes.route('/<songId>/likes', methods=['DELETE'])
