@@ -1,17 +1,18 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState} from 'react'
+// import { useParams } from 'react-router-dom';
+// import { useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { thunkAllAlbums, thunkOneAlbum } from '../../redux/albums'
-import { useNavigate } from "react-router-dom";
+// import { useDispatch } from 'react-redux'
+// import { thunkAllAlbums, thunkOneAlbum } from '../../redux/albums'
+// import { useNavigate } from "react-router-dom";
 import { CiCirclePlus } from "react-icons/ci";
 // import "./song-tile.css"
 
 function AlbumSongs(){
     // let {albumId} = useParams()
+    // let [isLoaded, setIsLoaded] = useState(false)
     let album_songs = useSelector(state => state.albums.selected)
     let arrSongs = Object.values(album_songs)
-    console.log(arrSongs)
+    // console.log(arrSongs)
     let i = 0
 
     const months = [
