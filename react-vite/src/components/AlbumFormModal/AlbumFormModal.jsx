@@ -1,41 +1,95 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-// import { thunkMakeAlbum } from "../../redux/albums";
+import { thunkAllAlbums, thunkMakeAlbum } from "../../redux/albums";
+import { useNavigate } from "react-router-dom";
 
-function AlbumFormModal() {
+function AlbumFormModal({ refresh, addSong }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    // const [showForms, setShowForms] = useState(false)
+    // const [disabled, setDisabled] = useState(false)
     const user = useSelector(state => state.session.user)
-
+    let navigate = useNavigate()
     // console.log(user.id)
+    let albums = useSelector(state => state.albums.all)
+
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // const serverResponse = await dispatch(
-        //     thunkMakeAlbum({
-        //         title,
-        //         id: user.id
-        //     })
-        // );
+        const serverResponse = await dispatch(
+            thunkMakeAlbum({
+                title,
+                id: user.id
+            })
+        );
 
-        // if (serverResponse) {
-        //     setErrors(serverResponse);
-        //     // console.log('errors',errors)
-        //     // alert(errors)
-        // } else {
-        //     closeModal();
-        // }
+        if (serverResponse) {
+            setErrors(serverResponse);
+            console.log('errors', serverResponse)
+            // alert(errors)
+        } else if (!user) {
+            errors.user = 'Must be logged in to create an album'
+        } else {
+            // console.log('the good stuff',serverResponse)
+            await dispatch(thunkAllAlbums())
+                .then(() => refresh())
+                .then(() => addSong())
+                .then(() => closeModal())
+                .then(() => {
+                    let album = Object.values(albums)
+                    return album[album.length - 1]
+                })
+                // .then((album)=> console.log(album.id))
+                .then((album) => navigate(`/albums/${album.id}/add-songs`))
+            // .then(() => setShowForms(true))
+        }
     };
 
-    // console.log(errors)
+    // const toggleAddSongs = (e) => {
+    //     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    //     setShowForms(!showForms);
+    // };
+
+
+    // useEffect(() => {
+    //     if (!showForms) return;
+
+    //     const closeForm = (e) => {
+    //         if (ulRef.current && !ulRef.current.contains(e.target)) {
+    //             setShowForms(false);
+    //         }
+    //     };
+
+    //     document.addEventListener('click', closeForm);
+
+    //     return () => document.removeEventListener('click', closeForm)
+    // }, [showForms])
+
+    // const closeForm = () => setShowForms(false)
+
 
     return (
         <>
+
+            {/* {showForms && album && (
+                <div>
+                    <OpenModalMenuItem
+                        itemText='Create Album'
+                        onItemClick={closeForm}
+                        modalComponent={<AlbumAddSongModal />}
+                    />
+                </div>
+            )} */}
             <h1>Create Album</h1>
-            {/* {errors.server && <p>{errors.server}</p>} */}
+            {errors.title && <p>{errors.title}</p>}
+            {!user && <p>Must be logged in to create an album</p>}
+
             <form onSubmit={handleSubmit}>
                 <label>
                     Title
@@ -46,7 +100,12 @@ function AlbumFormModal() {
                         required
                     />
                 </label>
-                <button type="submit">Sign Up</button>
+                <button
+                    type="submit"
+                    disabled={!user}
+                >
+                    Create Album
+                </button>
             </form>
         </>
     );
