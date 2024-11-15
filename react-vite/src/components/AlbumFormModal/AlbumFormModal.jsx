@@ -1,30 +1,36 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
+// import { thunkMakeAlbum } from "../../redux/albums";
 
 function AlbumFormModal() {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const user = useSelector(state => state.session.user)
 
+    // console.log(user.id)
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // const serverResponse = await dispatch(
-        //   thunkSignup({
-        //     email,
-        //     username,
-        //     password,
-        //   })
+        //     thunkMakeAlbum({
+        //         title,
+        //         id: user.id
+        //     })
         // );
 
         // if (serverResponse) {
-        //   setErrors(serverResponse);
+        //     setErrors(serverResponse);
+        //     // console.log('errors',errors)
+        //     // alert(errors)
         // } else {
-        //   closeModal();
+        //     closeModal();
         // }
     };
+
+    // console.log(errors)
 
     return (
         <>
