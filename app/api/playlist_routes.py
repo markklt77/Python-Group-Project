@@ -7,7 +7,7 @@ from app.forms import PlaylistForm, AddSongToPlaylistForm
 playlist_routes = Blueprint('playlists', __name__)
 
 
-@playlist_routes.route('/')
+@playlist_routes.route('/test')
 @login_required
 def get_user_playlists():
     """

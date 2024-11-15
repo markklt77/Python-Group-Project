@@ -1,7 +1,7 @@
 import { FiPlus } from "react-icons/fi";
 import AlbumTile from "../Albums/AlbumTile";
 import { useEffect, useRef, useState } from "react";
-import PlaylistTile from "../Playlists/PlaylistTile";
+import PlaylistPage from "../Playlists/PlaylistsPage";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
 
@@ -75,7 +75,7 @@ function Sidebar() {
                 {album === true ? (
                     <AlbumTile />
                 ) : (
-                    <PlaylistTile />
+                    <PlaylistPage />
                 )}
 
             </div>
