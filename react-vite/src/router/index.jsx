@@ -5,8 +5,13 @@ import Layout from './Layout';
 import Home from '../components/Home/Home';
 import AlbumsPage from '../components/Albums';
 import AlbumSongs from '../components/Albums'
+<<<<<<< HEAD
 
 import PlaylistSongsPage from '../components/Playlists/PlaylistSongsPage';
+=======
+import PlaylistsPage from '../components/Playlists';
+import AlbumAddSong from '../components/Albums/AlbumAddSong';
+>>>>>>> albums-frontend
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +34,10 @@ export const router = createBrowserRouter([
               {
                 path: "/albums/:albumId",
                 element: <AlbumSongs/>
+              },
+              {
+                path: "/albums/:albumId/add-songs",
+                element: <AlbumAddSong />
               }
             ]
           },
