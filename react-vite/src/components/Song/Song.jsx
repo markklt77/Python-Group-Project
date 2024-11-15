@@ -10,7 +10,7 @@ function Song({ song }) {
     }
 
     return (
-        <div>
+        <div id="play-button">
             <button onClick={handleClick}>Play</button>
         </div>
     )
