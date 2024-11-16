@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import Album, db, Song
 from app.forms import AlbumForm
 from app.models import AlbumSong
+import json
 
 
 album_routes = Blueprint('album', __name__)
@@ -74,13 +75,13 @@ def del_patch_specific_album(id):
 
 
 
-@album_routes.route('/create-album')
-@login_required
-def album_form():
-    form = AlbumForm()
-    return render_template('albums.html', form=form)
+# @album_routes.route('/create-album')
+# @login_required
+# def album_form():
+#     form = AlbumForm()
+#     return render_template('albums.html', form=form)
 
-@album_routes.route('/', methods=['POST'])
+@album_routes.route('/create-album', methods=['POST'])
 @login_required
 def create_album():
     """
@@ -88,11 +89,17 @@ def create_album():
     """
     form = AlbumForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    # data = json.load(request.data.decode("utf-8").strip().split("/n"))
+    # print(form.title,'the data in backend')
+    data = [json.loads(line) for line in request.data.decode("utf-8").strip().split("\n")]
+    # form.title.value = data[0]['title']
+    # print(data, 'data from the back')
     if form.validate_on_submit():
         album = Album(
-            title=form.data["title"],
+            title=data[0]['title'],
             artist_id=int(current_user.id)
         )
+
         db.session.add(album)
         db.session.commit()
         # return redirect('/api/albums')

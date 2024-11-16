@@ -1,10 +1,11 @@
-import { csrfFetch } from "./csrf"
+// import { csrfFetch } from "./csrf"
 
 
 //action
 const GET_ALL_ALBUMS = 'albums/getAllAlbums'
-const MAKE_ALBUM = 'albums/makeAlbum'
+const DELETE_ALBUM = 'albums/deleteAlbum'
 const GET_ONE_ALBUM = 'albums/getOneAlbum'
+
 
 const getAllAlbums = albums => ({
     type: GET_ALL_ALBUMS,
@@ -14,6 +15,12 @@ const getAllAlbums = albums => ({
 const getOneAlbum = album => ({
     type: GET_ONE_ALBUM,
     album
+})
+
+
+const deleteAlbum = albumId => ({
+    type: DELETE_ALBUM,
+    albumId
 })
 
 
@@ -45,21 +52,66 @@ export const thunkOneAlbum = (album_id) => async (dispatch) => {
 }
 
 
-// export const thunkMakeAlbum = (album) => async (dispatch) => {
-//     const res = await csrfFetch("/api/albums", {
-//         method: "POST",
-//         body: JSON.stringify(album)
+export const thunkMakeAlbum = (album) => async (dispatch) => {
+    const res = await fetch("/api/albums/create-album", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(album)
+    })
+
+    // console.log(res, 'resfrom the thunk')
+    // console.log('album data from thunk',res)
+    if(res.ok){
+        // let data = await res.json()
+        // console.log('data from thunk res', data)
+        // dispatch(createAlbum(data))
+        dispatch(thunkAllAlbums())
+    } else {
+        let data = await res.json()
+        // console.log('error data',data)
+        return data
+    }
+}
+
+
+export const thunkDeleteAlbum = (albumId) => async (dispatch) => {
+    // console.log(albumId, 'from the thunk')
+    const res = await fetch(`/api/albums/${albumId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+    })
+
+    if(res.ok){
+        let data = await res.json()
+        dispatch(deleteAlbum(albumId))
+        // console.log(data, 'from the thunk')
+
+        // return data
+    } else {
+        return await res.json()
+    }
+}
+
+export const thunkChangeAlbum = (albumInfo) => async (dispatch) => {
+    const res = await fetch(`/api/albums/${albumInfo.albumId}`, {
+        method: 'PATCH',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(albumInfo)
+    })
+    // console.log(res)
+    // console.log(albumInfo,'from the thunk')
+    if(res.ok){
+        dispatch(thunkAllAlbums())
+        return await res.json()
+    } else {
+        return await res.json()
+    }
+}
+
+// export const thunkAddSong = (songs, albumId) => async (dispatch) => {
+//     songs.forEach(song => {
+//         let res = await fetch()
 //     })
-//     console.log('album data from thunk',album)
-//     // if(res.ok){
-//     //     let data = await res.json()
-//     //     console.log('data from thunk res', data)
-//     //     dispatch(createAlbum(data))
-//     // } else {
-//     //     let data = await res.json()
-//     //     // console.log(data)
-//     //     return data
-//     // }
 // }
 
 
@@ -85,6 +137,11 @@ function albumReducer(state = initialState, action) {
             action.album.songs.forEach(song => {
                 newState.selected[song.id] = song
             })
+            return newState
+        }
+        case DELETE_ALBUM: {
+            let newState = { ...state }
+            delete newState.all[action.albumId]
             return newState
         }
         default:
