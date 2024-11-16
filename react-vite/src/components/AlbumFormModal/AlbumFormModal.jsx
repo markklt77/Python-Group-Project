@@ -38,46 +38,21 @@ function AlbumFormModal({ refresh, addSong }) {
         } else {
             // console.log('the good stuff',serverResponse)
             await dispatch(thunkAllAlbums())
-                .then(() => refresh())
-                .then(() => addSong())
-                .then(() => closeModal())
-                .then(() => {
-                    let album = Object.values(albums)
-                    return album[album.length - 1]
-                })
-                // .then((album)=> console.log(album.id))
-                .then((album) => navigate(`/albums/${album.id}/add-songs`))
-            // .then(() => setShowForms(true))
+            const albumArray = Object.values(albums);
+            const newAlbum = albumArray[albumArray.length - 1];
+            if (newAlbum) {
+                // console.log("New Album", newAlbum);
+                addSong(newAlbum);
+                refresh();
+                closeModal();
+            }
         }
-    };
+    }
 
-    // const toggleAddSongs = (e) => {
-    //     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    //     setShowForms(!showForms);
-    // };
+        return (
+            <>
 
-
-    // useEffect(() => {
-    //     if (!showForms) return;
-
-    //     const closeForm = (e) => {
-    //         if (ulRef.current && !ulRef.current.contains(e.target)) {
-    //             setShowForms(false);
-    //         }
-    //     };
-
-    //     document.addEventListener('click', closeForm);
-
-    //     return () => document.removeEventListener('click', closeForm)
-    // }, [showForms])
-
-    // const closeForm = () => setShowForms(false)
-
-
-    return (
-        <>
-
-            {/* {showForms && album && (
+                {/* {showForms && album && (
                 <div>
                     <OpenModalMenuItem
                         itemText='Create Album'
@@ -86,29 +61,29 @@ function AlbumFormModal({ refresh, addSong }) {
                     />
                 </div>
             )} */}
-            <h1>Create Album</h1>
-            {errors.title && <p>{errors.title}</p>}
-            {!user && <p>Must be logged in to create an album</p>}
+                <h1>Create Album</h1>
+                {errors.title && <p>{errors.title}</p>}
+                {!user && <p>Must be logged in to create an album</p>}
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Title
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
-                </label>
-                <button
-                    type="submit"
-                    disabled={!user}
-                >
-                    Create Album
-                </button>
-            </form>
-        </>
-    );
-}
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Title
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <button
+                        type="submit"
+                        disabled={!user}
+                    >
+                        Create Album
+                    </button>
+                </form>
+            </>
+        );
+    }
 
-export default AlbumFormModal;
+    export default AlbumFormModal;

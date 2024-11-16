@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { thunkOneAlbum, thunkDeleteAlbum, thunkAllAlbums } from '../../redux/albums'
 import AlbumNameFormModal from '../AlbumFormModal/AlbumNameFormModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import AlbumAddSong from '../Albums/AlbumAddSong'
+// import AlbumAddSong from '../Albums/AlbumAddSong'
 
 
 function AlbumsPage() {
@@ -109,11 +109,9 @@ function AlbumsPage() {
                             </div>
                         )}
                     </div>
-                    {addSongs ? (
-                        <AlbumAddSong />
-                    ) : (
-                        <AlbumSongs />
-                    )}
+
+                    <AlbumSongs />
+
 
                 </div>
 
