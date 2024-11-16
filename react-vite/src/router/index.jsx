@@ -41,7 +41,6 @@ export const router = createBrowserRouter([
           {
             path: "/playlists/:playlistId",
             element: <PlaylistSongsPage />
-<<<<<<< HEAD
           },
           {
             path: "/playlistForm",  //FOR TESTING
@@ -50,8 +49,6 @@ export const router = createBrowserRouter([
           {
             path: "/playlists",
             element: <PlaylistsPage />
-=======
->>>>>>> 90bbed98422668ab5cc6bec3ebff1a16c7aefb99
           }
         ]
       },
