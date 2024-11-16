@@ -1,3 +1,3 @@
-import OpenModalButton from './OpenModalButton';
+import PlusButton from './PlusButton';
 
-export default OpenModalButton;
+export default PlusButton;

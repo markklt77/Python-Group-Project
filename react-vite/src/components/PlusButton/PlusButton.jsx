@@ -1,6 +1,7 @@
 import { useModal } from '../../context/Modal';
+import { CiCirclePlus } from "react-icons/ci";
 
-function OpenModalButton({
+function PlusButton({
   modalComponent, // component to render inside the modal
   buttonText, // text of the button that opens the modal
   onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
@@ -14,7 +15,7 @@ function OpenModalButton({
     if (typeof onButtonClick === "function") onButtonClick();
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return < CiCirclePlus onClick={onClick} />;
 }
 
-export default OpenModalButton;
+export default PlusButton;
