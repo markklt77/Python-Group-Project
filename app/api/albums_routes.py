@@ -25,7 +25,8 @@ def get_specific_album(id):
     """
     album = Album.query.get(id)
     if album:
-        songs_ids = [songId.song_id for songId in AlbumSong.query.filter_by(album_id=id)]
+        songs_ids = [
+            songId.song_id for songId in AlbumSong.query.filter_by(album_id=id)]
         songs = []
         if len(songs_ids) > 0:
             for song_id in songs_ids:
@@ -41,7 +42,6 @@ def get_specific_album(id):
         return jsonify({'error': 'Album does not exist'}), 404
 
 
-
 @album_routes.route('/<int:id>', methods=['PATCH', 'DELETE'])
 @login_required
 def del_patch_specific_album(id):
@@ -49,6 +49,7 @@ def del_patch_specific_album(id):
     Update a selected album or delete a selected album
     """
     album = Album.query.get(id)
+    albumsSongs = AlbumSong.query.filter_by(album_id=id).all()
     if not album:
         return jsonify({'error': 'Album does not exist'}), 404
 
@@ -66,13 +67,13 @@ def del_patch_specific_album(id):
             return form.errors, 400
 
     if request.method == 'DELETE':
+        if len(albumsSongs) > 0:
+            for song in albumsSongs:
+                db.session.delete(song)
+                db.session.commit()
         db.session.delete(album)
         db.session.commit()
         return jsonify({"message": "Deleted album"})
-
-
-
-
 
 
 # @album_routes.route('/create-album')
@@ -91,7 +92,8 @@ def create_album():
     form['csrf_token'].data = request.cookies['csrf_token']
     # data = json.load(request.data.decode("utf-8").strip().split("/n"))
     # print(form.title,'the data in backend')
-    data = [json.loads(line) for line in request.data.decode("utf-8").strip().split("\n")]
+    data = [json.loads(line) for line in request.data.decode(
+        "utf-8").strip().split("\n")]
     # form.title.value = data[0]['title']
     # print(data, 'data from the back')
     if form.validate_on_submit():
@@ -118,14 +120,16 @@ def add_song(albumId, songId):
     """
     album = Album.query.get(albumId)
     song = Song.query.get(songId)
+    print('from the back data', request.data)
 
     if request.method == 'DELETE':
-        album_song = AlbumSong.query.filter_by(album_id=albumId, song_id=songId).first()
+        album_song = AlbumSong.query.filter_by(
+            album_id=albumId, song_id=songId).first()
 
         if album:
             if album.artist_id == current_user.id:
                 if song:
-                    if song.artist_id == current_user.id :
+                    if song.artist_id == current_user.id:
                         if album_song:
                             db.session.delete(album_song)
                             db.session.commit()
@@ -139,15 +143,15 @@ def add_song(albumId, songId):
                 return jsonify({'error': 'Album does not belong to you'}), 403
         else:
             return jsonify({'error': 'No album was found'}), 404
-        return jsonify({'message':f'{song.title} was removed from {album.title}'})
-
+        return jsonify({'message': f'{song.title} was removed from {album.title}'})
 
     if request.method == 'POST':
         if album:
             if album.to_dict()['artist_id'] == current_user.id:
                 if song:
                     if song.artist_id == album.artist_id:
-                        albumSong = AlbumSong.query.filter_by(album_id=albumId, song_id=songId).first()
+                        albumSong = AlbumSong.query.filter_by(
+                            album_id=albumId, song_id=songId).first()
                         if not albumSong:
                             new_song = AlbumSong(
                                 song_id=songId,

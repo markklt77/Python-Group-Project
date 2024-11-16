@@ -8,7 +8,7 @@ import AlbumSongs from '../components/Albums'
 import PlaylistSongsPage from '../components/Playlists/PlaylistSongsPage';
 import CreatePlaylistForm from '../components/Playlists/PlaylistForm';
 import PlaylistsPage from '../components/Playlists';
-import AlbumAddSong from '../components/Albums/AlbumAddSong';
+// import AlbumAddSong from '../components/Albums/AlbumAddSong';
 
 export const router = createBrowserRouter([
   {
@@ -31,10 +31,6 @@ export const router = createBrowserRouter([
               {
                 path: "/albums/:albumId",
                 element: <AlbumSongs/>
-              },
-              {
-                path: "/albums/:albumId/add-songs",
-                element: <AlbumAddSong />
               }
             ]
           },
