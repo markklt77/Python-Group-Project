@@ -84,10 +84,10 @@ function SongTile({ song, number }) {
                 {`${month} ${date.getDay()}, ${date.getFullYear()}`}
             </p>
             <div className="actions">
-                <PlusButton
-                modalComponent={<PlaylistSongModal />}
+                <PlusButton 
+                modalComponent={<PlaylistSongModal id={song.id}/>}
                 />
-                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''}/>
+                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
                 <span className="likes-count">{likesCount}</span>
             </div>
 
