@@ -9,6 +9,7 @@ import { IoPlaySharp } from "react-icons/io5";
 import "./song-tile.css";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 
+
 function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
@@ -83,7 +84,7 @@ function SongTile({ song, number }) {
                 {`${month} ${date.getDay()}, ${date.getFullYear()}`}
             </p>
             <div className="actions">
-                <PlusButton 
+                <PlusButton
                 modalComponent={<PlaylistSongModal />}
                 />
                 <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''}/>
