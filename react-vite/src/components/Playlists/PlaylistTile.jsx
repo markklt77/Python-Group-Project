@@ -1,8 +1,13 @@
-function PlaylistTile() {
+
+
+function PlaylistTile({user, name, onClick}) {
     return (
-        <>
-            <p>This will render a single list item for a playlist</p>
-        </>
+        <div
+        className="playlist-tile"
+        onClick={onClick}>
+            <h4>{name}</h4>
+            <p>Playlist . {user}</p>
+        </div>
     )
 }
 

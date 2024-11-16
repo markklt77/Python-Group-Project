@@ -1,12 +1,16 @@
+import { useDispatch } from "react-redux"
+import { getOneSong } from "../../redux/songs"
 import "./song.css"
 
 function Song({ song }) {
+    const dispatch = useDispatch();
+
     const handleClick = () => {
-        console.log(song.url)
+        dispatch(getOneSong(song.id))
     }
 
     return (
-        <div>
+        <div id="play-button">
             <button onClick={handleClick}>Play</button>
         </div>
     )
