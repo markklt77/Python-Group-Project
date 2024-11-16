@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { likeSong, unlikeSong } from "../../redux/likes";
+import PlusButton from "../PlusButton"
+import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { getOneSong } from "../../redux/songs";
@@ -80,9 +82,11 @@ function SongTile({ song, number }) {
             <p>
                 {`${month} ${date.getDay()}, ${date.getFullYear()}`}
             </p>
-            <div className="plus-button">
-                <CiCirclePlus />
-                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''}/>
+            <div className="actions">
+                <PlusButton 
+                modalComponent={<PlaylistSongModal id={song.id}/>}
+                />
+                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
                 <span className="likes-count">{likesCount}</span>
             </div>
 
