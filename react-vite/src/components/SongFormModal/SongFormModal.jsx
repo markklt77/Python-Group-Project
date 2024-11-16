@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux"
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { uploadSong } from "../../redux/songs";
 import { useModal } from "../../context/Modal";
 import "./song-form.css"
 
 function SongFormModal() {
+    const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
     const [file, setFile] = useState();
@@ -20,6 +22,7 @@ function SongFormModal() {
         formData.append("genre", genre)
 
         // May want to set a Loading Image
+        setIsLoading(true)
 
         const res = await dispatch(uploadSong(formData))
             .then(res => res.json())
@@ -28,7 +31,7 @@ function SongFormModal() {
                 return err
             })
 
-        console.log(res)
+        // console.log(res)
 
         if (!Object.values(errors).length) closeModal()
     }
@@ -36,6 +39,7 @@ function SongFormModal() {
     return (
         <div className="song-modal">
             <h2>Upload A New Song</h2>
+            { isLoading && <AiOutlineLoading3Quarters /> }
 
             <form
                 onSubmit={handleSubmit}

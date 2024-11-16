@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 import { likeSong, unlikeSong } from "../../redux/likes";
 import PlusButton from "../PlusButton"
-import { CiCirclePlus } from "react-icons/ci";
+// import { CiCirclePlus } from "react-icons/ci";
+import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { getOneSong } from "../../redux/songs";
 import { IoPlaySharp } from "react-icons/io5";
 import "./song-tile.css";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
+import { removeSongFromPlaylist } from "../../redux/playlists";
+
 
 function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
+    const [managePlaylist, setManagePlaylist] = useState(false)
     const dispatch = useDispatch()
+    const location = useLocation()
+    const { playlistId } = useParams()
+
 
     // format month
     const date = new Date(song.created_at)
@@ -38,7 +46,9 @@ function SongTile({ song, number }) {
         })
     })
 
-    // console.log(song.likes.length)
+    console.log(location.pathname)
+
+   
 
     const handleLike = async (e) => {
         e.preventDefault();
@@ -64,6 +74,15 @@ function SongTile({ song, number }) {
         dispatch(getOneSong(song.id))
     }
 
+    const removeSongPlaylist = async (e) => {
+        e.preventDefault();
+
+        const errors = {};
+
+        // console.log(parseInt(playlistId), number)
+        const removeSong = await dispatch(removeSongFromPlaylist(parseInt(playlistId), number))
+    }
+
     return (
         <div className="song-tile" key={`song${song.id}`}>
             { hovered?
@@ -84,10 +103,11 @@ function SongTile({ song, number }) {
             </p>
             <div className="actions">
                 <PlusButton 
-                modalComponent={<PlaylistSongModal />}
+                modalComponent={<PlaylistSongModal id={song.id}/>}
                 />
-                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''}/>
+                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
                 <span className="likes-count">{likesCount}</span>
+                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}/> : ''}
             </div>
 
         </div>
