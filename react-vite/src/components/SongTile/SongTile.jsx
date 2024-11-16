@@ -88,11 +88,6 @@ function SongTile({ song, number }) {
                 modalComponent={<PlaylistSongModal id={song.id}/>}
                 />
                 <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
-            <div className="actions">
-                <PlusButton
-                modalComponent={<PlaylistSongModal />}
-                />
-                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''}/>
                 <span className="likes-count">{likesCount}</span>
             </div>
 
