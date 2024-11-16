@@ -5,8 +5,11 @@ import Layout from './Layout';
 import Home from '../components/Home/Home';
 import AlbumsPage from '../components/Albums';
 import AlbumSongs from '../components/Albums'
+<<<<<<< HEAD
 import PlaylistSongsPage from '../components/Playlists/PlaylistSongsPage';
 import CreatePlaylistForm from '../components/Playlists/PlaylistForm';
+=======
+>>>>>>> 040b7baa96de58dc08e756fe429cc67d53f74d94
 import PlaylistsPage from '../components/Playlists';
 import AlbumAddSong from '../components/Albums/AlbumAddSong';
 
@@ -40,6 +43,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/playlists/:playlistId",
+<<<<<<< HEAD
             element: <PlaylistSongsPage />
           },
           {
@@ -48,6 +52,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "/playlists",
+=======
+>>>>>>> 040b7baa96de58dc08e756fe429cc67d53f74d94
             element: <PlaylistsPage />
           }
         ]

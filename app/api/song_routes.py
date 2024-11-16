@@ -37,7 +37,7 @@ def songId(songId):
 def upload_song_form():
     return render_template('upload_song.html')
 
-@song_routes.route('/', methods=["POST"])
+@song_routes.route('/test', methods=["POST"])
 @login_required
 def addSong():
     """
@@ -64,6 +64,7 @@ def addSong():
         file = form.file.data
         #does the file exist and is it allowed?
         if not allowed_file(file.filename):
+            print("Invalid file type")
             return {"errors": "Invalid file type"}, 400
 
         # title = data.get("title")
@@ -74,6 +75,7 @@ def addSong():
 
         # Handle errors during upload
         if "errors" in upload_response:
+            print(upload_response.errors)
             return jsonify(upload_response), 400
 
         song = Song(
@@ -88,6 +90,7 @@ def addSong():
 
         return song.to_dict(), 201
     else:
+        # print form.errors
         return jsonify(form.errors), 400
 
 @song_routes.route('/<songId>', methods=["PUT"])
@@ -183,7 +186,7 @@ def likes(songId):
     """
     artistId = current_user.id
     like = Like.query.filter_by(artist_id=artistId, song_id=songId).first()
-    
+
     if not like:
         newLike = Like(artist_id=artistId, song_id=songId)
 
