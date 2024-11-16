@@ -66,6 +66,20 @@ export const updateSong = (songData) => async dispatch => {
     return response;
 }
 
+export const deleteSong = (songId) => async dispatch => {
+    const response = await fetch(`/api/songs/${songId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+        const data = response.json()
+        dispatch(getAllSongs());
+        return data
+	}
+    return response;
+}
+
 const initialState = { all: {}, current: {}}
 
 function songsReducer(state = initialState, action) {
