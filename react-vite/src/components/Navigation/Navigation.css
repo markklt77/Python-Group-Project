@@ -23,4 +23,5 @@
 .profile-dropdown {
   background-color: grey;
   position: absolute;
+  z-index: 2;
 }

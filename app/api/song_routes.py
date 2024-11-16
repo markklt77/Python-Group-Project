@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from sqlalchemy.orm import joinedload
 from ..models import db, Like, Song
 from ..aws_helper import allowed_file, get_unique_filename, upload_file_to_s3, remove_file_from_s3
-from app.forms import SongForm
+from app.forms import SongForm, UpdateSongForm
 
 song_routes = Blueprint('songs', __name__, url_prefix='/songs')
 
@@ -37,7 +37,7 @@ def songId(songId):
 def upload_song_form():
     return render_template('upload_song.html')
 
-@song_routes.route('/', methods=["POST"])
+@song_routes.route('/test', methods=["POST"])
 @login_required
 def addSong():
     """
@@ -64,6 +64,7 @@ def addSong():
         file = form.file.data
         #does the file exist and is it allowed?
         if not allowed_file(file.filename):
+            print("Invalid file type")
             return {"errors": "Invalid file type"}, 400
 
         # title = data.get("title")
@@ -74,6 +75,7 @@ def addSong():
 
         # Handle errors during upload
         if "errors" in upload_response:
+            print(upload_response.errors)
             return jsonify(upload_response), 400
 
         song = Song(
@@ -88,6 +90,7 @@ def addSong():
 
         return song.to_dict(), 201
     else:
+        # print form.errors
         return jsonify(form.errors), 400
 
 @song_routes.route('/<songId>', methods=["PUT"])
@@ -104,7 +107,7 @@ def editSong(songId):
     if song.artist_id != current_user.id:
         return {'errors': {'message': 'Unauthorized'}}, 401
 
-    form = SongForm()
+    form = UpdateSongForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
@@ -117,15 +120,15 @@ def editSong(songId):
             song.genre = form.genre.data
 
         # handle file upload if a new file is submitted.... should users even be able to do this?
-        if form.file.data:
-            file = form.file.data
-            file.filename = get_unique_filename(file.filename)
-            upload_response = upload_file_to_s3(file)
+        # if form.file.data:
+        #     file = form.file.data
+        #     file.filename = get_unique_filename(file.filename)
+        #     upload_response = upload_file_to_s3(file)
 
-            if "errors" in upload_response:
-                return jsonify(upload_response), 400
+        #     if "errors" in upload_response:
+        #         return jsonify(upload_response), 400
 
-            song.url = upload_response["url"]
+        #     song.url = upload_response["url"]
 
 
         db.session.commit()
@@ -183,7 +186,7 @@ def likes(songId):
     """
     artistId = current_user.id
     like = Like.query.filter_by(artist_id=artistId, song_id=songId).first()
-    
+
     if not like:
         newLike = Like(artist_id=artistId, song_id=songId)
 

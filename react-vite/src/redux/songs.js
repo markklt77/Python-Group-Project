@@ -37,6 +37,49 @@ export const getOneSong = (id) => async dispatch => {
 	}
 }
 
+export const uploadSong = (songData) => async dispatch => {
+    const response = await fetch(`/api/songs/test`, {
+        method: "POST",
+        // headers: { "Content-Type": "application/json" },
+        body: songData
+    });
+
+    // console.log(response)
+    if (response.ok) {
+        dispatch(getAllSongs());
+	}
+    return response;
+}
+
+export const updateSong = (songData) => async dispatch => {
+    const response = await fetch(`/api/songs/${songData.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(songData)
+    });
+
+    if (response.ok) {
+        const data = response.json()
+        dispatch(getAllSongs());
+        return data
+	}
+    return response;
+}
+
+export const deleteSong = (songId) => async dispatch => {
+    const response = await fetch(`/api/songs/${songId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+        const data = response.json()
+        dispatch(getAllSongs());
+        return data
+	}
+    return response;
+}
+
 const initialState = { all: {}, current: {}}
 
 function songsReducer(state = initialState, action) {

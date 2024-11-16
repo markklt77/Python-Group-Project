@@ -6,6 +6,7 @@ const SET_PLAYLISTS = 'SET_PLAYLISTS';
 const SET_SINGLE_PLAYLIST = 'SET_SINGLE_PLAYLIST';
 const ADD_SONG_TO_PLAYLIST = 'ADD_SONG_TO_PLAYLIST';
 const REMOVE_SONG_FROM_PLAYLIST = 'REMOVE_SONG_FROM_PLAYLIST';
+const CREATE_PLAYLIST = 'CREATE_PLAYLIST';
 
 //action creators
 const setPlaylists = (playlists) => ({
@@ -28,6 +29,11 @@ const removeSong = (songId, playlistId) => ({
     type: REMOVE_SONG_FROM_PLAYLIST,
     songId,
     playlistId,
+});
+
+const createPlaylist = (playlist) => ({
+    type: CREATE_PLAYLIST,
+    playlist,
 });
 
 //thunks
@@ -76,11 +82,33 @@ export const removeSongFromPlaylist = (playlistId, songId) => async (dispatch) =
 
     if (response.ok) {
         const data = await response.json();
-        dispatch(removeSong(songId, playlistId)); // Update the playlist in state
+        dispatch(removeSong(songId, playlistId));
         console.log(data.message)
     } else {
         const error = await response.json();
         throw new Error(error.error || "Failed to remove song from playlist");
+    }
+};
+
+export const createNewPlaylist = (playlistData) => async (dispatch) => {
+    try {
+        const response = await fetch('/api/users/playlists/test', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(playlistData),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(createPlaylist(data));
+        } else {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to create playlist');
+        }
+    } catch (error) {
+        console.error('Error creating playlist:', error);
     }
 };
 
@@ -126,6 +154,17 @@ export default function playlistReducer(state = initialState, action) {
                 currentPlaylist: updatedPlaylist,
             };
         }
+
+        case CREATE_PLAYLIST: {
+            return {
+                ...state,
+                allPlaylists: {
+                    ...state.allPlaylists,
+                    [action.playlist.id]: action.playlist,
+                },
+            };
+        }
+
         default:
             return state;
     }
