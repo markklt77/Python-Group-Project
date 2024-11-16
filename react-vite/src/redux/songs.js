@@ -37,6 +37,20 @@ export const getOneSong = (id) => async dispatch => {
 	}
 }
 
+export const uploadSong = (songData) => async dispatch => {
+    const response = await fetch(`/api/songs/test`, {
+        method: "POST",
+        // headers: { "Content-Type": "application/json" },
+        body: songData
+    });
+
+    // console.log(response)
+    if (response.ok) {
+        dispatch(getAllSongs());
+	}
+    return response;
+}
+
 const initialState = { all: {}, current: {}}
 
 function songsReducer(state = initialState, action) {

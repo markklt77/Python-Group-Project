@@ -1,7 +1,7 @@
 import { FiPlus } from "react-icons/fi";
 import AlbumTile from "../Albums/AlbumTile";
 import { useEffect, useRef, useState } from "react";
-import PlaylistTile from "../Playlists/PlaylistTile";
+import PlaylistPage from "../Playlists/PlaylistsPage";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
 import { useNavigate } from "react-router-dom";
@@ -20,18 +20,6 @@ function Sidebar() {
     let navigate = useNavigate()
     // const recentAlbumRef = useRef(null);
 
-    // useEffect(() => {
-    //     const albumArray = Object.values(albums);
-    //     recentAlbumRef.current = albumArray[albumArray.length - 1];
-    //     // console.log('Recent Album:', recentAlbumRef.current);
-    // }, [albums]);
-    useEffect(() => {
-        console.log('addsongs:',addSongs)
-        console.log('showForms:',showForms)
-        console.log(newAlbum, 'this is the new album')
-    })
-
-    // console.log(addSongs)
 
     let refresh = () => {
         setHelpWithRefresh(prev => prev + 1)
@@ -40,7 +28,6 @@ function Sidebar() {
     let addSong = (album) => {
         setAddSongs(true)
         setNewAlbum(album)
-        // console.log(album,'from the add song func')
     }
 
 
@@ -57,10 +44,6 @@ function Sidebar() {
         e.stopPropagation();
         setShowForms(!showForms);
     };
-
-    // if(addSongs){
-
-    // }
 
 
     useEffect(() => {
@@ -94,12 +77,12 @@ function Sidebar() {
                         <div>
                             <OpenModalMenuItem
                                 itemText='Create Album'
-                                onItemClick={() => setShowForms(false)}
+                                onItemClick={closeForm}
                                 modalComponent={<AlbumFormModal addSong={addSong} refresh={refresh} />}
                             />
                         </div>
                     )}
-                    {addSongs && newAlbum &&(
+                    {addSongs && newAlbum && (
                         <div>
                             <OpenModalMenuItem
                                 itemText='Add Song to Album'
@@ -127,7 +110,7 @@ function Sidebar() {
                         helpWithRefresh={helpWithRefresh}
                     />
                 ) : (
-                    <PlaylistTile />
+                    <PlaylistPage />
                 )}
 
             </div>

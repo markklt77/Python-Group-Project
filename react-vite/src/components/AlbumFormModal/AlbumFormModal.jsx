@@ -31,7 +31,7 @@ function AlbumFormModal({ refresh, addSong }) {
 
         if (serverResponse) {
             setErrors(serverResponse);
-            console.log('errors', serverResponse)
+            // console.log('errors', serverResponse)
             // alert(errors)
         } else if (!user) {
             errors.user = 'Must be logged in to create an album'
@@ -41,7 +41,6 @@ function AlbumFormModal({ refresh, addSong }) {
             const albumArray = Object.values(albums);
             const newAlbum = albumArray[albumArray.length - 1];
             if (newAlbum) {
-                // console.log("New Album", newAlbum);
                 addSong(newAlbum);
                 refresh();
                 closeModal();
@@ -51,16 +50,6 @@ function AlbumFormModal({ refresh, addSong }) {
 
         return (
             <>
-
-                {/* {showForms && album && (
-                <div>
-                    <OpenModalMenuItem
-                        itemText='Create Album'
-                        onItemClick={closeForm}
-                        modalComponent={<AlbumAddSongModal />}
-                    />
-                </div>
-            )} */}
                 <h1>Create Album</h1>
                 {errors.title && <p>{errors.title}</p>}
                 {!user && <p>Must be logged in to create an album</p>}

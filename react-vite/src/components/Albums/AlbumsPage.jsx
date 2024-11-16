@@ -80,8 +80,6 @@ function AlbumsPage() {
 
     const closeForm = () => setShowForms(false)
 
-
-
     let handleClick = (id) => {
         dispatch(thunkOneAlbum(id)).then(() => navigate(`/albums/${id}`))
     };
