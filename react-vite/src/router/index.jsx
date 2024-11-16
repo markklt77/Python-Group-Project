@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/playlists/:playlistId",
-            element: <PlaylistsPage />
+            element: <PlaylistSongsPage />
           }
         ]
       },
