@@ -40,17 +40,13 @@ export const getOneSong = (id) => async dispatch => {
 export const uploadSong = (songData) => async dispatch => {
     const response = await fetch(`/api/songs/test`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(songData)
-      });
-    if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-            console.log(data.errors)
-			return
-		}
+        // headers: { "Content-Type": "application/json" },
+        body: songData
+    });
 
-		dispatch(getAllSongs());
+    // console.log(response)
+    if (response.ok) {
+        dispatch(getAllSongs());
 	}
     return response;
 }

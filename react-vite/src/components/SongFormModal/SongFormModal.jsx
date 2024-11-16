@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux"
 import { uploadSong } from "../../redux/songs";
+import { useModal } from "../../context/Modal";
 import "./song-form.css"
 
 function SongFormModal() {
@@ -9,33 +10,37 @@ function SongFormModal() {
     const [file, setFile] = useState();
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch()
+    const { closeModal } = useModal();
 
     const handleSubmit = async e => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append("file", file)
+        formData.append("title", title)
+        formData.append("genre", genre)
 
-        const song = {
-            title,
-            genre,
-            file
-        }
+        // May want to set a Loading Image
 
-        const res = dispatch(uploadSong(song))
-            .catch((err) => {
-                setErrors({err})
+        const res = await dispatch(uploadSong(formData))
+            .then(res => res.json())
+            .catch(err => {
+                setErrors({...err})
+                return err
             })
 
-        // if (!Object.values(errors).length) return
-    }
+        console.log(res)
 
-    const handleChange = e => {
-        setFile(e.target.files[0])
+        if (!Object.values(errors).length) closeModal()
     }
 
     return (
         <div className="song-modal">
             <h2>Upload A New Song</h2>
 
-            <form onSubmit={handleSubmit}>
+            <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+            >
                 <p>
                     { Object.values(errors).length?
                         Object.values(errors).forEach(err => (
@@ -63,7 +68,7 @@ function SongFormModal() {
                 <input
                     type="file"
                     accept=".mp3,.wav,.flac,.aac"
-                    onChange={handleChange}
+                    onChange={e => setFile(e.target.files[0])}
                     required
                 />
 

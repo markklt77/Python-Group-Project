@@ -186,7 +186,7 @@ def likes(songId):
     """
     artistId = current_user.id
     like = Like.query.filter_by(artist_id=artistId, song_id=songId).first()
-    
+
     if not like:
         newLike = Like(artist_id=artistId, song_id=songId)
 
