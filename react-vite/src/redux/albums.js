@@ -114,7 +114,7 @@ export const thunkChangeAlbum = (albumInfo) => async (dispatch) => {
     }
 }
 
-export const thunkAddSong = (songInfo) => async (dispatch) => {
+export const thunkAddSong = (songInfo) => async () => {
     let albumId = songInfo.id
     songInfo.songs.forEach(async (song) => {
         let ids = {albumId:albumId, songId:song.id}

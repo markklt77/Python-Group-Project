@@ -21,7 +21,7 @@ export const likeSong = (songId) => async dispatch => {
         headers: {
             "Content-Type": "application/json",
         },
-        
+
     });
 
     if (res.ok) {
@@ -48,7 +48,7 @@ export const unlikeSong = (songId) => async dispatch => {
 const initialState = {};
 
 const likesReducer = (state = initialState, action) => {
-    let newState
+    // let newState
     switch (action.type) {
         default:
             return state;

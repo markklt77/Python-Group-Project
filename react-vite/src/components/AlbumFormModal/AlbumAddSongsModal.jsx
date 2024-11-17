@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 // import { thunkAllAlbums, thunkMakeAlbum } from "../../redux/albums";
 import { useNavigate } from "react-router-dom";
-import AlbumSongTile from "../Albums/AlbumSongTile";
+// import AlbumSongTile from "../Albums/AlbumSongTile";
 import { thunkAddSong } from "../../redux/albums";
 
 
-function AlbumAddSongModal({ newAlbum }) {
+function AlbumAddSongModal() {
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkAllAlbums, thunkMakeAlbum, thunkChangeAlbum } from "../../redux/albums";
-import { useNavigate, useParams } from "react-router-dom";
+import { thunkAllAlbums, thunkChangeAlbum } from "../../redux/albums";
+import { useParams } from "react-router-dom";
 
 function AlbumNameFormModal({ refresh }) {
     const dispatch = useDispatch();

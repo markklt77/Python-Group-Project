@@ -19,7 +19,7 @@ function AlbumsPage() {
     let [isLoaded, setIsLoaded] = useState(false)
     const [showForms, setShowForms] = useState(false)
     let navigate = useNavigate()
-    const [helpWithRefresh, setHelpWithRefresh] = useState(0)
+    const [setHelpWithRefresh] = useState(0)
     // let [deleteRefresh, setDeleteRefresh] = useState(0)
     const ulRef = useRef()
 

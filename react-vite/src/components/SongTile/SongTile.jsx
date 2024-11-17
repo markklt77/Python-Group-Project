@@ -19,7 +19,7 @@ function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
-    const [managePlaylist, setManagePlaylist] = useState(false)
+    // const [managePlaylist, setManagePlaylist] = useState(false)
     const dispatch = useDispatch()
     const location = useLocation()
     const { playlistId } = useParams()
@@ -55,9 +55,9 @@ function SongTile({ song, number }) {
     const handleLike = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
-        const newLike = await dispatch(likeSong(number))
+        return await dispatch(likeSong(number))
         .then(setLiked(true))
         .then(setLikesCount(likesCount => likesCount + 1))
     }
@@ -65,9 +65,9 @@ function SongTile({ song, number }) {
     const handleUnlike = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
-        const unlike = await dispatch(unlikeSong(number))
+        return await dispatch(unlikeSong(number))
         .then(setLiked(false))
         .then(setLikesCount(likesCount => likesCount - 1))
     }
@@ -79,10 +79,10 @@ function SongTile({ song, number }) {
     const removeSongPlaylist = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
         // console.log(parseInt(playlistId), number)
-        const removeSong = await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
+        return await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
     }
 
     const deleteASong = async e => {

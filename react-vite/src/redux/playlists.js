@@ -94,7 +94,7 @@ export const removeSongFromPlaylist = (playlistId, songId) => async (dispatch) =
     });
 
     if (response.ok) {
-        const data = await response.json();
+        // const data = await response.json();
         dispatch(removeSong(songId, playlistId));
         // console.log(data.message)
     } else {
@@ -135,7 +135,7 @@ export const deletePlaylist = (playlistId) => async (dispatch) => {
         });
 
         if (response.ok) {
-            const data = await response.json();
+            // const data = await response.json();
             // console.log(data.message);
 
             dispatch(removePlaylist(playlistId));
@@ -155,12 +155,13 @@ const initialState = {allPlaylists: {}, currentPlaylist: null};
 
 export default function playlistReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_PLAYLISTS:
+        case SET_PLAYLISTS:{
             const newState = { ...state, allPlaylists: {...state.allPlaylists}};
             action.playlists.forEach((playlist) => {
                 newState.allPlaylists[playlist.id] = playlist;
             });
             return newState;
+        }
         case SET_SINGLE_PLAYLIST:
             return { ...state, currentPlaylist: action.playlist}
 

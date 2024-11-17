@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
-import SongFormModal from "../SongFormModal";
+// import OpenModalButton from "../OpenModalButton/OpenModalButton";
+// import SongFormModal from "../SongFormModal";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
