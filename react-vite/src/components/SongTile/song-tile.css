@@ -50,7 +50,7 @@
 } */
 
 .like-button:hover {
-    color: rgb(54, 58, 121);
+    color: #4e53ae;
 }
 
 .likes-count {
@@ -59,7 +59,7 @@
 }
 
 .delete-button:hover {
-    color: firebrick;
+    color: #b22222;
 }
 
 .hidden {
