@@ -29,10 +29,15 @@ function UpdateSongModal({ id }) {
     }
 
     return (
-        <div>
-            <h2>Update Your Song</h2>
+        <div className="song-modal">
+            <div className="modal-head">
+                <h2>Update Your Song</h2>
+            </div>
 
-            <form onSubmit={handleSubmit}>
+            <form
+                onSubmit={handleSubmit}
+                className="form-modal"
+            >
                 <input
                     type="text"
                     placeholder="Title"
@@ -45,7 +50,11 @@ function UpdateSongModal({ id }) {
                     value={genre}
                     onChange={e => setGenre(e.target.value)}
                 />
-                <button type="submit">Update</button>
+                <div></div>
+                <button
+                    type="submit"
+                    className="filter-buttons"
+                >Update</button>
             </form>
         </div>
     )
