@@ -6,12 +6,14 @@ import PlusButton from "../PlusButton"
 // import { CiCirclePlus } from "react-icons/ci";
 import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
-import { getOneSong } from "../../redux/songs";
 import { IoPlaySharp } from "react-icons/io5";
-import "./song-tile.css";
+import { MdEdit } from "react-icons/md";
+import { getOneSong, deleteSong } from "../../redux/songs";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import { removeSongFromPlaylist } from "../../redux/playlists";
-
+import OpenModalButton from "../OpenModalButton"
+import UpdateSongModal from "../SongFormModal/UpdateSongModal"
+import "./song-tile.css";
 
 function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
@@ -83,6 +85,12 @@ function SongTile({ song, number }) {
         const removeSong = await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
     }
 
+    const deleteASong = async e => {
+        e.preventDefault();
+
+        await dispatch(deleteSong(song.id))
+    }
+
     return (
         <div className="song-tile" key={`song${song.id}`}>
             { hovered?
@@ -107,7 +115,16 @@ function SongTile({ song, number }) {
                 />
                 <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
                 <span className="likes-count">{likesCount}</span>
-                {location.pathname.includes("playlists") ? < IoTrashSharp className="delete-button" onClick={removeSongPlaylist}/> : ''}
+                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}/> : ''}
+                {location.pathname.includes("manage-songs") ?
+                    <>
+                        <OpenModalButton
+                            buttonText={<MdEdit />}
+                            modalComponent={<UpdateSongModal />}
+                            addClass="edit-button"
+                        />
+                        <IoTrashSharp onClick={deleteASong}/>
+                    </> : ''}
             </div>
 
         </div>

@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import SongFormModal from "../SongFormModal";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
@@ -53,22 +56,42 @@ function ProfileButton() {
             <>
               <li>{user.username}</li>
               <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
+              <div className="profile-button-container">
+                <li>
+                  <NavLink to="/manage-songs">
+                    <button className="filter-buttons">
+                      Manage Songs
+                    </button>
+                  </NavLink>
+                </li>
+                <li>
+                  <button
+                    onClick={logout}
+                    className="filter-buttons"
+                    >Log Out</button>
+                </li>
+              </div>
             </>
           ) : (
             <>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
+              <div className="session-buttons">
+                <li>
+                  <OpenModalMenuItem
+                    itemText="Log In"
+                    onItemClick={closeMenu}
+                    modalComponent={<LoginFormModal />}
+                    newClass="filter-buttons"
+                    />
+                </li>
+                <li>
+                  <OpenModalMenuItem
+                    itemText="Sign Up"
+                    onItemClick={closeMenu}
+                    modalComponent={<SignupFormModal />}
+                    newClass="filter-buttons"
+                    />
+                </li>
+              </div>
             </>
           )}
         </ul>
