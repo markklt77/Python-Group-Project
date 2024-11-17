@@ -11,11 +11,11 @@ function PlaylistSongModal({id}) {
   const { closeModal } = useModal();
 
   const playlists = useSelector(state => state.playlists.allPlaylists)
-  console.log(playlists)
+  // console.log(playlists)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(id, playlistId)
+    // console.log(id, playlistId)
     const addSong = await dispatch(addSongToPlaylist(playlistId, id))
 
     if (addSong) {

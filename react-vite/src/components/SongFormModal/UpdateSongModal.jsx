@@ -22,7 +22,7 @@ function UpdateSongModal({ id }) {
         const res = await dispatch(updateSong(songData))
             .catch((err) => {
                 setErrors({...err})
-                console.log(err)
+                // console.log(err)
             })
 
         if (!Object.values(errors).length) closeModal()

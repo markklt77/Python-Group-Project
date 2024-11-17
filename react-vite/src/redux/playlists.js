@@ -47,7 +47,7 @@ export const fetchUserPlaylists = () => async (dispatch) => {
     const response = await fetch('/api/users/playlists/test')
     if (response.ok) {
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         dispatch(setPlaylists(data.playlists));
     }
 };
@@ -78,7 +78,7 @@ export const addSongToPlaylist = (playlistId, songId) => async (dispatch) => {
             const updatedPlaylistData = await updatedPlaylistResponse.json();
             dispatch(setSinglePlaylist(updatedPlaylistData));
         }
-        console.log(data)
+        // console.log(data)
     } else {
         const error = await response.json();
         throw new Error(error.error || "Failed to add song to playlist");
@@ -96,7 +96,7 @@ export const removeSongFromPlaylist = (playlistId, songId) => async (dispatch) =
     if (response.ok) {
         const data = await response.json();
         dispatch(removeSong(songId, playlistId));
-        console.log(data.message)
+        // console.log(data.message)
     } else {
         const error = await response.json();
         throw new Error(error.error || "Failed to remove song from playlist");
@@ -136,7 +136,7 @@ export const deletePlaylist = (playlistId) => async (dispatch) => {
 
         if (response.ok) {
             const data = await response.json();
-            console.log(data.message);
+            // console.log(data.message);
 
             dispatch(removePlaylist(playlistId));
         } else {

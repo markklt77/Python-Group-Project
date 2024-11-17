@@ -145,7 +145,7 @@ export const thunkRemoveSong = (songInfo) => async (dispatch) => {
         body: JSON.stringify(songInfo)
     })
 
-    console.log(res)
+    // console.log(res)
     if(res.ok){
         dispatch(deleteSong(songInfo))
         return await res.json()

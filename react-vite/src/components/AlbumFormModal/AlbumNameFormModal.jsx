@@ -15,7 +15,7 @@ function AlbumNameFormModal({ refresh }) {
     const album = useSelector(state => state.albums.all[albumId])
     // console.log(user.id)
     // let navigate = useNavigate()
-    console.log(user.id, album.artist_id)
+    // console.log(user.id, album.artist_id)
 
     let handleSubmit = async (e) => {
         e.preventDefault()
