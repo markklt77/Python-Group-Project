@@ -19,10 +19,10 @@ function UpdateSongModal({ id }) {
             genre,
         }
 
-        const res = await dispatch(updateSong(songData))
+        await dispatch(updateSong(songData))
             .catch((err) => {
                 setErrors({...err})
-                console.log(err)
+                // console.log(err)
             })
 
         if (!Object.values(errors).length) closeModal()

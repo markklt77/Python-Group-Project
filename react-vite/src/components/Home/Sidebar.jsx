@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import PlaylistPage from "../Playlists/PlaylistsPage";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CreatePlaylistForm from "../Playlists/PlaylistForm";
-import AlbumAddSongModal from "../AlbumFormModal/AlbumAddSongsModal";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
     const [album, setAlbum] = useState(false)
@@ -21,7 +20,7 @@ function Sidebar() {
     const ulRef = useRef()
     let navigate = useNavigate()
     // const recentAlbumRef = useRef(null);
-    let albumArr = Object.values(albums)
+    // let albumArr = Object.values(albums)
 
 
     let refresh = () => {

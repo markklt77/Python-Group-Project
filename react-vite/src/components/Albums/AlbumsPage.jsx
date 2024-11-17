@@ -20,10 +20,8 @@ function AlbumsPage() {
     let [isLoaded, setIsLoaded] = useState(false)
     const [showForms, setShowForms] = useState(false)
     let navigate = useNavigate()
-    const [changeName, setChangeName] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
-    let albumSongs = Object.values(currAlbum)
-    const [addSong, setAddSong] = useState(false)
+    // let [deleteRefresh, setDeleteRefresh] = useState(0)
     const ulRef = useRef()
 
     let refresh = () => {

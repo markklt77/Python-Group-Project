@@ -27,10 +27,10 @@ function SongFormModal() {
 
         const res = await dispatch(uploadSong(formData))
             .then(res => res.json())
-            .catch(err => {
-                validate = {...err}
-                return err
-            })
+            // .catch(err => {
+            //     validate = {...err}
+            //     return err
+            // })
 
 
         if (res.file.length) {

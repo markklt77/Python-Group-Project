@@ -13,7 +13,7 @@ def songs():
     """
     Get all songs
     """
-    print("inside all songs")
+    # print("inside all songs")
     songs = Song.query.options(joinedload(Song.likes)).all()
 
     return [song.to_dict() for song in songs]
@@ -64,7 +64,7 @@ def addSong():
         file = form.file.data
         #does the file exist and is it allowed?
         if not allowed_file(file.filename):
-            print("Invalid file type")
+            # print("Invalid file type")
             return {"errors": "Invalid file type"}, 400
 
         # title = data.get("title")
@@ -75,7 +75,7 @@ def addSong():
 
         # Handle errors during upload
         if "errors" in upload_response:
-            print(upload_response.errors)
+            # print(upload_response.errors)
             return jsonify(upload_response), 400
 
         song = Song(
