@@ -37,25 +37,19 @@ export const router = createBrowserRouter([
           },
           {
             path: "/playlists",
-<<<<<<< HEAD
-            children: [
-              {
-                index: true,
-                element: <PlaylistsPage />
-              },
-              {
-                path: "/playlists/:playlistId",
-                element: <PlaylistSongsPage />
-              },
-
-            ]
-=======
-            element: <PlaylistsPage />
+            element: <PlaylistsPage/>
           },
+
+          {
+            path: "playlists/:playlistId",
+            element: <PlaylistSongsPage/>
+          },
+
+
+
           {
             path: '/manage-songs',
             element: <ManageSongs />
->>>>>>> b05e9af763eff3d15d7e6bf9050c602b3ad3707c
           }
         ]
       },
