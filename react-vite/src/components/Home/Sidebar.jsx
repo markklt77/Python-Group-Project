@@ -6,6 +6,7 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import CreatePlaylistForm from "../Playlists/PlaylistForm";
 import AlbumAddSongModal from "../AlbumFormModal/AlbumAddSongsModal";
 
 function Sidebar() {
@@ -82,6 +83,18 @@ function Sidebar() {
                             />
                         </div>
                     )}
+
+                    {showForms && playlist && (
+                        <div>
+                            <OpenModalMenuItem
+                                itemText='Create Playlist'
+                                onItemClick={closeForm}
+                                modalComponent={<CreatePlaylistForm/>}
+                            />
+                        </div>
+                    )}
+
+
                     {addSongs && newAlbum && (
                         <div>
                             <OpenModalMenuItem
