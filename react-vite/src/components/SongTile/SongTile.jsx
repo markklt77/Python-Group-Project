@@ -46,7 +46,7 @@ function SongTile({ song, number }) {
         })
     })
 
-    console.log(location.pathname)
+    // console.log(location.pathname)
 
    
 
@@ -107,7 +107,7 @@ function SongTile({ song, number }) {
                 />
                 <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
                 <span className="likes-count">{likesCount}</span>
-                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}/> : ''}
+                {location.pathname.includes("playlists") ? < IoTrashSharp className="delete-button" onClick={removeSongPlaylist}/> : ''}
             </div>
 
         </div>

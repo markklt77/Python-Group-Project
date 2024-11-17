@@ -58,6 +58,10 @@
     align-self: center;
 }
 
+.delete-button:hover {
+    color: firebrick;
+}
+
 .hidden {
     display: none;
 }
