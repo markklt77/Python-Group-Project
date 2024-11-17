@@ -7,7 +7,7 @@ import AlbumSongTile from "../Albums/AlbumSongTile";
 import { thunkAddSong } from "../../redux/albums";
 
 
-function AlbumAddSongModal({ newAlbum }) {
+function AlbumAddSongModal() {
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
@@ -42,9 +42,6 @@ function AlbumAddSongModal({ newAlbum }) {
         }
 
 
-    // console.log(selected)
-
-
     const addSong = (song) => {
         let found = selected.filter(thisSong => {
             return song.id == thisSong.id
@@ -66,17 +63,15 @@ function AlbumAddSongModal({ newAlbum }) {
 
     return (
         <>
-            <h1>Add songs to new Album</h1>
             {errors.error && <p>{errors.error}</p>}
             {!user && <p>Must be logged in to create an album</p>}
             {ownerSongs.length > 0 && (
-                <div>
-                    <div className="content-header">
-                        <h1>All Songs Belonging To You</h1>
+                <div className="add-songs-new-album-modal">
+                    <div >
+                        <h3>All Songs Belonging To You</h3>
                     </div>
                     <form onSubmit={handleSub}>
-                        <div className="container-song-tile"
-                        >
+                        <div>
                             {ownerSongs.map((song) => {
                                 return (
                                     <div key={song.id}>

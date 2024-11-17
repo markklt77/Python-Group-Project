@@ -31,19 +31,20 @@ function AlbumFormModal({ refresh, addSong }) {
 
         if (serverResponse) {
             setErrors(serverResponse);
-            // console.log('errors', serverResponse)
-            // alert(errors)
         } else if (!user) {
             errors.user = 'Must be logged in to create an album'
+            alert(errors.user)
         } else {
             // console.log('the good stuff',serverResponse)
             await dispatch(thunkAllAlbums())
             const albumArray = Object.values(albums);
             const newAlbum = albumArray[albumArray.length - 1];
             if (newAlbum) {
-                addSong(newAlbum);
-                refresh();
-                closeModal();
+                dispatch(thunkAllAlbums())
+                .then(() => addSong(newAlbum))
+                .then(() => refresh())
+                .then(() => closeModal())
+                .then(()=> navigate(`/albums/${newAlbum.id}`))
             }
         }
     }

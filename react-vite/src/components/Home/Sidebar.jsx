@@ -15,10 +15,11 @@ function Sidebar() {
     const [addSongs, setAddSongs] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
     const [newAlbum, setNewAlbum] = useState(null)
-    // let albums = useSelector(state => state.albums.all)
+    let albums = useSelector(state => state.albums.all)
     const ulRef = useRef()
     let navigate = useNavigate()
     // const recentAlbumRef = useRef(null);
+    let albumArr = Object.values(albums)
 
 
     let refresh = () => {
@@ -72,34 +73,34 @@ function Sidebar() {
                 <div className="side-head">
                     <h3>Library</h3>
                     <FiPlus onClick={toggleMenu} className="faplus" />
-
-                    {showForms && album && (
-                        <div>
-                            <OpenModalMenuItem
-                                itemText='Create Album'
-                                onItemClick={closeForm}
-                                modalComponent={<AlbumFormModal addSong={addSong} refresh={refresh} />}
-                            />
-                        </div>
-                    )}
-                    {addSongs && newAlbum && (
-                        <div>
-                            <OpenModalMenuItem
-                                itemText='Add Song to Album'
-                                onItemClick={closeAddSong}
-                                modalComponent={<AlbumAddSongModal newAlbum={newAlbum}/>}
-                            />
-                        </div>
-                    )}
-
                 </div>
+                {showForms && album && (
+                    <div className="sidebar-create-album">
+                        <OpenModalMenuItem
+                            itemText='Create Album'
+                            onItemClick={closeForm}
+                            modalComponent={<AlbumFormModal addSong={addSong} refresh={refresh} />}
+                        />
+                    </div>
+                )}
+                {/* {addSongs && newAlbum && (
+                    <div className="sidebar-add-song-created-album">
+                        <OpenModalMenuItem
+                            itemText='Add Song to Album'
+                            onItemClick={closeAddSong}
+                            modalComponent={<AlbumAddSongModal newAlbum={newAlbum} />}
+                        />
+                    </div>
+                )} */}
+
+
 
 
                 <div className="side-filters">
-                    <button onClick={isPlaylist} className="filter-buttons">
+                    <button onClick={isPlaylist} className={playlist ? 'filter-button-selected' : 'filter-buttons'}>
                         Playlists
                     </button>
-                    <button onClick={isAlbum} className="filter-buttons">
+                    <button onClick={isAlbum} className={album ? 'filter-button-selected' : 'filter-buttons'}>
                         Albums
                     </button>
                 </div>
@@ -107,6 +108,7 @@ function Sidebar() {
             <div>
                 {album === true ? (
                     <AlbumTile
+                        albums={albums}
                         helpWithRefresh={helpWithRefresh}
                     />
                 ) : (

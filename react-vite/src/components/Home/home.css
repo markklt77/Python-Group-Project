@@ -10,6 +10,18 @@
     right: 0;
 }
 
+.sidebar-create-album {
+    background-color: gray;
+    height: 30px;
+    color: white;
+    display: flex;
+    width: 180px;
+    align-items: center;
+    margin-left: 220px;
+    justify-content: center;
+}
+
+
 .sidebar,
 .content {
     background-color: rgb(21, 21, 21);
@@ -50,6 +62,16 @@
     border: unset;
     border-radius: 20px;
     color: white;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}
+
+.filter-button-selected {
+    background-color: white;
+    border: unset;
+    border-radius: 20px;
+    color: rgb(46, 46, 46);
     height: 30px;
     margin: 0 5px;
     padding: 0 12px;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkAllAlbums, thunkMakeAlbum, thunkChangeAlbum } from "../../redux/albums";
 import { useNavigate, useParams } from "react-router-dom";
+import './albumFormModal.css'
 
 function AlbumNameFormModal({ refresh }) {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function AlbumNameFormModal({ refresh }) {
     const album = useSelector(state => state.albums.all[albumId])
     // console.log(user.id)
     // let navigate = useNavigate()
-    console.log(user.id, album.artist_id)
+    // console.log(user.id, album.artist_id)
 
     let handleSubmit = async (e) => {
         e.preventDefault()

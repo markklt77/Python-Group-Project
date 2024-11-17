@@ -7,7 +7,11 @@ import { useDispatch } from 'react-redux'
 import { thunkOneAlbum, thunkDeleteAlbum, thunkAllAlbums } from '../../redux/albums'
 import AlbumNameFormModal from '../AlbumFormModal/AlbumNameFormModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import { FaGear } from "react-icons/fa6";
+import AlbumAddSongModal from '../AlbumFormModal/AlbumAddSongsModal';
+import OpenModalAddSong from './AlbumAddSong/OpenModalAddSong';
 // import AlbumAddSong from '../Albums/AlbumAddSong'
+import './albums.css'
 
 
 function AlbumsPage() {
@@ -15,16 +19,20 @@ function AlbumsPage() {
     let dispatch = useDispatch()
     let albums = useSelector(state => state.albums.all)
     let album = useSelector(state => state.albums.all[albumId])
+    let currAlbum = useSelector(state => state.albums.selected)
     let user = useSelector(state => state.session.user)
     let [isLoaded, setIsLoaded] = useState(false)
     const [showForms, setShowForms] = useState(false)
     let navigate = useNavigate()
+    const [changeName, setChangeName] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
-    // let [deleteRefresh, setDeleteRefresh] = useState(0)
+    let albumSongs = Object.values(currAlbum)
+    const [addSong, setAddSong] = useState(false)
     const ulRef = useRef()
 
     let refresh = () => {
         setHelpWithRefresh(prev => prev + 1)
+        // setHelpWithRefresh
     }
 
 
@@ -48,8 +56,12 @@ function AlbumsPage() {
             if (res) {
                 // setDeleteRefresh(prev => prev + 1)
                 // dispatch(thunkAllAlbums())
-                navigate('/albums')
-                alert('Album was deleted')
+                dispatch(thunkDeleteAlbum(albumId))
+                    .then(() => refresh())
+                    .then(() => navigate('/'))
+                    .then(() => alert('Album was deleted'))
+
+
 
             }
         } else {
@@ -59,16 +71,23 @@ function AlbumsPage() {
 
 
     const toggleNameChange = (e) => {
-        e.stopPropagation();
-        setShowForms(!showForms);
+        e.stopPropagation()
+        setChangeName(true)
+        setAddSong(false)
+        if(showForms && changeName){
+            setShowForms(false)
+        }else{
+            setShowForms(true)
+        }
     };
 
 
     useEffect(() => {
         if (!showForms) return;
 
+        // console.log(ulRef)
         const closeForm = (e) => {
-            if (ulRef.current && !ulRef.current.contains(e.target)) {
+            if (ulRef.current === 'undefined' && !ulRef.current.contains(e.target)) {
                 setShowForms(false);
             }
         };
@@ -78,11 +97,30 @@ function AlbumsPage() {
         return () => document.removeEventListener('click', closeForm)
     }, [showForms])
 
-    const closeForm = () => setShowForms(false)
 
+    // console.log(ulRef)
+    const closeForm = () => setShowForms(false)
     let handleClick = (id) => {
         dispatch(thunkOneAlbum(id)).then(() => navigate(`/albums/${id}`))
     };
+
+
+    const addSongs = () => {
+        setAddSong(true)
+        setChangeName(false)
+        if(showForms && addSong){
+            setShowForms(false)
+        }else{
+            setShowForms(true)
+        }
+
+
+    }
+    const closeAddSong = () => {
+        setAddSong(false)
+        setShowForms(false)
+        closeModal()
+    }
 
 
 
@@ -92,24 +130,49 @@ function AlbumsPage() {
             {albumId && album ? (
                 <div>
                     <div className="content-header">
-                        <span>
+                        <div>
                             <p>List of songs for {album.title}</p>
-                            <button onClick={handleDelete}>Delete album</button>
-                            <button onClick={toggleNameChange}>Change album name</button>
-                        </span>
-                        {showForms && albumId && (
-                            <div>
-                                <OpenModalMenuItem
-                                    itemText='Change Name'
-                                    onItemClick={closeForm}
-                                    modalComponent={<AlbumNameFormModal refresh={refresh} />}
-                                />
-                            </div>
-                        )}
+                            {user.id === album.artist_id && (
+                                <span>
+                                    <button onClick={handleDelete}>Delete album</button>
+                                    <button onClick={toggleNameChange}>Change album name</button>
+                                    <button onClick={addSongs}>Add songs to album</button>
+                                </span>
+                            )}
+                            {showForms && addSong && (
+                                <div className="sidebar-add-song-created-album">
+                                    <OpenModalAddSong
+                                        itemText='Add my songs'
+                                        onItemClick={closeAddSong}
+                                        modalComponent={<AlbumAddSongModal />}
+                                    />
+                                </div>
+                            )}
+                            {showForms && changeName && (
+                                <div className='change-album-name-modal'>
+                                    <OpenModalMenuItem
+                                        itemText='Change Name'
+                                        onItemClick={closeForm}
+                                        modalComponent={<AlbumNameFormModal refresh={refresh} />}
+                                    />
+                                </div>
+                            )}
+
+                        </div>
+
+
+
                     </div>
 
-                    <AlbumSongs />
-
+                    <div className="container-song-tile">
+                        {albumSongs.map((song, i) => (
+                            <AlbumSongs
+                                song={song}
+                                number={i + 1}
+                                key={`song${song.id}`}
+                            />
+                        ))}
+                    </div>
 
                 </div>
 
