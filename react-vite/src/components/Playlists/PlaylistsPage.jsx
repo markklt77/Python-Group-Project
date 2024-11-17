@@ -23,6 +23,16 @@ function PlaylistPage() {
         navigate(`/playlists/${playlistId}`);
     };
 
+    const handleDelete = (playlistId) => {
+
+        dispatch(playlistActions.deletePlaylist(playlistId)).then(() => {
+
+            dispatch(playlistActions.fetchUserPlaylists());
+        }).catch((error) => {
+            console.error("Error deleting playlist:", error);
+        });
+    };
+
 
     return (
         <div className="playlists-container">
@@ -32,9 +42,11 @@ function PlaylistPage() {
                         className="playlist-tile"
                         key={playlist.id}
                         id={playlist.id}
+                        playlistId={playlist.id}
                         name={playlist.name}
                         user={user ? user.username : "Loading User"}
                         onClick={() => handlePlaylistClick(playlist.id)}
+                        handleDelete={handleDelete}
                     />
                 ))
             ) : (

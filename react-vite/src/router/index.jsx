@@ -8,6 +8,7 @@ import AlbumSongs from '../components/Albums'
 import PlaylistSongsPage from '../components/Playlists/PlaylistSongsPage';
 import CreatePlaylistForm from '../components/Playlists/PlaylistForm';
 import PlaylistsPage from '../components/Playlists';
+import ManageSongs from '../components/ManageSongs/ManageSongs';
 // import AlbumAddSong from '../components/Albums/AlbumAddSong';
 
 export const router = createBrowserRouter([
@@ -35,16 +36,20 @@ export const router = createBrowserRouter([
             ]
           },
           {
-            path: "/playlists/:playlistId",
-            element: <PlaylistSongsPage />
-          },
-          {
-            path: "/playlistForm",  //FOR TESTING
-            element: <CreatePlaylistForm/>
-          },
-          {
             path: "/playlists",
-            element: <PlaylistsPage />
+            element: <PlaylistsPage/>
+          },
+
+          {
+            path: "playlists/:playlistId",
+            element: <PlaylistSongsPage/>
+          },
+
+
+
+          {
+            path: '/manage-songs',
+            element: <ManageSongs />
           }
         ]
       },

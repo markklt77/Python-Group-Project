@@ -1,10 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { useState } from "react"
 import * as playlistActions from '../../redux/playlists'
+import { useModal } from "../../context/Modal";
 
 function CreatePlaylistForm() {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
+  const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -22,6 +24,7 @@ function CreatePlaylistForm() {
     dispatch(playlistActions.createNewPlaylist(playlistData));
     setName('');
     setError('');
+    closeModal();
   };
 
   return (

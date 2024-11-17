@@ -28,8 +28,9 @@
     display: flex;
     width: 139px;
     align-items: center;
-    margin-left: 95px;
+    margin-left: 122px;
     justify-content: center;
+    border-radius:5px;
 }
 
 .sidebar-add-song-created-album {
@@ -37,8 +38,36 @@
     height: 30px;
     color: white;
     display: flex;
-    width: 180px;
+    width: 133px;
     align-items: center;
-    margin-left: 220px;
+    margin-left: 278px;
     justify-content: center;
+    border-radius:5px;
+}
+
+
+.album-page-title{
+    color: white;
+    font-size: 40px;
+}
+
+
+.filter-buttons {
+    background-color: rgb(46, 46, 46);
+    border: unset;
+    border-radius: 20px;
+    color: white;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}
+
+.filter-button-selected {
+    background-color: white;
+    border: unset;
+    border-radius: 20px;
+    color: rgb(46, 46, 46);
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
 }

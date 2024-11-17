@@ -1,5 +1,4 @@
 import AlbumSongs from './AlbumSongs';
-// import AlbumTile from './AlbumTile'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
@@ -7,10 +6,7 @@ import { useDispatch } from 'react-redux'
 import { thunkOneAlbum, thunkDeleteAlbum, thunkAllAlbums } from '../../redux/albums'
 import AlbumNameFormModal from '../AlbumFormModal/AlbumNameFormModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import { FaGear } from "react-icons/fa6";
 import AlbumAddSongModal from '../AlbumFormModal/AlbumAddSongsModal';
-import OpenModalAddSong from './AlbumAddSong/OpenModalAddSong';
-// import AlbumAddSong from '../Albums/AlbumAddSong'
 import './albums.css'
 
 
@@ -35,10 +31,10 @@ function AlbumsPage() {
         // setHelpWithRefresh
     }
 
-
     useEffect(() => {
         dispatch(thunkAllAlbums()).then(() => setIsLoaded(true))
         dispatch(thunkOneAlbum(albumId))
+        // setShowForms(false)
     }, [dispatch, albumId])
 
 
@@ -60,9 +56,6 @@ function AlbumsPage() {
                     .then(() => refresh())
                     .then(() => navigate('/'))
                     .then(() => alert('Album was deleted'))
-
-
-
             }
         } else {
             return alert('You must be the creator of an album to delete it')
@@ -70,36 +63,24 @@ function AlbumsPage() {
     }
 
 
-    const toggleNameChange = (e) => {
-        e.stopPropagation()
-        setChangeName(true)
-        setAddSong(false)
-        if(showForms && changeName){
-            setShowForms(false)
-        }else{
-            setShowForms(true)
-        }
-    };
-
-
     useEffect(() => {
         if (!showForms) return;
 
-        // console.log(ulRef)
         const closeForm = (e) => {
-            if (ulRef.current === 'undefined' && !ulRef.current.contains(e.target)) {
+            if (ulRef.current && !ulRef.current.contains(e.target)) {
                 setShowForms(false);
             }
         };
 
-        document.addEventListener('click', closeForm);
+        document.addEventListener("click", closeForm);
 
-        return () => document.removeEventListener('click', closeForm)
-    }, [showForms])
-
+        return () => document.removeEventListener("click", closeForm);
+    }, [showForms]);
 
     // console.log(ulRef)
     const closeForm = () => setShowForms(false)
+
+
     let handleClick = (id) => {
         dispatch(thunkOneAlbum(id)).then(() => navigate(`/albums/${id}`))
     };
@@ -108,18 +89,27 @@ function AlbumsPage() {
     const addSongs = () => {
         setAddSong(true)
         setChangeName(false)
-        if(showForms && addSong){
+        if (showForms && addSong) {
             setShowForms(false)
-        }else{
+        } else {
             setShowForms(true)
         }
-
-
     }
-    const closeAddSong = () => {
+
+    const toggleNameChange = (e) => {
+        // e.stopPropagation()
+        setChangeName(true)
         setAddSong(false)
-        setShowForms(false)
-        closeModal()
+        if (showForms && changeName) {
+            setShowForms(false)
+        } else {
+            setShowForms(true)
+        }
+    };
+    const closeAddSong = (e) => {
+        // e.stopPropagation()
+        setAddSong(false)
+        closeForm()
     }
 
 
@@ -131,17 +121,23 @@ function AlbumsPage() {
                 <div>
                     <div className="content-header">
                         <div>
-                            <p>List of songs for {album.title}</p>
+                            <h2 className='album-page-title'>List of songs for {album.title}</h2>
                             {user.id === album.artist_id && (
                                 <span>
-                                    <button onClick={handleDelete}>Delete album</button>
-                                    <button onClick={toggleNameChange}>Change album name</button>
-                                    <button onClick={addSongs}>Add songs to album</button>
+                                    <button
+                                        className={'filter-buttons'}
+                                        onClick={handleDelete}>Delete album</button>
+                                    <button
+                                        className={changeName ? 'filter-button-selected' : 'filter-buttons'}
+                                        onClick={toggleNameChange}>Change album name</button>
+                                    <button
+                                        className={addSong ? 'filter-button-selected' : 'filter-buttons'}
+                                        onClick={addSongs}>Add songs to album</button>
                                 </span>
                             )}
                             {showForms && addSong && (
                                 <div className="sidebar-add-song-created-album">
-                                    <OpenModalAddSong
+                                    <OpenModalMenuItem
                                         itemText='Add my songs'
                                         onItemClick={closeAddSong}
                                         modalComponent={<AlbumAddSongModal />}
@@ -164,22 +160,28 @@ function AlbumsPage() {
 
                     </div>
 
-                    <div className="container-song-tile">
-                        {albumSongs.map((song, i) => (
-                            <AlbumSongs
-                                song={song}
-                                number={i + 1}
-                                key={`song${song.id}`}
-                            />
-                        ))}
-                    </div>
+                    {albumSongs.length > 0 ? (
+                        <div className="container-song-tile">
+                            {albumSongs.map((song, i) => (
+                                <AlbumSongs
+                                    song={song}
+                                    number={i + 1}
+                                    key={`song${song.id}`}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <p>This album needs some love</p>
+                    )}
+
+
 
                 </div>
 
             ) : (
                 <div>
                     <div className="content-header">
-                        <p>list of current users Albums</p>
+                        <h2 className='album-page-title'>List of all your albums</h2>
                     </div>
                     <div>
                         {ownersAlbums.length > 0 && isLoaded ? (

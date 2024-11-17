@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux"
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { uploadSong } from "../../redux/songs";
 import { useModal } from "../../context/Modal";
 import "./song-form.css"
 
 function SongFormModal() {
+    const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
     const [file, setFile] = useState();
@@ -19,36 +21,44 @@ function SongFormModal() {
         formData.append("title", title)
         formData.append("genre", genre)
 
-        // May want to set a Loading Image
+        setIsLoading(true)
+
+        const validate = {};
 
         const res = await dispatch(uploadSong(formData))
             .then(res => res.json())
             .catch(err => {
-                setErrors({...err})
+                validate = {...err}
                 return err
             })
 
-        console.log(res)
 
-        if (!Object.values(errors).length) closeModal()
+        if (res.file.length) {
+            validate.file = res.file[0]
+            setErrors(validate)
+        }
+
+        if (!Object.values(validate).length) closeModal()
+        else setIsLoading(false)
     }
 
     return (
         <div className="song-modal">
-            <h2>Upload A New Song</h2>
+            <div className="modal-head">
+                <h2>Upload A New Song</h2>
+                { isLoading && <AiOutlineLoading3Quarters /> }
+                <p className="errors">
+                    { errors.file? errors.file :
+                        ""
+                    }
+                </p>
+            </div>
 
             <form
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
+                className="form-modal"
             >
-                <p>
-                    { Object.values(errors).length?
-                        Object.values(errors).forEach(err => (
-                            <>{ err }</>
-                        )) :
-                        ""
-                    }
-                </p>
                 <input
                     type="text"
                     placeholder="Title"
@@ -72,7 +82,9 @@ function SongFormModal() {
                     required
                 />
 
-                <button type="submit">Upload Song</button>
+                <button
+                    type="submit"
+                    className="filter-buttons">Upload Song</button>
             </form>
         </div>
     )

@@ -6,6 +6,7 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import CreatePlaylistForm from "../Playlists/PlaylistForm";
 import AlbumAddSongModal from "../AlbumFormModal/AlbumAddSongsModal";
 
 function Sidebar() {
@@ -15,6 +16,7 @@ function Sidebar() {
     const [addSongs, setAddSongs] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
     const [newAlbum, setNewAlbum] = useState(null)
+    const [myAlbum, setMyAlbum] = useState(false)
     let albums = useSelector(state => state.albums.all)
     const ulRef = useRef()
     let navigate = useNavigate()
@@ -35,10 +37,15 @@ function Sidebar() {
     const isAlbum = () => {
         setAlbum(true)
         setPlaylist(false)
+
     }
     const isPlaylist = () => {
         setPlaylist(true)
         setAlbum(false)
+
+    }
+    const isMyAlbum = () => {
+        navigate('/albums')
     }
 
     const toggleMenu = (e) => {
@@ -62,10 +69,10 @@ function Sidebar() {
     }, [showForms])
 
     const closeForm = () => setShowForms(false)
-    const closeAddSong = () => {
-        setAddSongs(false)
-        setNewAlbum(null)
-    }
+    // const closeAddSong = () => {
+    //     setAddSongs(false)
+    //     setNewAlbum(null)
+    // }
 
     return (
         <>
@@ -74,6 +81,17 @@ function Sidebar() {
                     <h3>Library</h3>
                     <FiPlus onClick={toggleMenu} className="faplus" />
                 </div>
+
+                {showForms && playlist && (
+                    <div>
+                        <OpenModalMenuItem
+                            itemText='Create Playlist'
+                            onItemClick={closeForm}
+                            modalComponent={<CreatePlaylistForm />}
+                        />
+                    </div>
+                )}
+
                 {showForms && album && (
                     <div className="sidebar-create-album">
                         <OpenModalMenuItem
@@ -83,18 +101,6 @@ function Sidebar() {
                         />
                     </div>
                 )}
-                {/* {addSongs && newAlbum && (
-                    <div className="sidebar-add-song-created-album">
-                        <OpenModalMenuItem
-                            itemText='Add Song to Album'
-                            onItemClick={closeAddSong}
-                            modalComponent={<AlbumAddSongModal newAlbum={newAlbum} />}
-                        />
-                    </div>
-                )} */}
-
-
-
 
                 <div className="side-filters">
                     <button onClick={isPlaylist} className={playlist ? 'filter-button-selected' : 'filter-buttons'}>
@@ -103,6 +109,12 @@ function Sidebar() {
                     <button onClick={isAlbum} className={album ? 'filter-button-selected' : 'filter-buttons'}>
                         Albums
                     </button>
+                    <span>
+                        <button onClick={isMyAlbum} className='filter-buttons-my-album'>
+                            My Albums
+                        </button>
+                    </span>
+
                 </div>
             </div>
             <div>

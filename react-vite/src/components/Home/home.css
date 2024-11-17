@@ -34,6 +34,7 @@
 
 .content {
     overflow: auto;
+    padding: 0;
 }
 
 .head-container {
@@ -66,6 +67,16 @@
     margin: 0 5px;
     padding: 0 12px;
 }
+.filter-buttons-my-album{
+    background-color: rgb(46, 46, 46);
+    border: unset;
+    border-radius: 20px;
+    margin-left: 115px;
+    color: white;
+    height: 30px;
+    /* margin: 0 5px; */
+    padding: 0 12px;
+}
 
 .filter-button-selected {
     background-color: white;
@@ -94,5 +105,5 @@ background-color: rgb(54, 58, 121);
 
 .container-song-tile {
     width: auto;
-    height: 99%;
+    height: fit-content;
 }

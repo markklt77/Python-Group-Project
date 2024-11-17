@@ -5,6 +5,7 @@ import { useModal } from "../../context/Modal";
 import { useNavigate } from "react-router-dom";
 import AlbumSongTile from "../Albums/AlbumSongTile";
 import { thunkAddSong } from "../../redux/albums";
+import './albumFormModal.css'
 
 
 function AlbumAddSongModal() {
@@ -37,7 +38,7 @@ function AlbumAddSongModal() {
             } else {
                 navigate(`/albums/${album[album.length - 1].id}`)
                 closeModal()
-                alert('Album was created')
+                alert('Songs were added successfully')
             }
         }
 
@@ -57,8 +58,6 @@ function AlbumAddSongModal() {
             selected.push(song)
             // console.log(selected, 'adding the song')
         }
-
-
     }
 
     return (
@@ -76,12 +75,12 @@ function AlbumAddSongModal() {
                                 return (
                                     <div key={song.id}>
                                         <input type='checkbox' onChange={() => addSong(song)} key={song.id} value={song.id} />
-                                        <label>{song.title}</label>
+                                        <label className="add-song-title-modal">{song.title}</label>
                                     </div>
                                 )
                             })}
                         </div>
-                        <button>Add songs to album</button>
+                        <button className="add-song-submit-modal">Add songs to album</button>
                     </form>
 
 
