@@ -7,6 +7,7 @@ const SET_SINGLE_PLAYLIST = 'SET_SINGLE_PLAYLIST';
 const ADD_SONG_TO_PLAYLIST = 'ADD_SONG_TO_PLAYLIST';
 const REMOVE_SONG_FROM_PLAYLIST = 'REMOVE_SONG_FROM_PLAYLIST';
 const CREATE_PLAYLIST = 'CREATE_PLAYLIST';
+const DELETE_PLAYLIST = 'DELETE_PLAYLIST'
 
 //action creators
 const setPlaylists = (playlists) => ({
@@ -35,6 +36,11 @@ const createPlaylist = (playlist) => ({
     type: CREATE_PLAYLIST,
     playlist,
 });
+
+const removePlaylist = (playlistId) => ({
+    type: DELETE_PLAYLIST,
+    playlistId
+})
 
 //thunks
 export const fetchUserPlaylists = () => async (dispatch) => {
@@ -65,6 +71,13 @@ export const addSongToPlaylist = (playlistId, songId) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(addSong(data.song, playlistId));
+
+        //refetch the playlist to include new song
+        const updatedPlaylistResponse = await fetch(`/api/users/playlists/${playlistId}`);
+        if (updatedPlaylistResponse.ok) {
+            const updatedPlaylistData = await updatedPlaylistResponse.json();
+            dispatch(setSinglePlaylist(updatedPlaylistData));
+        }
         console.log(data)
     } else {
         const error = await response.json();
@@ -111,6 +124,30 @@ export const createNewPlaylist = (playlistData) => async (dispatch) => {
         console.error('Error creating playlist:', error);
     }
 };
+
+export const deletePlaylist = (playlistId) => async (dispatch) => {
+    try {
+        const response = await fetch(`/api/users/playlists/${playlistId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data.message);
+
+            dispatch(removePlaylist(playlistId));
+        } else {
+            const error = await response.json();
+            throw new Error(error.error || "Failed to delete playlist");
+        }
+    } catch (error) {
+        console.error('Error deleting playlist:', error);
+    }
+};
+
 
 
 
@@ -163,6 +200,15 @@ export default function playlistReducer(state = initialState, action) {
                     [action.playlist.id]: action.playlist,
                 },
             };
+        }
+
+        case DELETE_PLAYLIST: {
+            const newState = { ...state };
+            delete newState.allPlaylists[action.playlistId];
+            if (state.currentPlaylist && state.currentPlaylist.id === action.playlistId) {
+                newState.currentPlaylist = null;
+            }
+            return newState
         }
 
         default:
