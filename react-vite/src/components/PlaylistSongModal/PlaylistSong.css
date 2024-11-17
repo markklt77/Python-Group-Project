@@ -1,0 +1,20 @@
+.playlist-song-modal {
+    height: 150px;
+    width: 350px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+select {
+    background-color: rgba(170, 170, 170, 0.477);
+    color: white;
+    border-radius: 8px;
+    border: unset;
+    height: 30px;
+    margin: 5px;
+    padding: 5px;
+}

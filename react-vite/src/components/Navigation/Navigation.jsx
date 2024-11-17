@@ -1,18 +1,31 @@
 import { NavLink } from "react-router-dom";
+import { FaSpotify } from "react-icons/fa6";
+import { useSelector } from "react-redux";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import SongFormModal from "../SongFormModal";
 import ProfileButton from "./ProfileButton";
+
 import "./Navigation.css";
 
 function Navigation() {
+  const user = useSelector(state => state.session.user)
+  
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-
-      <li>
+    <nav>
+      <div className="logo-container">
+        <NavLink to="/">
+          <FaSpotify className="logo"/>
+        </NavLink>
+      </div>
+      <div className="profile-container">
+        {user && <OpenModalButton
+          modalComponent={<SongFormModal />}
+          buttonText="Add Song"
+          addClass='filter-buttons'
+        />}
         <ProfileButton />
-      </li>
-    </ul>
+      </div>
+    </nav>
   );
 }
 
