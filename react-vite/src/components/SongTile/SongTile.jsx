@@ -82,7 +82,7 @@ function SongTile({ song, number }) {
         const errors = {};
 
         // console.log(parseInt(playlistId), number)
-        const removeSong = await dispatch(removeSongFromPlaylist(parseInt(playlistId), number))
+        const removeSong = await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
     }
 
     const deleteASong = async e => {

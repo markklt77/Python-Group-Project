@@ -36,17 +36,17 @@ export const router = createBrowserRouter([
             ]
           },
           {
-            path: "/playlists/:playlistId",
-            element: <PlaylistSongsPage />
-          },
-          {
-            path: "/playlistForm",  //FOR TESTING
-            element: <CreatePlaylistForm/>
-          },
-          {
             path: "/playlists",
-            element: <PlaylistsPage />
+            element: <PlaylistsPage/>
           },
+
+          {
+            path: "playlists/:playlistId",
+            element: <PlaylistSongsPage/>
+          },
+
+
+
           {
             path: '/manage-songs',
             element: <ManageSongs />
