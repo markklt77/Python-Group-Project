@@ -48,7 +48,7 @@ function SongTile({ song, number }) {
 
     console.log(location.pathname)
 
-   
+
 
     const handleLike = async (e) => {
         e.preventDefault();
@@ -102,7 +102,7 @@ function SongTile({ song, number }) {
                 {`${month} ${date.getDay()}, ${date.getFullYear()}`}
             </p>
             <div className="actions">
-                <PlusButton 
+                <PlusButton
                 modalComponent={<PlaylistSongModal id={song.id}/>}
                 />
                 <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
