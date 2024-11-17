@@ -22,6 +22,7 @@
 
 .content {
     overflow: auto;
+    padding: 0;
 }
 
 .head-container {
@@ -72,5 +73,5 @@ background-color: rgb(54, 58, 121);
 
 .container-song-tile {
     width: auto;
-    height: 99%;
+    height: fit-content;
 }

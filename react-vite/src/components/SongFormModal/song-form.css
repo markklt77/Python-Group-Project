@@ -2,8 +2,8 @@
     background-color: rgb(20, 20, 20);
     border-radius: 10px;
     padding: 20px;
-    height: 260px;
-    width: 350px;
+    height: fit-content;
+    width: fit-content;
 }
 
 .song-modal {
@@ -42,4 +42,14 @@ input {
     height: 20px;
     margin: 5px;
     padding: 5px;
+}
+
+input::file-selector-button {
+    background-color: rgb(46, 46, 46);
+    border: unset;
+    border-radius: 20px;
+    color: white;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0 12px;
 }
