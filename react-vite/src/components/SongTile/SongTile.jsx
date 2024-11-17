@@ -113,9 +113,9 @@ function SongTile({ song, number }) {
                 <PlusButton
                 modalComponent={<PlaylistSongModal id={song.id}/>}
                 />
-                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
+                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "#4e53ae"} : ''} />
                 <span className="likes-count">{likesCount}</span>
-                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}/> : ''}
+                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}  className="delete-button"/> : ''}
                 {location.pathname.includes("manage-songs") ?
                     <>
                         <OpenModalButton
