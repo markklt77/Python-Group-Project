@@ -8,9 +8,8 @@ import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation() {
-  // Add useSelector to get current User
   const user = useSelector(state => state.session.user)
-  // Add conditional for Add Song button
+  
   return (
     <nav>
       <div className="logo-container">

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
@@ -57,11 +58,11 @@ function ProfileButton() {
               <li>{user.email}</li>
               <div className="profile-button-container">
                 <li>
-                  <OpenModalButton
-                    modalComponent={<SongFormModal />}
-                    buttonText="Add Song"
-                    addClass='filter-buttons'
-                    />
+                  <NavLink to="/manage-songs">
+                    <button className="filter-buttons">
+                      Manage Songs
+                    </button>
+                  </NavLink>
                 </li>
                 <li>
                   <button
