@@ -6,19 +6,18 @@ import "./PlaylistSong.css";
 
 function PlaylistSongModal({id}) {
   const dispatch = useDispatch();
-
+  const [playlistId, setPlaylistId] = useState("")
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
   const playlists = useSelector(state => state.playlists.allPlaylists)
-  const [playlistId, setPlaylistId] = useState(playlists[0].id)
   // console.log(playlists)
 
-  // useEffect(() => {
-  //   if (playlists.length > 0) {
-  //     setPlaylistId(playlists[0].id);
-  //   }
-  // }, [playlists]);
+  useEffect(() => {
+    if (playlists.length > 0 && !playlistId) {
+      setPlaylistId(playlists[0].id);
+    }
+  }, [playlists, playlistId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
