@@ -19,7 +19,10 @@ function AlbumsPage() {
     let user = useSelector(state => state.session.user)
     let [isLoaded, setIsLoaded] = useState(false)
     const [showForms, setShowForms] = useState(false)
+    const [addSong, setAddSong] = useState(false)
+    const [changeName, setChangeName] = useState(false)
     let navigate = useNavigate()
+    let albumSongs = Object.values(currAlbum)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
     // let [deleteRefresh, setDeleteRefresh] = useState(0)
     const ulRef = useRef()
@@ -32,8 +35,10 @@ function AlbumsPage() {
     useEffect(() => {
         dispatch(thunkAllAlbums()).then(() => setIsLoaded(true))
         dispatch(thunkOneAlbum(albumId))
-        // setShowForms(false)
-    }, [dispatch, albumId])
+        setChangeName(false)
+        setAddSong(false)
+        setShowForms(false)
+    }, [dispatch, albumId, helpWithRefresh])
 
 
 
@@ -48,8 +53,7 @@ function AlbumsPage() {
         if (user.id === album.artist_id) {
             let res = dispatch(thunkDeleteAlbum(albumId))
             if (res) {
-                // setDeleteRefresh(prev => prev + 1)
-                // dispatch(thunkAllAlbums())
+
                 dispatch(thunkDeleteAlbum(albumId))
                     .then(() => refresh())
                     .then(() => navigate('/'))
@@ -138,7 +142,7 @@ function AlbumsPage() {
                                     <OpenModalMenuItem
                                         itemText='Add my songs'
                                         onItemClick={closeAddSong}
-                                        modalComponent={<AlbumAddSongModal />}
+                                        modalComponent={<AlbumAddSongModal refresh={refresh} />}
                                     />
                                 </div>
                             )}

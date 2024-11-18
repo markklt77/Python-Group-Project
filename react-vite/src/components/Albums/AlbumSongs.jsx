@@ -81,7 +81,7 @@
 // export default AlbumSongs
 
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { likeSong, unlikeSong } from "../../redux/likes";
 import PlusButton from "../PlusButton"
 import DeleteSong from "./AlbumDeleteSong/AlbumDeleteSongModal";
@@ -97,8 +97,11 @@ function AlbumSongs({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
+    const [errors, setErrors] = useState({})
     const dispatch = useDispatch()
-    let {albumId} = useParams()
+    let { albumId } = useParams()
+    let album = useSelector(state => state.albums.all[albumId])
+    let user = useSelector(state => state.session.user)
 
 
     let handleDeleteSong = async (songId) => {
@@ -138,7 +141,7 @@ function AlbumSongs({ song, number }) {
 
     useEffect(() => {
         // reference to SongTile
-        const tiles = document.getElementsByClassName("song-tile")
+        const tiles = document.getElementsByClassName("song-tile-album")
         const tile = tiles[number - 1]
 
         tile.addEventListener("mouseenter", () => {
@@ -156,9 +159,9 @@ function AlbumSongs({ song, number }) {
     const handleLike = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
-        const newLike = await dispatch(likeSong(number))
+        return await dispatch(likeSong(number))
             .then(setLiked(true))
             .then(setLikesCount(likesCount => likesCount + 1))
     }
@@ -166,9 +169,9 @@ function AlbumSongs({ song, number }) {
     const handleUnlike = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
-        const unlike = await dispatch(unlikeSong(number))
+        return await dispatch(unlikeSong(number))
             .then(setLiked(false))
             .then(setLikesCount(likesCount => likesCount - 1))
     }
@@ -178,7 +181,7 @@ function AlbumSongs({ song, number }) {
     }
 
     return (
-        <div className="song-tile" key={`song${song.id}`}>
+        <div className="song-tile-album" key={`song${song.id}`}>
             {hovered ?
                 <div id="play-button-container" >
                     <button
@@ -191,18 +194,20 @@ function AlbumSongs({ song, number }) {
                 <p id="num">{number}</p>
             }
             <p>{song.title}</p>
-            <p>{song.album.title}</p>
-            <p>
+            <p className="date-song-tile-album">
                 {`${month} ${date.getDay()}, ${date.getFullYear()}`}
             </p>
-            <div className="actions">
+            <div className="actions-albums">
                 <PlusButton
                     modalComponent={<PlaylistSongModal />}
                 />
                 <FaHeart className="like-button" onClick={!liked ? handleLike : handleUnlike} style={liked ? { color: "rgb(54, 58, 121)" } : ''} />
                 <span className="likes-count">{likesCount}</span>
-                <DeleteSong
-                    modalComponent={<AlbumDeleteQuestion song={song} handleDeleteSong={handleDeleteSong} />} />
+                {user.id === album.artist_id && (
+                    <DeleteSong
+                        modalComponent={<AlbumDeleteQuestion song={song} handleDeleteSong={handleDeleteSong} />} />
+                )}
+
             </div>
 
         </div>
