@@ -1,4 +1,4 @@
-import AlbumSongs from './AlbumSongs';
+// import AlbumSongs from './AlbumSongs';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
@@ -8,6 +8,8 @@ import AlbumNameFormModal from '../AlbumFormModal/AlbumNameFormModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import AlbumAddSongModal from '../AlbumFormModal/AlbumAddSongsModal';
 import './albums.css'
+import { getAllSongs } from '../../redux/songs';
+import SongTile from '../SongTile'
 
 
 function AlbumsPage() {
@@ -24,12 +26,10 @@ function AlbumsPage() {
     let navigate = useNavigate()
     let albumSongs = Object.values(currAlbum)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
-    // let [deleteRefresh, setDeleteRefresh] = useState(0)
     const ulRef = useRef()
 
     let refresh = () => {
         setHelpWithRefresh(prev => prev + 1)
-        // setHelpWithRefresh
     }
 
     useEffect(() => {
@@ -48,6 +48,9 @@ function AlbumsPage() {
         })
     }
 
+    useEffect(() => {
+        dispatch(getAllSongs())
+    }, [dispatch, helpWithRefresh])
 
 
     // console.log(ownersAlbums)
@@ -82,7 +85,6 @@ function AlbumsPage() {
         return () => document.removeEventListener("click", closeForm);
     }, [showForms]);
 
-    // console.log(ulRef)
     const closeForm = () => setShowForms(false)
 
 
@@ -168,10 +170,11 @@ function AlbumsPage() {
                     {albumSongs && albumSongs.length > 0 ? (
                         <div className="container-song-tile">
                             {albumSongs.map((song, i) => (
-                                <AlbumSongs
+                                <SongTile
                                     song={song}
                                     number={i + 1}
                                     key={`song${song.id}`}
+                                    refresh={refresh}
                                 />
                             ))}
                         </div>
