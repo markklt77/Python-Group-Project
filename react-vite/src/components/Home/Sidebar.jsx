@@ -118,7 +118,7 @@ function Sidebar() {
                             itemText='Create Album'
                             onItemClick={closeForm}
                             modalComponent={<AlbumFormModal refresh={refresh} />}
-                            newClass={"create-playlist-open-modal-button"}
+                            newClass={"create-album-open-modal-button"}
                         />
                     </div>
                 )}

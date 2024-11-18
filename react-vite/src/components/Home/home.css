@@ -123,3 +123,17 @@ background-color: rgb(54, 58, 121);
     width: auto;
     height: fit-content;
 }
+
+
+
+.create-album-open-modal-button {
+    color: white;
+    background-color: rgba(124, 119, 119, 0.411);
+    margin-left: 330px;
+}
+
+.create-album-open-modal-button:hover {
+    color: white;
+    background-color: rgba(66, 64, 64, 0.411);
+    cursor: pointer;
+}
