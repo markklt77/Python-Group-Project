@@ -19,7 +19,7 @@ import "./song-tile.css";
 import { thunkOneAlbum, thunkRemoveSong } from "../../redux/albums";
 
 
-function SongTile({ song, number, refresh }) {
+function SongTile({ song, number}) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
@@ -87,7 +87,7 @@ function SongTile({ song, number, refresh }) {
         await dispatch(likeSong(song.id))
             .then(setLiked(true))
             .then(setLikesCount(likesCount => likesCount + 1))
-            .then(() => refresh())
+
     }
 
     const handleUnlike = async (e) => {
@@ -100,7 +100,7 @@ function SongTile({ song, number, refresh }) {
             .then(setLikesCount(likesCount => likesCount - 1))
 
         return await dispatch(getOneSong(song.id))
-            .then(() => refresh())
+
     }
 
     const handleClick = () => {
