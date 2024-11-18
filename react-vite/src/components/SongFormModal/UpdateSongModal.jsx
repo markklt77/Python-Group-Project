@@ -21,7 +21,7 @@ function UpdateSongModal({ id }) {
 
         await dispatch(updateSong(songData))
             .catch((err) => {
-                setErrors({...err})
+                setErrors({ ...err })
                 // console.log(err)
             })
 
