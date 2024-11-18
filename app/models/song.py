@@ -16,8 +16,8 @@ class Song(db.Model):
 
 
     user = db.relationship("User", back_populates="songs")
-    albums = db.relationship("Album", secondary="album_songs", back_populates="songs")
-    playlists = db.relationship("Playlist", secondary="playlist_songs", back_populates="songs")
+    albums = db.relationship("Album", secondary=add_prefix_for_prod("album_songs"), back_populates="songs")
+    playlists = db.relationship("Playlist", secondary=add_prefix_for_prod("playlist_songs"), back_populates="songs")
     likes = db.relationship("Like", back_populates="song", cascade="all, delete-orphan")
 
 
