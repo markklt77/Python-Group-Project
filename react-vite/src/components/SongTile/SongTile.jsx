@@ -141,7 +141,7 @@ function SongTile({ song, number }) {
                     <>
                         <OpenModalButton
                             buttonText={<MdEdit />}
-                            modalComponent={<UpdateSongModal />}
+                            modalComponent={<UpdateSongModal id={song.id} />}
                             addClass="edit-button"
                         />
                         <IoTrashSharp onClick={deleteASong} />
