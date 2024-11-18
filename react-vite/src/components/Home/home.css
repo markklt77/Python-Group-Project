@@ -1,0 +1,139 @@
+.layout {
+    color: rgb(170, 170, 170);
+    display: grid;
+    grid-template-columns: 30% 70%;
+    max-height: 96%;
+    position: fixed;
+    top: 65px;
+    bottom: 81px;
+    left: 0;
+    right: 0;
+}
+
+.sidebar-create-album {
+    background-color: gray;
+    height: 30px;
+    color: white;
+    display: flex;
+    width: 120px;
+    align-items: center;
+    margin-left: 260px;
+    justify-content: center;
+}
+
+
+.sidebar,
+.content {
+    background-color: rgb(21, 21, 21);
+    border-radius: 10px;
+    box-sizing: border-box;
+    max-height: 99%;
+    width: 99%;
+    margin: 0 5px;
+}
+
+.content {
+    overflow: auto;
+    padding: 0;
+}
+
+.head-container {
+    background-color: rgb(20, 20, 20);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.side-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 18px;
+}
+.side-head:hover {
+    cursor: pointer;
+}
+
+.faplus {
+    font-size: 23px;
+}
+
+.side-filters {
+    margin: 0 10px;
+}
+
+.filter-button-selected:hover{
+    cursor: pointer;
+
+}
+.filter-buttons:hover{
+    cursor: pointer;
+
+}
+.filter-buttons-my-album{
+    cursor: pointer;
+}
+
+.filter-buttons {
+    background-color: rgb(46, 46, 46);
+    border: unset;
+    border-radius: 20px;
+    color: white;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}
+.filter-buttons-my-album{
+    background-color: rgb(46, 46, 46);
+    border: unset;
+    border-radius: 20px;
+    margin-left: 115px;
+    color: white;
+    height: 30px;
+    /* margin: 0 5px; */
+    padding: 0 12px;
+}
+
+.filter-button-selected {
+    background-color: white;
+    border: unset;
+    border-radius: 20px;
+    color: rgb(46, 46, 46);
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}
+
+/*
+Color close to original site:
+background-color: rgb(54, 58, 121);
+*/
+
+.content-header {
+    /* background-color: rgb(54, 58, 121); */
+    background-color: rgb(54, 58, 121);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 200px;
+}
+
+.container-song-tile {
+    width: auto;
+    height: fit-content;
+}
+
+
+
+.create-album-open-modal-button {
+    color: white;
+    background-color: rgba(124, 119, 119, 0.411);
+    margin-left: 330px;
+}
+
+.create-album-open-modal-button:hover {
+    color: white;
+    background-color: rgba(66, 64, 64, 0.411);
+    cursor: pointer;
+}

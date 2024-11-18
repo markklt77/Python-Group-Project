@@ -1,0 +1,67 @@
+.container-song-tile {
+    padding: 0 15px;
+}
+
+.song-tile {
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 7px;
+    display: grid;
+    grid-template-columns: 50px 31% 31% 16% 15%;
+    grid-template-rows: 100%;
+    height: 60px;
+    width: 100%;
+}
+
+.song-tile:hover {
+    background-color: rgba(77, 77, 77, 0.315);
+}
+
+.actions {
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#num {
+    text-align: center;
+    margin: 0 10px;
+    grid-column: 1;
+}
+
+#play-button-container {
+    background-color: unset;
+    grid-column: 1;
+}
+
+.play-button {
+    background-color: unset;
+    border: unset;
+    color: white;
+    font-size: 18px;
+    margin: 0 13px;
+    text-align: center;
+}
+
+/* .like-button .liked {
+    color: rgb(54, 58, 121);
+
+} */
+
+.like-button:hover {
+    color: #4e53ae;
+}
+
+.likes-count {
+    font-size: 12px;
+    align-self: center;
+}
+
+.delete-button:hover {
+    color: #b22222;
+}
+
+.hidden {
+    display: none;
+}

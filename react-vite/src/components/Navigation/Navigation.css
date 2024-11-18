@@ -1,0 +1,62 @@
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 26px;
+}
+
+.logo {
+  color: white;
+  font-size: 33px;
+}
+
+#profile {
+  font-size: 40px;
+  color: white;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  width: 200px;
+}
+
+.profile-button {
+  background-color: unset;
+  border: unset;
+}
+
+.profile-dropdown {
+  background-color: rgb(21, 21, 21);
+  border-radius: 10px;
+  color: white;
+  margin: unset;
+  padding: 5px;
+  position: absolute;
+  top: 60px;
+  height: fit-content;
+  width: 150px;
+  z-index: 2;
+}
+
+.profile-dropdown li {
+  padding: 5px 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: unset;
+}
+
+.profile-button-container {
+  margin-top: 30px;
+}
+
+.profile-button-container li {
+  padding: 5px 0;
+}
+
+.session-buttons {
+  /* margin-top: 20px; */
+}
