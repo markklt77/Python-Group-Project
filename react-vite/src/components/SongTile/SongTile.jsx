@@ -57,7 +57,7 @@ function SongTile({ song, number }) {
 
         // const errors = {};
 
-        return await dispatch(likeSong(number))
+        return await dispatch(likeSong(song.id))
         .then(setLiked(true))
         .then(setLikesCount(likesCount => likesCount + 1))
     }
@@ -67,7 +67,7 @@ function SongTile({ song, number }) {
 
         // const errors = {};
 
-        return await dispatch(unlikeSong(number))
+        return await dispatch(unlikeSong(song.id))
         .then(setLiked(false))
         .then(setLikesCount(likesCount => likesCount - 1))
     }
