@@ -21,10 +21,11 @@ function AlbumAddSongModal({ refresh }) {
     })
     let albums = useSelector(state => state.albums.all)
     let album = Object.values(albums)
-
     let selected = []
+
     const handleSub = async (e) => {
         e.preventDefault();
+
         const serverResponse = await dispatch(
             thunkAddSong({
                 songs: selected,
@@ -33,7 +34,10 @@ function AlbumAddSongModal({ refresh }) {
         );
         if (serverResponse) {
             setErrors(serverResponse)
+            alert(errors.error)
+            // console.log(await serverResponse.json(), 'serverRe')
         } else {
+            // console.log(await serverResponse.json(), 'serverRe')
             dispatch(thunkAllAlbums())
                 .then(() => { navigate(`/albums/${album[album.length - 1].id}`) })
                 .then(() => { refresh() })
