@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { likeSong, unlikeSong } from "../../redux/likes";
 import PlusButton from "../PlusButton"
@@ -15,11 +15,12 @@ import OpenModalButton from "../OpenModalButton"
 import UpdateSongModal from "../SongFormModal/UpdateSongModal"
 import "./song-tile.css";
 
+
 function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
-    const [managePlaylist, setManagePlaylist] = useState(false)
+    // const [managePlaylist, setManagePlaylist] = useState(false)
     const dispatch = useDispatch()
     const location = useLocation()
     const { playlistId } = useParams()
@@ -34,6 +35,16 @@ function SongTile({ song, number }) {
     const month = months[date.getMonth()]
 
 
+    let count = useSelector(state => state.songs.all[song.id].likes)
+    let likesAmount = count.length
+    let currentUserId = useSelector(state => state.session.user.id)
+    // console.log(count)
+
+    const currentlyLiked = count.some(like => like.artist_id === currentUserId)
+
+    // console.log(currentlyLiked)
+
+
     useEffect(() => {
         // reference to SongTile
         const tiles = document.getElementsByClassName("song-tile")
@@ -46,7 +57,13 @@ function SongTile({ song, number }) {
         tile.addEventListener("mouseleave", () => {
             setHovered(false)
         })
-    })
+
+        setLikesCount(likesAmount)
+        setLiked(currentlyLiked)
+
+
+
+    }, [number, likesAmount, currentlyLiked])
 
     // console.log(location.pathname)
 
@@ -55,9 +72,9 @@ function SongTile({ song, number }) {
     const handleLike = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
-        const newLike = await dispatch(likeSong(number))
+        return await dispatch(likeSong(song.id))
         .then(setLiked(true))
         .then(setLikesCount(likesCount => likesCount + 1))
     }
@@ -65,9 +82,9 @@ function SongTile({ song, number }) {
     const handleUnlike = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
-        const unlike = await dispatch(unlikeSong(number))
+        return await dispatch(unlikeSong(song.id))
         .then(setLiked(false))
         .then(setLikesCount(likesCount => likesCount - 1))
     }
@@ -79,10 +96,10 @@ function SongTile({ song, number }) {
     const removeSongPlaylist = async (e) => {
         e.preventDefault();
 
-        const errors = {};
+        // const errors = {};
 
         // console.log(parseInt(playlistId), number)
-        const removeSong = await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
+        return await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
     }
 
     const deleteASong = async e => {
@@ -113,9 +130,9 @@ function SongTile({ song, number }) {
                 <PlusButton
                 modalComponent={<PlaylistSongModal id={song.id}/>}
                 />
-                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "rgb(54, 58, 121)"} : ''} />
+                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "#4e53ae"} : ''} />
                 <span className="likes-count">{likesCount}</span>
-                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}/> : ''}
+                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}  className="delete-button"/> : ''}
                 {location.pathname.includes("manage-songs") ?
                     <>
                         <OpenModalButton

@@ -1,0 +1,102 @@
+.div-container-all-albums {
+    overflow-y: auto;
+    height: 500px;
+}
+
+.album-tile-h4-tag {
+    font-size: 18px;
+}
+
+
+.select-album {
+    height: 50px;
+    /* padding-bottom: 25px; */
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.album-tile:hover {
+    cursor: pointer;
+    background-color: rgba(43, 43, 43, 0.572);
+}
+
+.change-album-name-modal {
+    background-color: gray;
+    height: 30px;
+    color: white;
+    display: flex;
+    width: 139px;
+    align-items: center;
+    margin-left: 122px;
+    justify-content: center;
+    border-radius:5px;
+}
+
+.sidebar-add-song-created-album {
+    background-color: gray;
+    height: 30px;
+    color: white;
+    display: flex;
+    width: 133px;
+    align-items: center;
+    margin-left: 278px;
+    justify-content: center;
+    border-radius:5px;
+}
+
+
+.album-page-title{
+    color: white;
+    font-size: 40px;
+}
+
+
+.filter-buttons {
+    background-color: rgb(46, 46, 46);
+    border: unset;
+    border-radius: 20px;
+    color: white;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}
+
+.filter-button-selected {
+    background-color: white;
+    border: unset;
+    border-radius: 20px;
+    color: rgb(46, 46, 46);
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}
+
+
+.song-tile-album {
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 7px;
+    display: grid;
+    grid-template-columns: 50px 31% 31% 16% 15%;
+    grid-template-rows: 100%;
+    height: 60px;
+    width: 100%;
+}
+
+.song-tile-album:hover {
+    background-color: rgba(77, 77, 77, 0.315);
+    cursor: pointer;
+}
+
+/*
+.date-song-tile-album{
+    margin-right: 20px;
+} */
+
+.actions-albums {
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+}

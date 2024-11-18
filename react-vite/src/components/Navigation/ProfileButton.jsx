@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
-import SongFormModal from "../SongFormModal";
+// import OpenModalButton from "../OpenModalButton/OpenModalButton";
+// import SongFormModal from "../SongFormModal";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
@@ -48,7 +48,7 @@ function ProfileButton() {
         onClick={toggleMenu}
         className="profile-button"
       >
-        <FaUserCircle id="profile"/>
+        <FaUserCircle id="profile" />
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
@@ -68,7 +68,7 @@ function ProfileButton() {
                   <button
                     onClick={logout}
                     className="filter-buttons"
-                    >Log Out</button>
+                  >Log Out</button>
                 </li>
               </div>
             </>
@@ -81,7 +81,7 @@ function ProfileButton() {
                     onItemClick={closeMenu}
                     modalComponent={<LoginFormModal />}
                     newClass="filter-buttons"
-                    />
+                  />
                 </li>
                 <li>
                   <OpenModalMenuItem
@@ -89,7 +89,7 @@ function ProfileButton() {
                     onItemClick={closeMenu}
                     modalComponent={<SignupFormModal />}
                     newClass="filter-buttons"
-                    />
+                  />
                 </li>
               </div>
             </>

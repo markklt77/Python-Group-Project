@@ -1,5 +1,5 @@
 import SongTile from "../SongTile";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function PlaylistSongsPage() {
@@ -14,7 +14,10 @@ function PlaylistSongsPage() {
 
     return (
         <div className="content">
-            <h2 className="content-header">{playlist.name}</h2>
+            <div className="content-header">
+                <h1>{playlist.name}</h1>
+            </div>
+
             <div className="songs-list">
                 {playlist.songs.length > 0 ? (
                     playlist.songs.map((song, index) => {

@@ -120,7 +120,7 @@ def add_song(albumId, songId):
     """
     album = Album.query.get(albumId)
     song = Song.query.get(songId)
-    print('from the back data', request.data)
+    # print('from the back data', request.data)
 
     if request.method == 'DELETE':
         album_song = AlbumSong.query.filter_by(

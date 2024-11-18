@@ -7,14 +7,16 @@ function PlaylistTile({user, name, playlistId, onClick, handleDelete}) {
         <div
         className="playlist-tile"
         onClick={onClick}>
-            <h4>{name}</h4>
+            <div className="top-part">
+                <h4>{name}</h4>
+                <button onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(playlistId);
+                }} className="delete-button">
+                    <IoTrashSharp />
+                </button>
+            </div>
             <p>Playlist . {user}</p>
-            <button onClick={(e) => {
-                e.stopPropagation();
-                handleDelete(playlistId);
-            }} className="delete-button">
-                <IoTrashSharp />
-            </button>
         </div>
     )
 }

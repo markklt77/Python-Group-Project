@@ -47,7 +47,7 @@ export const fetchUserPlaylists = () => async (dispatch) => {
     const response = await fetch('/api/users/playlists/test')
     if (response.ok) {
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         dispatch(setPlaylists(data.playlists));
     }
 };
@@ -78,7 +78,7 @@ export const addSongToPlaylist = (playlistId, songId) => async (dispatch) => {
             const updatedPlaylistData = await updatedPlaylistResponse.json();
             dispatch(setSinglePlaylist(updatedPlaylistData));
         }
-        console.log(data)
+        // console.log(data)
     } else {
         const error = await response.json();
         throw new Error(error.error || "Failed to add song to playlist");
@@ -94,9 +94,9 @@ export const removeSongFromPlaylist = (playlistId, songId) => async (dispatch) =
     });
 
     if (response.ok) {
-        const data = await response.json();
+        // const data = await response.json();
         dispatch(removeSong(songId, playlistId));
-        console.log(data.message)
+        // console.log(data.message)
     } else {
         const error = await response.json();
         throw new Error(error.error || "Failed to remove song from playlist");
@@ -135,8 +135,8 @@ export const deletePlaylist = (playlistId) => async (dispatch) => {
         });
 
         if (response.ok) {
-            const data = await response.json();
-            console.log(data.message);
+            // const data = await response.json();
+            // console.log(data.message);
 
             dispatch(removePlaylist(playlistId));
         } else {
@@ -155,12 +155,13 @@ const initialState = {allPlaylists: {}, currentPlaylist: null};
 
 export default function playlistReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_PLAYLISTS:
+        case SET_PLAYLISTS:{
             const newState = { ...state, allPlaylists: {...state.allPlaylists}};
             action.playlists.forEach((playlist) => {
                 newState.allPlaylists[playlist.id] = playlist;
             });
             return newState;
+        }
         case SET_SINGLE_PLAYLIST:
             return { ...state, currentPlaylist: action.playlist}
 
