@@ -8,7 +8,7 @@ import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoPlaySharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
-import { getOneSong, deleteSong } from "../../redux/songs";
+import { getCurrentSong, getOneSong, deleteSong } from "../../redux/songs";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import { removeSongFromPlaylist } from "../../redux/playlists";
 import OpenModalButton from "../OpenModalButton"
@@ -78,9 +78,12 @@ function SongTile({ song, number }) {
 
         // const errors = {};
 
-        return await dispatch(likeSong(song.id))
+        await dispatch(likeSong(song.id))
             .then(setLiked(true))
             .then(setLikesCount(likesCount => likesCount + 1))
+
+        return await dispatch(getOneSong(song.id))
+
     }
 
     const handleUnlike = async (e) => {
@@ -88,13 +91,15 @@ function SongTile({ song, number }) {
 
         // const errors = {};
 
-        return await dispatch(unlikeSong(song.id))
+        await dispatch(unlikeSong(song.id))
             .then(setLiked(false))
             .then(setLikesCount(likesCount => likesCount - 1))
+
+        return await dispatch(getOneSong(song.id))
     }
 
     const handleClick = () => {
-        dispatch(getOneSong(song.id))
+        dispatch(getCurrentSong(song.id))
     }
 
     const removeSongPlaylist = async (e) => {

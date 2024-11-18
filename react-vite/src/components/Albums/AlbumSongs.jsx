@@ -86,7 +86,7 @@ import { likeSong, unlikeSong } from "../../redux/likes";
 import PlusButton from "../PlusButton"
 import DeleteSong from "./AlbumDeleteSong/AlbumDeleteSongModal";
 import { FaHeart } from "react-icons/fa";
-import { getOneSong } from "../../redux/songs";
+import { getOneSong, getCurrentSong } from "../../redux/songs";
 import { IoPlaySharp } from "react-icons/io5";
 import { thunkRemoveSong, thunkOneAlbum } from '../../redux/albums'
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
@@ -161,9 +161,11 @@ function AlbumSongs({ song, number }) {
 
         // const errors = {};
 
-        return await dispatch(likeSong(number))
+        await dispatch(likeSong(number))
             .then(setLiked(true))
             .then(setLikesCount(likesCount => likesCount + 1))
+
+        return await dispatch(getOneSong(song.id))
     }
 
     const handleUnlike = async (e) => {
@@ -171,13 +173,15 @@ function AlbumSongs({ song, number }) {
 
         // const errors = {};
 
-        return await dispatch(unlikeSong(number))
+        await dispatch(unlikeSong(number))
             .then(setLiked(false))
             .then(setLikesCount(likesCount => likesCount - 1))
+
+        return await dispatch(getOneSong(song.id))
     }
 
     const handleClick = () => {
-        dispatch(getOneSong(song.id))
+        dispatch(getCurrentSong(song.id))
     }
 
     return (

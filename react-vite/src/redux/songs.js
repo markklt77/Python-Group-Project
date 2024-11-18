@@ -1,10 +1,16 @@
 const SET_SONGS = 'songs/setSongs'
+const SET_ONE = 'songs/setOne'
 const SELECTED_SONG = 'songs/selectedSong'
 
 // Action creators
 const setAllSongs = songs => ({
     type: SET_SONGS,
     songs
+})
+
+const setOneSong = song => ({
+    type: SET_ONE,
+    song
 })
 
 const setCurrentSong = song => ({
@@ -26,6 +32,16 @@ export const getAllSongs = () => async dispatch => {
 }
 
 export const getOneSong = (id) => async dispatch => {
+    const response = await fetch(`/api/songs/${id}`);
+    if (response.ok) {
+		const data = await response.json();
+		dispatch(setOneSong(data));
+	}
+    return response
+}
+
+// For playback
+export const getCurrentSong = (id) => async dispatch => {
     const response = await fetch(`/api/songs/${id}`);
     if (response.ok) {
 		const data = await response.json();
@@ -94,6 +110,14 @@ function songsReducer(state = initialState, action) {
                 all: { ...flatSongs },
                 current: { ...state.current }
             }
+        }
+        case SET_ONE:{
+            const newState = {
+                all: { ...state.all },
+                current: { ...state.song }
+            }
+            newState[action.song.id] = song
+            return newState
         }
         case SELECTED_SONG:
             return {
