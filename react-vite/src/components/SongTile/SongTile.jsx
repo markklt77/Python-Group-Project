@@ -16,6 +16,7 @@ import UpdateSongModal from "../SongFormModal/UpdateSongModal"
 import "./song-tile.css";
 
 
+
 function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
@@ -104,7 +105,9 @@ function SongTile({ song, number }) {
 
         // console.log(parseInt(playlistId), number)
 
-        return await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
+        await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
+
+
     }
 
     const deleteASong = async e => {
