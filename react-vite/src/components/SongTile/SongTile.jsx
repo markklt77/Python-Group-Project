@@ -19,12 +19,7 @@ import "./song-tile.css";
 import { thunkOneAlbum, thunkRemoveSong } from "../../redux/albums";
 
 
-<<<<<<< HEAD
-
-function SongTile({ song, number }) {
-=======
 function SongTile({ song, number, refresh }) {
->>>>>>> 1df7f407b26d3fd38cbe51593db19c1d3f14dbdd
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
