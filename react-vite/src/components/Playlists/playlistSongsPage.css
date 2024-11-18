@@ -20,9 +20,13 @@
     cursor: pointer;
 }
 
-/* .playlist-tile:hover .delete-button{
+/* .playlist-tile:hover .delete-button-playlist{
     display: block;
 } */
+
+.delete-button-playlist:hover {
+    color: red;
+}
 
 .top-part {
     display: flex;
@@ -34,9 +38,18 @@
     all: unset;
     cursor: pointer;
     /* background-color: transparent; */
-    padding-right: 1.5vmin;
-    margin-top: 0.45vmin;
+    /* padding-right: 1.5vmin;
+    margin-top: 4vmin; */
     display: none;
+    position: absolute;
+    /* top: 50%;
+    left: 50%; */
+    transform: translate(-175%, 30%);
+
+}
+
+.parent-div-of-playlist-button {
+    position: relative;
 }
 
 .top-part h4 {
