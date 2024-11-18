@@ -162,9 +162,14 @@ export default function playlistReducer(state = initialState, action) {
             });
             return newState;
         }
-        case SET_SINGLE_PLAYLIST:
-            return { ...state, currentPlaylist: action.playlist}
+        case SET_SINGLE_PLAYLIST:{
+            const newState = { ...state, currentPlaylist: action.playlist}
 
+            if (newState.allPlaylists[action.playlist.id]) {
+                newState.allPlaylists[action.playlist.id] = action.playlist
+            }
+            return newState
+        }
         case ADD_SONG_TO_PLAYLIST: {
             const updatedPlaylist = { ...state.allPlaylists[action.playlistId] };
             updatedPlaylist.songs = [...updatedPlaylist.songs, action.song];
@@ -183,6 +188,7 @@ export default function playlistReducer(state = initialState, action) {
             updatedPlaylist.songs = updatedPlaylist.songs.filter(
                 (song) => song.id !== action.songId
             );
+            console.log(updatedPlaylist)
             return {
                 ...state,
                 allPlaylists: {
