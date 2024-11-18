@@ -8,7 +8,7 @@ import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoPlaySharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
-import songsReducer, { getOneSong, deleteSong } from "../../redux/songs";
+import { getOneSong, deleteSong } from "../../redux/songs";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import { removeSongFromPlaylist } from "../../redux/playlists";
 import OpenModalButton from "../OpenModalButton"

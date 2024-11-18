@@ -98,7 +98,7 @@ function AlbumsPage() {
         }
     }
 
-    const toggleNameChange = (e) => {
+    const toggleNameChange = () => {
         // e.stopPropagation()
         setChangeName(true)
         setAddSong(false)
@@ -108,7 +108,7 @@ function AlbumsPage() {
             setShowForms(true)
         }
     };
-    const closeAddSong = (e) => {
+    const closeAddSong = () => {
         // e.stopPropagation()
         setAddSong(false)
         closeForm()
