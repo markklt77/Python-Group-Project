@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { addSongToPlaylist } from "../../redux/playlists";
@@ -12,6 +12,12 @@ function PlaylistSongModal({id}) {
 
   const playlists = useSelector(state => state.playlists.allPlaylists)
   // console.log(playlists)
+
+  useEffect(() => {
+    if (playlists.length > 0 && !playlistId) {
+      setPlaylistId(playlists[0].id);
+    }
+  }, [playlists, playlistId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
