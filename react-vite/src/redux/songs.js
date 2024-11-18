@@ -116,7 +116,7 @@ function songsReducer(state = initialState, action) {
                 all: { ...state.all },
                 current: { ...state.song }
             }
-            newState[action.song.id] = song
+            newState[action.song.id] = action.song
             return newState
         }
         case SELECTED_SONG:
