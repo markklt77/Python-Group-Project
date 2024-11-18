@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkAllAlbums, thunkMakeAlbum } from "../../redux/albums";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function AlbumFormModal({ refresh, addSong }) {
+function AlbumFormModal({ refresh }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [errors, setErrors] = useState({});
@@ -12,7 +12,7 @@ function AlbumFormModal({ refresh, addSong }) {
     // const [showForms, setShowForms] = useState(false)
     // const [disabled, setDisabled] = useState(false)
     const user = useSelector(state => state.session.user)
-    // let navigate = useNavigate()
+    let navigate = useNavigate()
     // console.log(user.id)
     let albums = useSelector(state => state.albums.all)
 
@@ -41,7 +41,7 @@ function AlbumFormModal({ refresh, addSong }) {
             const newAlbum = albumArray[albumArray.length - 1];
             if (newAlbum) {
                 dispatch(thunkAllAlbums())
-                .then(() => addSong(newAlbum))
+                // .then(() => addSong(newAlbum))
                 .then(() => refresh())
                 .then(() => closeModal())
                 .then(()=> navigate(`/albums/${newAlbum.id}`))

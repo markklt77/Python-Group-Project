@@ -15,9 +15,9 @@
     height: 30px;
     color: white;
     display: flex;
-    width: 180px;
+    width: 120px;
     align-items: center;
-    margin-left: 220px;
+    margin-left: 260px;
     justify-content: center;
 }
 
@@ -49,6 +49,9 @@
     align-items: center;
     margin: 25px 18px;
 }
+.side-head:hover {
+    cursor: pointer;
+}
 
 .faplus {
     font-size: 23px;
@@ -56,6 +59,18 @@
 
 .side-filters {
     margin: 0 10px;
+}
+
+.filter-button-selected:hover{
+    cursor: pointer;
+
+}
+.filter-buttons:hover{
+    cursor: pointer;
+
+}
+.filter-buttons-my-album{
+    cursor: pointer;
 }
 
 .filter-buttons {

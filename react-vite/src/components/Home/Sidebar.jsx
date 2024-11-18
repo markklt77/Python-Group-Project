@@ -12,10 +12,10 @@ function Sidebar() {
     const [album, setAlbum] = useState(false)
     const [playlist, setPlaylist] = useState(true)
     const [showForms, setShowForms] = useState(false)
-    const [addSongs, setAddSongs] = useState(false)
+    // const [addSongs, setAddSongs] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
     const [newAlbum, setNewAlbum] = useState(null)
-    const [myAlbum, setMyAlbum] = useState(false)
+    // const [myAlbum, setMyAlbum] = useState(false)
     let albums = useSelector(state => state.albums.all)
     const ulRef = useRef()
     let navigate = useNavigate()
@@ -27,10 +27,10 @@ function Sidebar() {
         setHelpWithRefresh(prev => prev + 1)
     }
 
-    let addSong = (album) => {
-        setAddSongs(true)
-        setNewAlbum(album)
-    }
+    // let addSong = (album) => {
+    //     setAddSongs(true)
+    //     setNewAlbum(album)
+    // }
 
 
     const isAlbum = () => {
@@ -68,10 +68,7 @@ function Sidebar() {
     }, [showForms])
 
     const closeForm = () => setShowForms(false)
-    // const closeAddSong = () => {
-    //     setAddSongs(false)
-    //     setNewAlbum(null)
-    // }
+
 
     return (
         <>
@@ -97,7 +94,7 @@ function Sidebar() {
                         <OpenModalMenuItem
                             itemText='Create Album'
                             onItemClick={closeForm}
-                            modalComponent={<AlbumFormModal addSong={addSong} refresh={refresh} />}
+                            modalComponent={<AlbumFormModal refresh={refresh} />}
                         />
                     </div>
                 )}

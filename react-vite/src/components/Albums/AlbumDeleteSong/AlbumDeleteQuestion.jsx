@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+// import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 
 function AlbumDeleteQuestion({ handleDeleteSong, song }) {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const [deleteSong, setDeleteSong] = useState()
-    const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (deleteSong) {
+        if (deleteSong === true) {
             // console.log(song)
             handleDeleteSong(song.id)
-            closeModal()
-        } else {
-            closeModal()
         }
+            closeModal()
+
     };
 
 
@@ -28,18 +27,18 @@ function AlbumDeleteQuestion({ handleDeleteSong, song }) {
 
     return (
         <>
-            {errors.server && <p>{errors.server}</p>}
+            {/* {errors.server && <p>{errors.server}</p>} */}
             <form onSubmit={handleSubmit}>
                 <h3>Would you like to delete your song from you album</h3>
 
                 <div>
-                    <input type="radio" onChange={()=>setDeleteSong(true)}/>
-                    <label>Yes, delete the song</label>
+                    <input  type="radio" checked={deleteSong === true} onChange={()=>setDeleteSong(true)}/>
+                    <label style={{color:'white'}}>Yes, delete the song</label>
                 </div>
 
                 <span>
-                    <input type="radio" onChange={()=>setDeleteSong(false)} />
-                    <label>No, do not delete the song</label>
+                    <input type="radio" checked={deleteSong === false} onChange={()=>setDeleteSong(false)} />
+                    <label style={{color:'white'}}>No, do not delete the song</label>
                 </span>
                 <div>
                     <button type='submit'>Submit</button>
