@@ -87,8 +87,6 @@ function SongTile({ song, number }) {
         await dispatch(likeSong(song.id))
             .then(setLiked(true))
             .then(setLikesCount(likesCount => likesCount + 1))
-        // .then(() => refresh())
-
         return await dispatch(getAllSongs())
     }
 
@@ -102,7 +100,7 @@ function SongTile({ song, number }) {
             .then(setLikesCount(likesCount => likesCount - 1))
 
         return await dispatch(getAllSongs())
-        // .then(() => refresh())
+
     }
 
     const handleClick = () => {
@@ -116,7 +114,9 @@ function SongTile({ song, number }) {
 
         // console.log(parseInt(playlistId), number)
 
-        return await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
+        await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
+
+
     }
 
     const deleteASong = async e => {

@@ -174,7 +174,6 @@ function AlbumsPage() {
                                     song={song}
                                     number={i + 1}
                                     key={`song${song.id}`}
-                                    // refresh={refresh}
                                 />
                             ))}
                         </div>

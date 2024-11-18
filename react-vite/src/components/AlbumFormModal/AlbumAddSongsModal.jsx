@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkAllAlbums } from "../../redux/albums";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import AlbumSongTile from "../Albums/AlbumSongTile";
 import { thunkAddSong } from "../../redux/albums";
 import './albumFormModal.css'
@@ -10,6 +10,7 @@ import './albumFormModal.css'
 
 function AlbumAddSongModal({ refresh }) {
     const dispatch = useDispatch();
+    let {albumId} = useParams()
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const user = useSelector(state => state.session.user)
@@ -29,7 +30,7 @@ function AlbumAddSongModal({ refresh }) {
         const serverResponse = await dispatch(
             thunkAddSong({
                 songs: selected,
-                id: album[album.length - 1].id
+                id: albumId
             })
         );
         if (serverResponse) {

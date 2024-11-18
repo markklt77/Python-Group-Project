@@ -1,26 +1,29 @@
 // import { getAllSongs } from "../../redux/songs";
+import { useEffect } from "react";
 import SongTile from "../SongTile";
-// import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+// import { getAllSongs } from "../../redux/songs";
+import { useParams } from "react-router-dom";
+import { fetchPlaylistById } from "../../redux/playlists";
+
 
 function PlaylistSongsPage() {
     const playlist = useSelector(state => state.playlists.currentPlaylist);
-    // const [helpWithRefresh, setHelpWithRefresh] = useState(0)
-    // let dispatch = useDispatch()
+    const { playlistId } = useParams();
+    let dispatch = useDispatch();
 
-    // let refresh = () => {
-    //     setHelpWithRefresh(prev => prev + 1)
-    // }
-    // useEffect(() => {
-    //     dispatch(getAllSongs())
-    // }, [dispatch, helpWithRefresh])
+
+    useEffect(() => {
+        if (playlistId) {
+            dispatch(fetchPlaylistById(playlistId));
+        }
+    }, [dispatch, playlistId])
+
 
     if (!playlist) {
-        // Return a loading state or an empty state if playlist is not available
+
         return <p>Loading playlist...</p>;
     }
-
-
 
 
 
@@ -41,7 +44,6 @@ function PlaylistSongsPage() {
                                 key={song.id}
                                 song={song}
                                 number={index + 1}
-                            // refresh={refresh}
                             />
                         );
                     })
