@@ -17,7 +17,7 @@ function PlaylistSongModal({id}) {
     if (Object.keys(playlists)) {
       setPlaylistId(Object.values(playlists)[0].id);
     }
-  }, [playlists, playlistId]);
+  }, [playlists]);
 
 
   const handleSubmit = async (e) => {
