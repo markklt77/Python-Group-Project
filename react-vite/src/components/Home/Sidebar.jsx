@@ -14,7 +14,7 @@ function Sidebar() {
     const [showForms, setShowForms] = useState(false)
     // const [addSongs, setAddSongs] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
-    const [newAlbum, setNewAlbum] = useState(null)
+    // const [newAlbum, setNewAlbum] = useState(null)
     // const [myAlbum, setMyAlbum] = useState(false)
     let albums = useSelector(state => state.albums.all)
     const ulRef = useRef()
