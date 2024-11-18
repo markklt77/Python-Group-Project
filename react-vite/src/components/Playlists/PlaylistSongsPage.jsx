@@ -1,13 +1,26 @@
 import SongTile from "../SongTile";
-// import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchPlaylistById } from "../../redux/playlists";
+
 
 function PlaylistSongsPage() {
+
+    const { playlistId } = useParams();
+    const dispatch = useDispatch();
     const playlist = useSelector(state => state.playlists.currentPlaylist);
+
+    useEffect(() => {
+        if (playlistId) {
+            dispatch(fetchPlaylistById(playlistId))
+        }
+    }, [dispatch, playlistId])
+
 
 
     if (!playlist) {
-        // Return a loading state or an empty state if playlist is not available
+
         return <p>Loading playlist...</p>;
     }
 
