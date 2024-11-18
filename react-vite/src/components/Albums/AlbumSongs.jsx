@@ -203,7 +203,7 @@ function AlbumSongs({ song, number }) {
                 />
                 <FaHeart className="like-button" onClick={!liked ? handleLike : handleUnlike} style={liked ? { color: "rgb(54, 58, 121)" } : ''} />
                 <span className="likes-count">{likesCount}</span>
-                {user.id === album.artist_id && (
+                {user && user.id === album.artist_id && (
                     <DeleteSong
                         modalComponent={<AlbumDeleteQuestion song={song} handleDeleteSong={handleDeleteSong} />} />
                 )}

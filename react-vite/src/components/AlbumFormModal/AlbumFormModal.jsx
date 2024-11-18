@@ -51,12 +51,11 @@ function AlbumFormModal({ refresh }) {
 
         return (
             <>
-                <h1>Create Album</h1>
                 {errors.title && <p>{errors.title}</p>}
                 {!user && <p>Must be logged in to create an album</p>}
 
-                <form onSubmit={handleSubmit}>
-                    <label>
+                <form className="playlist-create-form" onSubmit={handleSubmit}>
+                    <label className="playlist-name-field">
                         Title
                         <input
                             type="text"

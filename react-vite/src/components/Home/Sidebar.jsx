@@ -4,48 +4,65 @@ import { useEffect, useRef, useState } from "react";
 import PlaylistPage from "../Playlists/PlaylistsPage";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CreatePlaylistForm from "../Playlists/PlaylistForm";
 import { useNavigate } from "react-router-dom";
+import { thunkAllAlbums, thunkOneAlbum } from "../../redux/albums";
 
 function Sidebar() {
     const [album, setAlbum] = useState(false)
     const [playlist, setPlaylist] = useState(true)
     const [showForms, setShowForms] = useState(false)
-    // const [addSongs, setAddSongs] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
-    // const [newAlbum, setNewAlbum] = useState(null)
-    // const [myAlbum, setMyAlbum] = useState(false)
+    const [myAlbum, setMyAlbum] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
     let albums = useSelector(state => state.albums.all)
+    let user = useSelector(state => state.session.user)
     const ulRef = useRef()
     let navigate = useNavigate()
     // const recentAlbumRef = useRef(null);
-    // let albumArr = Object.values(albums)
+    let dispatch = useDispatch()
+    let albumArr = Object.values(albums)
+
+    let ownersAlbums
+    if (albumArr && user) {
+        ownersAlbums = albumArr.filter((album) => {
+            return album.artist_id === user.id
+        })
+    }
+
+
+    useEffect(() => {
+        dispatch(thunkAllAlbums()).then(() => setIsLoaded(true))
+    }, [dispatch]);
+
 
 
     let refresh = () => {
         setHelpWithRefresh(prev => prev + 1)
     }
 
-    // let addSong = (album) => {
-    //     setAddSongs(true)
-    //     setNewAlbum(album)
-    // }
+
 
 
     const isAlbum = () => {
         setAlbum(true)
         setPlaylist(false)
+        setMyAlbum(false)
 
     }
     const isPlaylist = () => {
         setPlaylist(true)
         setAlbum(false)
+        setMyAlbum(false)
+    }
 
-    }
     const isMyAlbum = () => {
-        navigate('/albums')
+        setPlaylist(false)
+        setAlbum(false)
+        setMyAlbum(true)
     }
+
 
     const toggleMenu = (e) => {
         e.stopPropagation();
@@ -69,6 +86,12 @@ function Sidebar() {
 
     const closeForm = () => setShowForms(false)
 
+    let handleClick = (id) => {
+        dispatch(thunkOneAlbum(id))
+            .then(() => navigate(`/albums/${id}`))
+
+    };
+
 
     return (
         <>
@@ -78,23 +101,24 @@ function Sidebar() {
                     <FiPlus onClick={toggleMenu} className="faplus" />
                 </div>
 
-                    {showForms && playlist && (
-                        <div>
-                            <OpenModalMenuItem
-                                itemText={<span className="create-playlist-text">Create Playlist</span>}
-                                onItemClick={closeForm}
-                                modalComponent={<CreatePlaylistForm/>}
-                                newClass={"create-playlist-open-modal-button"}
-                            />
-                        </div>
-                    )}
+                {showForms && playlist && (
+                    <div>
+                        <OpenModalMenuItem
+                            itemText={<span className="create-playlist-text">Create Playlist</span>}
+                            onItemClick={closeForm}
+                            modalComponent={<CreatePlaylistForm />}
+                            newClass={"create-playlist-open-modal-button"}
+                        />
+                    </div>
+                )}
 
-                {showForms && album && (
-                    <div className="sidebar-create-album">
+                {showForms && (album || myAlbum) && (
+                    <div>
                         <OpenModalMenuItem
                             itemText='Create Album'
                             onItemClick={closeForm}
                             modalComponent={<AlbumFormModal refresh={refresh} />}
+                            newClass={"create-playlist-open-modal-button"}
                         />
                     </div>
                 )}
@@ -106,22 +130,41 @@ function Sidebar() {
                     <button onClick={isAlbum} className={album ? 'filter-button-selected' : 'filter-buttons'}>
                         Albums
                     </button>
-                    <span>
-                        <button onClick={isMyAlbum} className='filter-buttons-my-album'>
+                    {user && (
+                        <button onClick={isMyAlbum} className={myAlbum ? 'filter-button-selected' : 'filter-buttons'}>
                             My Albums
                         </button>
-                    </span>
+                    )}
+
+
 
                 </div>
             </div>
             <div>
-                {album === true ? (
+                {album === true && (
                     <AlbumTile
                         albums={albums}
                         helpWithRefresh={helpWithRefresh}
                     />
-                ) : (
+                )}
+
+                {playlist === true && (
                     <PlaylistPage />
+                )}
+
+                {ownersAlbums && myAlbum === true && isLoaded && (
+                    <div className='div-container-all-albums'>
+                        <h4 className='album-tile-h4-tag'>All Available Albums</h4>
+                        {ownersAlbums.length > 0 ? (
+                            ownersAlbums.map(album => {
+                                return <div key={album.id} className='album-tile'>
+                                    <p onClick={() => handleClick(album.id)} className='select-album'>{album.title}</p>
+                                </div>
+                            })
+                        ) : (
+                            <p>No available albums.</p>
+                        )}
+                    </div>
                 )}
 
             </div>
