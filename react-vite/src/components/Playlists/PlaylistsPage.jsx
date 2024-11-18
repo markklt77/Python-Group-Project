@@ -37,24 +37,30 @@ function PlaylistPage() {
 
     return (
         <div className={`playlists-container playlist-page`}>
-            {Object.values(playlists).length > 0 ? (
-                Object.values(playlists).map((playlist) => (
-                    <PlaylistTile
-                        className="playlist-tile"
-                        key={playlist.id}
-                        id={playlist.id}
-                        playlistId={playlist.id}
-                        name={playlist.name}
-                        user={user ? user.username : "Loading User"}
-                        onClick={() => handlePlaylistClick(playlist.id)}
-                        handleDelete={handleDelete}
-                    />
-                ))
+          {user ? (
+            Object.values(playlists).length > 0 ? (
+              Object.values(playlists).map((playlist) => (
+                <PlaylistTile
+                  className="playlist-tile"
+                  key={playlist.id}
+                  id={playlist.id}
+                  playlistId={playlist.id}
+                  name={playlist.name}
+                  user={user.username}
+                  onClick={() => handlePlaylistClick(playlist.id)}
+                  handleDelete={handleDelete}
+                />
+              ))
             ) : (
-                <p>No playlists found.</p>
-            )}
+              <p>No playlists found.</p>
+            )
+          ) : (
+            <div className="login-prompt">
+              <p>Please log in to see your playlists.</p>
+            </div>
+          )}
         </div>
-    );
+      );
 }
 
 export default PlaylistPage;
