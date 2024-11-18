@@ -13,17 +13,23 @@ import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import { removeSongFromPlaylist } from "../../redux/playlists";
 import OpenModalButton from "../OpenModalButton"
 import UpdateSongModal from "../SongFormModal/UpdateSongModal"
+import DeleteSong from '../Albums/AlbumDeleteSong/AlbumDeleteSongModal'
+import AlbumDeleteQuestion from '../Albums/AlbumDeleteSong/AlbumDeleteQuestion'
 import "./song-tile.css";
+import { thunkOneAlbum, thunkRemoveSong } from "../../redux/albums";
 
 
-function SongTile({ song, number }) {
+function SongTile({ song, number, refresh }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
     // const [managePlaylist, setManagePlaylist] = useState(false)
     const dispatch = useDispatch()
     const location = useLocation()
+    const [errors, setErrors] = useState({})
     const { playlistId } = useParams()
+    let { albumId } = useParams()
+    let album = useSelector(state => state.albums.all[albumId])
 
 
     // format month
@@ -39,7 +45,7 @@ function SongTile({ song, number }) {
     let likesAmount = count.length
     let user = useSelector(state => state.session.user)
     let currentUserId
-    if (user){
+    if (user) {
         currentUserId = user.id
     }
     // console.log(count)
@@ -81,9 +87,7 @@ function SongTile({ song, number }) {
         await dispatch(likeSong(song.id))
             .then(setLiked(true))
             .then(setLikesCount(likesCount => likesCount + 1))
-
-        return await dispatch(getOneSong(song.id))
-
+            .then(() => refresh())
     }
 
     const handleUnlike = async (e) => {
@@ -96,6 +100,7 @@ function SongTile({ song, number }) {
             .then(setLikesCount(likesCount => likesCount - 1))
 
         return await dispatch(getOneSong(song.id))
+            .then(() => refresh())
     }
 
     const handleClick = () => {
@@ -118,6 +123,27 @@ function SongTile({ song, number }) {
         await dispatch(deleteSong(song.id))
     }
 
+
+    //from AlbumSong
+    let handleDeleteSong = async (songId) => {
+        let songInfo = {
+            songId,
+            albumId: Number(albumId)
+        }
+        let serverResponse = await dispatch(thunkRemoveSong(songInfo))
+
+        if (serverResponse.message) {
+            await dispatch(thunkOneAlbum(albumId)).then(() => {
+                alert(serverResponse.message)
+            })
+
+
+        } else {
+            setErrors(serverResponse)
+            alert(errors.error)
+        }
+    }
+
     return (
         <div className="song-tile" key={`song${song.id}`}>
             {hovered ?
@@ -132,7 +158,10 @@ function SongTile({ song, number }) {
                 <p id="num">{number}</p>
             }
             <p>{song.title}</p>
-            <p>{song.album.title}</p>
+            {!location.pathname.includes('albums') && (
+                <p>{song.album.title}</p>
+            )}
+
             <p>
                 {`${month} ${date.getDay()}, ${date.getFullYear()}`}
             </p>
@@ -152,6 +181,10 @@ function SongTile({ song, number }) {
                         />
                         <IoTrashSharp onClick={deleteASong} />
                     </> : ''}
+                {location.pathname.includes('albums') && user && user.id === album.artist_id && (
+                    <DeleteSong
+                        modalComponent={<AlbumDeleteQuestion song={song} handleDeleteSong={handleDeleteSong} />} />
+                )}
             </div>
 
         </div>
