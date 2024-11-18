@@ -30,7 +30,7 @@
     align-items: center;
 }
 
-.delete-button {
+.delete-button-playlist {
     all: unset;
     cursor: pointer;
     /* background-color: transparent; */
