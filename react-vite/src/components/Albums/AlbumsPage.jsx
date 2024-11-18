@@ -40,11 +40,14 @@ function AlbumsPage() {
         setShowForms(false)
     }, [dispatch, albumId, helpWithRefresh])
 
+    let ownersAlbums
 
+    if (user) {
+        ownersAlbums = Object.values(albums).filter((album) => {
+            return album.artist_id === user.id
+        })
+    }
 
-    let ownersAlbums = Object.values(albums).filter((album) => {
-        return album.artist_id === user.id
-    })
 
 
     // console.log(ownersAlbums)
@@ -124,7 +127,7 @@ function AlbumsPage() {
                     <div className="content-header">
                         <div>
                             <h2 className='album-page-title'>List of songs for {album.title}</h2>
-                            {user.id === album.artist_id && (
+                            {user && user.id === album.artist_id && (
                                 <span>
                                     <button
                                         className={'filter-buttons'}
@@ -162,7 +165,7 @@ function AlbumsPage() {
 
                     </div>
 
-                    {albumSongs.length > 0 ? (
+                    {albumSongs && albumSongs.length > 0 ? (
                         <div className="container-song-tile">
                             {albumSongs.map((song, i) => (
                                 <AlbumSongs
@@ -186,7 +189,7 @@ function AlbumsPage() {
                         <h2 className='album-page-title'>List of all your albums</h2>
                     </div>
                     <div>
-                        {ownersAlbums.length > 0 && isLoaded ? (
+                        {ownersAlbums && ownersAlbums.length > 0 && isLoaded ? (
                             ownersAlbums.map(album => {
                                 return <div key={album.id} className='album-tile'>
                                     <p onClick={() => handleClick(album.id)} className='select-album'>{album.title}</p>

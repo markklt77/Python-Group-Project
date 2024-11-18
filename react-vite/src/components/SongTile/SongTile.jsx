@@ -37,7 +37,11 @@ function SongTile({ song, number }) {
 
     let count = useSelector(state => state.songs.all[song.id].likes)
     let likesAmount = count.length
-    let currentUserId = useSelector(state => state.session.user.id)
+    let user = useSelector(state => state.session.user)
+    let currentUserId
+    if (user){
+        currentUserId = user.id
+    }
     // console.log(count)
 
     const currentlyLiked = count.some(like => like.artist_id === currentUserId)
@@ -48,7 +52,7 @@ function SongTile({ song, number }) {
     useEffect(() => {
         // reference to SongTile
         const tiles = document.getElementsByClassName("song-tile")
-        const tile = tiles[number-1]
+        const tile = tiles[number - 1]
 
         tile.addEventListener("mouseenter", () => {
             setHovered(true)
@@ -75,8 +79,8 @@ function SongTile({ song, number }) {
         // const errors = {};
 
         return await dispatch(likeSong(song.id))
-        .then(setLiked(true))
-        .then(setLikesCount(likesCount => likesCount + 1))
+            .then(setLiked(true))
+            .then(setLikesCount(likesCount => likesCount + 1))
     }
 
     const handleUnlike = async (e) => {
@@ -85,8 +89,8 @@ function SongTile({ song, number }) {
         // const errors = {};
 
         return await dispatch(unlikeSong(song.id))
-        .then(setLiked(false))
-        .then(setLikesCount(likesCount => likesCount - 1))
+            .then(setLiked(false))
+            .then(setLikesCount(likesCount => likesCount - 1))
     }
 
     const handleClick = () => {
@@ -110,7 +114,7 @@ function SongTile({ song, number }) {
 
     return (
         <div className="song-tile" key={`song${song.id}`}>
-            { hovered?
+            {hovered ?
                 <div id="play-button-container" >
                     <button
                         onClick={handleClick}
@@ -128,11 +132,11 @@ function SongTile({ song, number }) {
             </p>
             <div className="actions">
                 <PlusButton
-                modalComponent={<PlaylistSongModal id={song.id}/>}
+                    modalComponent={<PlaylistSongModal id={song.id} />}
                 />
-                <FaHeart className="like-button" onClick={ !liked ? handleLike : handleUnlike} style={ liked ? {color: "#4e53ae"} : ''} />
+                <FaHeart className="like-button" onClick={!liked ? handleLike : handleUnlike} style={liked ? { color: "#4e53ae" } : ''} />
                 <span className="likes-count">{likesCount}</span>
-                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist}  className="delete-button"/> : ''}
+                {location.pathname.includes("playlists") ? < IoTrashSharp onClick={removeSongPlaylist} className="delete-button" /> : ''}
                 {location.pathname.includes("manage-songs") ?
                     <>
                         <OpenModalButton
@@ -140,7 +144,7 @@ function SongTile({ song, number }) {
                             modalComponent={<UpdateSongModal />}
                             addClass="edit-button"
                         />
-                        <IoTrashSharp onClick={deleteASong}/>
+                        <IoTrashSharp onClick={deleteASong} />
                     </> : ''}
             </div>
 

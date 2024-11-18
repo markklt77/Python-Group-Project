@@ -174,10 +174,12 @@ function albumReducer(state = initialState, action) {
         }
         case GET_ONE_ALBUM: {
             let newState = { ...state }
+            let i = 0
             // console.log(newState)
             newState.selected = {}
             action.album.songs.forEach(song => {
-                newState.selected[song.id] = song
+                i += 1
+                newState.selected[i] = song
             })
             return newState
         }
