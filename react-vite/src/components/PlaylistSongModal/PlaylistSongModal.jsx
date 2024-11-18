@@ -6,7 +6,7 @@ import "./PlaylistSong.css";
 
 function PlaylistSongModal({id}) {
   const dispatch = useDispatch();
-  const [playlistId, setPlaylistId] = useState()
+  const [playlistId, setPlaylistId] = useState("")
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
