@@ -12,7 +12,7 @@ function PlaylistTile({user, name, playlistId, onClick, handleDelete}) {
                 <button onClick={(e) => {
                     e.stopPropagation();
                     handleDelete(playlistId);
-                }} className="delete-button">
+                }} className="delete-button-playlist">
                     <IoTrashSharp />
                 </button>
             </div>
