@@ -81,15 +81,16 @@ function Sidebar() {
                     <FiPlus onClick={toggleMenu} className="faplus" />
                 </div>
 
-                {showForms && playlist && (
-                    <div>
-                        <OpenModalMenuItem
-                            itemText='Create Playlist'
-                            onItemClick={closeForm}
-                            modalComponent={<CreatePlaylistForm />}
-                        />
-                    </div>
-                )}
+                    {showForms && playlist && (
+                        <div>
+                            <OpenModalMenuItem
+                                itemText={<span className="create-playlist-text">Create Playlist</span>}
+                                onItemClick={closeForm}
+                                modalComponent={<CreatePlaylistForm/>}
+                                newClass={"create-playlist-open-modal-button"}
+                            />
+                        </div>
+                    )}
 
                 {showForms && album && (
                     <div className="sidebar-create-album">

@@ -3,6 +3,7 @@ import * as playlistActions from "../../redux/playlists"
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import "./playlistSongsPage.css"
 
 function PlaylistPage() {
 
@@ -35,7 +36,7 @@ function PlaylistPage() {
 
 
     return (
-        <div className="playlists-container">
+        <div className={`playlists-container playlist-page`}>
             {Object.values(playlists).length > 0 ? (
                 Object.values(playlists).map((playlist) => (
                     <PlaylistTile
