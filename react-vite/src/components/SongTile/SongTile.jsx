@@ -8,7 +8,7 @@ import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoPlaySharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
-import { getCurrentSong, getOneSong, deleteSong } from "../../redux/songs";
+import { getCurrentSong, deleteSong, getAllSongs } from "../../redux/songs";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import { removeSongFromPlaylist } from "../../redux/playlists";
 import OpenModalButton from "../OpenModalButton"
@@ -19,7 +19,7 @@ import "./song-tile.css";
 import { thunkOneAlbum, thunkRemoveSong } from "../../redux/albums";
 
 
-function SongTile({ song, number, refresh }) {
+function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
@@ -87,7 +87,9 @@ function SongTile({ song, number, refresh }) {
         await dispatch(likeSong(song.id))
             .then(setLiked(true))
             .then(setLikesCount(likesCount => likesCount + 1))
-            .then(() => refresh())
+        // .then(() => refresh())
+
+        return await dispatch(getAllSongs())
     }
 
     const handleUnlike = async (e) => {
@@ -99,8 +101,8 @@ function SongTile({ song, number, refresh }) {
             .then(setLiked(false))
             .then(setLikesCount(likesCount => likesCount - 1))
 
-        return await dispatch(getOneSong(song.id))
-            .then(() => refresh())
+        return await dispatch(getAllSongs())
+        // .then(() => refresh())
     }
 
     const handleClick = () => {
