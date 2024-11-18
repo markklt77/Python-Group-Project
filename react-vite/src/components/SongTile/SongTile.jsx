@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { likeSong, unlikeSong } from "../../redux/likes";
 import PlusButton from "../PlusButton"
@@ -8,12 +8,13 @@ import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoPlaySharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
-import { getOneSong, deleteSong } from "../../redux/songs";
+import songsReducer, { getOneSong, deleteSong } from "../../redux/songs";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import { removeSongFromPlaylist } from "../../redux/playlists";
 import OpenModalButton from "../OpenModalButton"
 import UpdateSongModal from "../SongFormModal/UpdateSongModal"
 import "./song-tile.css";
+
 
 function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
@@ -34,6 +35,16 @@ function SongTile({ song, number }) {
     const month = months[date.getMonth()]
 
 
+    let count = useSelector(state => state.songs.all[song.id].likes)
+    let likesAmount = count.length
+    let currentUserId = useSelector(state => state.session.user.id)
+    // console.log(count)
+
+    const currentlyLiked = count.some(like => like.artist_id === currentUserId)
+
+    // console.log(currentlyLiked)
+
+
     useEffect(() => {
         // reference to SongTile
         const tiles = document.getElementsByClassName("song-tile")
@@ -46,7 +57,13 @@ function SongTile({ song, number }) {
         tile.addEventListener("mouseleave", () => {
             setHovered(false)
         })
-    })
+
+        setLikesCount(likesAmount)
+        setLiked(currentlyLiked)
+
+
+
+    }, [number, likesAmount, currentlyLiked])
 
     // console.log(location.pathname)
 
