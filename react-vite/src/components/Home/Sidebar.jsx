@@ -13,6 +13,7 @@ function Sidebar() {
     const [album, setAlbum] = useState(false)
     const [playlist, setPlaylist] = useState(true)
     const [showForms, setShowForms] = useState(false)
+    const [ownersAlbums, setOwnersAlbums] = useState([])
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
     const [myAlbum, setMyAlbum] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -24,18 +25,20 @@ function Sidebar() {
     let dispatch = useDispatch()
     let albumArr = Object.values(albums)
 
-    let ownersAlbums
-    if (albumArr && user) {
-        ownersAlbums = albumArr.filter((album) => {
-            return album.artist_id === user.id
-        })
-    }
+    useEffect(() => {
 
+        if (albumArr && user) {
+            setOwnersAlbums(albumArr.filter((album) => {
+                    return album.artist_id === user.id
+                })
+            )
+        }
+
+    }, [albumArr, user, setOwnersAlbums])
 
     useEffect(() => {
         dispatch(thunkAllAlbums()).then(() => setIsLoaded(true))
     }, [dispatch]);
-
 
 
     let refresh = () => {
@@ -43,19 +46,19 @@ function Sidebar() {
     }
 
 
-
-
     const isAlbum = () => {
         setAlbum(true)
         setPlaylist(false)
         setMyAlbum(false)
-
     }
+
+
     const isPlaylist = () => {
         setPlaylist(true)
         setAlbum(false)
         setMyAlbum(false)
     }
+
 
     const isMyAlbum = () => {
         setPlaylist(false)
