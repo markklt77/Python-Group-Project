@@ -3,7 +3,6 @@
 }
 
 
-
 .playlist-tile {
 
     padding-top: 0.3vmin;
@@ -21,9 +20,9 @@
     cursor: pointer;
 }
 
-.playlist-tile:hover .delete-button{
+/* .playlist-tile:hover .delete-button{
     display: block;
-}
+} */
 
 .top-part {
     display: flex;
