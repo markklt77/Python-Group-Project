@@ -47,7 +47,7 @@ function SongFormModal() {
         <div className="song-modal">
             <div className="modal-head">
                 <h2>Upload A New Song</h2>
-                {isLoading && <AiOutlineLoading3Quarters />}
+                {isLoading && <AiOutlineLoading3Quarters style={{color: "white"}}/>}
                 <p className="errors">
                     {errors.file ? errors.file :
                         ""
