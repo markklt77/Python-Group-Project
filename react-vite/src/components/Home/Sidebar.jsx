@@ -87,9 +87,10 @@ function Sidebar() {
                     {showForms && playlist && (
                         <div>
                             <OpenModalMenuItem
-                                itemText='Create Playlist'
+                                itemText={<span className="create-playlist-text">Create Playlist</span>}
                                 onItemClick={closeForm}
                                 modalComponent={<CreatePlaylistForm/>}
+                                newClass={"create-playlist-open-modal-button"}
                             />
                         </div>
                     )}
