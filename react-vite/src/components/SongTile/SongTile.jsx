@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { likeSong, unlikeSong } from "../../redux/likes";
 import PlusButton from "../PlusButton"
-// import { CiCirclePlus } from "react-icons/ci";
 import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoPlaySharp } from "react-icons/io5";
@@ -23,7 +22,6 @@ function SongTile({ song, number }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
-    // const [managePlaylist, setManagePlaylist] = useState(false)
     const dispatch = useDispatch()
     const location = useLocation()
     const [errors, setErrors] = useState({})
@@ -48,12 +46,8 @@ function SongTile({ song, number }) {
     if (user) {
         currentUserId = user.id
     }
-    // console.log(count)
 
     const currentlyLiked = count.some(like => like.artist_id === currentUserId)
-
-    // console.log(currentlyLiked)
-
 
     useEffect(() => {
         // reference to SongTile
@@ -71,12 +65,7 @@ function SongTile({ song, number }) {
         setLikesCount(likesAmount)
         setLiked(currentlyLiked)
 
-
-
     }, [number, likesAmount, currentlyLiked])
-
-    // console.log(location.pathname)
-
 
 
     const handleLike = async (e) => {
@@ -112,8 +101,6 @@ function SongTile({ song, number }) {
 
         // const errors = {};
 
-        // console.log(parseInt(playlistId), number)
-
         await dispatch(removeSongFromPlaylist(parseInt(playlistId), song.id))
 
 
@@ -139,7 +126,6 @@ function SongTile({ song, number }) {
                 alert(serverResponse.message)
             })
 
-
         } else {
             setErrors(serverResponse)
             alert(errors.error)
@@ -160,10 +146,7 @@ function SongTile({ song, number }) {
                 <p id="num">{number}</p>
             }
             <p>{song.title}</p>
-            {!location.pathname.includes('albums') && (
-                <p>{song.album.title}</p>
-            )}
-
+            <p>{song.album.title}</p>
             <p>
                 {`${month} ${date.getDay()}, ${date.getFullYear()}`}
             </p>

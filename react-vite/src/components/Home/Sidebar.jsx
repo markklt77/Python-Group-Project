@@ -13,7 +13,6 @@ function Sidebar() {
     const [album, setAlbum] = useState(false)
     const [playlist, setPlaylist] = useState(true)
     const [showForms, setShowForms] = useState(false)
-    const [ownersAlbums, setOwnersAlbums] = useState([])
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
     const [myAlbum, setMyAlbum] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -21,24 +20,19 @@ function Sidebar() {
     let user = useSelector(state => state.session.user)
     const ulRef = useRef()
     let navigate = useNavigate()
-    // const recentAlbumRef = useRef(null);
     let dispatch = useDispatch()
     let albumArr = Object.values(albums)
 
-    useEffect(() => {
+    const [ownersAlbums] = useState(
+        albumArr?.filter((album) => {
+            return album.artist_id === user?.id
+    }))
 
-        if (albumArr && user) {
-            setOwnersAlbums(albumArr.filter((album) => {
-                    return album.artist_id === user.id
-                })
-            )
-        }
-
-    }, [albumArr, user, setOwnersAlbums])
 
     useEffect(() => {
         dispatch(thunkAllAlbums()).then(() => setIsLoaded(true))
     }, [dispatch]);
+
 
 
     let refresh = () => {
@@ -50,15 +44,13 @@ function Sidebar() {
         setAlbum(true)
         setPlaylist(false)
         setMyAlbum(false)
+
     }
-
-
     const isPlaylist = () => {
         setPlaylist(true)
         setAlbum(false)
         setMyAlbum(false)
     }
-
 
     const isMyAlbum = () => {
         setPlaylist(false)

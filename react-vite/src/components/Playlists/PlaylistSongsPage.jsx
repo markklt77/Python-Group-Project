@@ -32,7 +32,12 @@ function PlaylistSongsPage() {
             <div className="content-header">
                 <h1>{playlist.name}</h1>
             </div>
-
+            <div className="song-labels">
+                <p id="num">#</p>
+                <p>Title</p>
+                <p>Album</p>
+                <p>Date Added</p>
+            </div>
             <div className="songs-list">
                 {playlist.songs.length > 0 ? (
                     playlist.songs.map((song, index) => {

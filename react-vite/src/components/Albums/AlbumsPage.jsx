@@ -52,10 +52,7 @@ function AlbumsPage() {
         dispatch(getAllSongs())
     }, [dispatch, helpWithRefresh])
 
-
-    // console.log(ownersAlbums)
     let handleDelete = () => {
-        // console.log(user.id, album.artist_id)
         if (user.id === album.artist_id) {
             let res = dispatch(thunkDeleteAlbum(albumId))
             if (res) {
@@ -104,7 +101,6 @@ function AlbumsPage() {
     }
 
     const toggleNameChange = () => {
-        // e.stopPropagation()
         setChangeName(true)
         setAddSong(false)
         if (showForms && changeName) {
@@ -114,7 +110,6 @@ function AlbumsPage() {
         }
     };
     const closeAddSong = () => {
-        // e.stopPropagation()
         setAddSong(false)
         closeForm()
     }
@@ -128,7 +123,7 @@ function AlbumsPage() {
                 <div>
                     <div className="content-header">
                         <div>
-                            <h2 className='album-page-title'>List of songs for {album.title}</h2>
+                            <h2 className='album-page-title'>{album.title}</h2>
                             {user && user.id === album.artist_id && (
                                 <span>
                                     <button
@@ -163,20 +158,26 @@ function AlbumsPage() {
 
                         </div>
 
-
-
                     </div>
 
                     {albumSongs && albumSongs.length > 0 ? (
-                        <div className="container-song-tile">
-                            {albumSongs.map((song, i) => (
-                                <SongTile
+                        <>
+                            <div className="song-labels">
+                                <p id="num">#</p>
+                                <p>Title</p>
+                                <p>Album</p>
+                                <p>Date Added</p>
+                            </div>
+                            <div className="container-song-tile">
+                                {albumSongs.map((song, i) => (
+                                    <SongTile
                                     song={song}
                                     number={i + 1}
                                     key={`song${song.id}`}
-                                />
-                            ))}
-                        </div>
+                                    />
+                                ))}
+                            </div>
+                        </>
                     ) : (
                         <p>This album needs some love</p>
                     )}
