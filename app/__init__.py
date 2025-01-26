@@ -15,7 +15,7 @@ from .api.playlist_routes import playlist_routes
 from .seeds import seed_commands
 from .config import Config
 
-app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
+app = Flask(__name__, static_folder='../react-app/dist', static_url_path='/')
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB
 
 # Setup login manager
