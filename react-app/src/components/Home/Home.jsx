@@ -6,7 +6,7 @@ import SongTile from "../SongTile";
 import "./home.css";
 
 function Home() {
-    const {isLoading, setIsLoading} = useLoading()
+    const { setIsLoading } = useLoading()
     const allSongsFlat = useSelector(state => state.songs.all)
     const arrSongs = Object.values(allSongsFlat)
     let dispatch = useDispatch()
@@ -14,7 +14,7 @@ function Home() {
     useEffect(() => {
         dispatch(thunkAllAlbums())
             .then(() => setIsLoading(false))
-    }, [dispatch]);
+    }, [dispatch, setIsLoading]);
 
     return (
         <div className="content">
