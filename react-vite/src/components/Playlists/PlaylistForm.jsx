@@ -28,8 +28,8 @@ function CreatePlaylistForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Playlist Name:</label>
+    <form className="playlist-create-form" onSubmit={handleSubmit}>
+      <label className="playlist-name-field" htmlFor="name">Playlist Name:</label>
       <input
         type="text"
         id="name"

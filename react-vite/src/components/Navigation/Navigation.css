@@ -6,7 +6,7 @@
 }
 
 .logo {
-  color: white;
+  color: rgb(28,212,100);
   font-size: 33px;
 }
 
@@ -55,8 +55,4 @@ ul {
 
 .profile-button-container li {
   padding: 5px 0;
-}
-
-.session-buttons {
-  /* margin-top: 20px; */
 }

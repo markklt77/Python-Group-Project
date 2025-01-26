@@ -3,6 +3,7 @@ import * as playlistActions from "../../redux/playlists"
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import "./playlistSongsPage.css"
 
 function PlaylistPage() {
 
@@ -35,25 +36,31 @@ function PlaylistPage() {
 
 
     return (
-        <div className="playlists-container">
-            {Object.values(playlists).length > 0 ? (
-                Object.values(playlists).map((playlist) => (
-                    <PlaylistTile
-                        className="playlist-tile"
-                        key={playlist.id}
-                        id={playlist.id}
-                        playlistId={playlist.id}
-                        name={playlist.name}
-                        user={user ? user.username : "Loading User"}
-                        onClick={() => handlePlaylistClick(playlist.id)}
-                        handleDelete={handleDelete}
-                    />
-                ))
+        <div className={`playlists-container playlist-page`}>
+          {user ? (
+            Object.values(playlists).length > 0 ? (
+              Object.values(playlists).map((playlist) => (
+                <PlaylistTile
+                  className="playlist-tile"
+                  key={playlist.id}
+                  id={playlist.id}
+                  playlistId={playlist.id}
+                  name={playlist.name}
+                  user={user.username}
+                  onClick={() => handlePlaylistClick(playlist.id)}
+                  handleDelete={handleDelete}
+                />
+              ))
             ) : (
-                <p>No playlists found.</p>
-            )}
+              <p>No playlists found.</p>
+            )
+          ) : (
+            <div className="login-prompt">
+              <p>Please log in to see your playlists.</p>
+            </div>
+          )}
         </div>
-    );
+      );
 }
 
 export default PlaylistPage;

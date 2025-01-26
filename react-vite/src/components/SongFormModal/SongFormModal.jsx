@@ -13,9 +13,9 @@ function SongFormModal() {
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch()
     const { closeModal } = useModal();
-
     const handleSubmit = async e => {
         e.preventDefault();
+
         const formData = new FormData();
         formData.append("file", file)
         formData.append("title", title)
@@ -27,10 +27,11 @@ function SongFormModal() {
 
         const res = await dispatch(uploadSong(formData))
             .then(res => res.json())
-            // .catch(err => {
-            //     validate = {...err}
-            //     return err
-            // })
+            .then(() => closeModal())
+        // .catch(err => {
+        //     validate = {...err}
+        //     return err
+        // })
 
 
         if (res.file.length) {
@@ -46,9 +47,9 @@ function SongFormModal() {
         <div className="song-modal">
             <div className="modal-head">
                 <h2>Upload A New Song</h2>
-                { isLoading && <AiOutlineLoading3Quarters /> }
+                {isLoading && <AiOutlineLoading3Quarters style={{color: "white"}}/>}
                 <p className="errors">
-                    { errors.file? errors.file :
+                    {errors.file ? errors.file :
                         ""
                     }
                 </p>
@@ -84,7 +85,9 @@ function SongFormModal() {
 
                 <button
                     type="submit"
-                    className="filter-buttons">Upload Song</button>
+                    className="filter-buttons"
+                    disabled={isLoading}>Upload Song</button>
+
             </form>
         </div>
     )

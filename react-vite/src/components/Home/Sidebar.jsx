@@ -1,45 +1,62 @@
-import { FiPlus } from "react-icons/fi";
-import AlbumTile from "../Albums/AlbumTile";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { FiPlus } from "react-icons/fi";
+import { thunkAllAlbums, thunkOneAlbum } from "../../redux/albums";
+import { useLoading } from "../../context/LoadingContext";
+import AlbumTile from "../Albums/AlbumTile";
 import PlaylistPage from "../Playlists/PlaylistsPage";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
-// import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
 import CreatePlaylistForm from "../Playlists/PlaylistForm";
-import AlbumAddSongModal from "../AlbumFormModal/AlbumAddSongsModal";
 
 function Sidebar() {
-    const [album, setAlbum] = useState(false)
-    const [playlist, setPlaylist] = useState(true)
+    const [album, setAlbum] = useState(true)
+    const [playlist, setPlaylist] = useState(false)
     const [showForms, setShowForms] = useState(false)
-    const [addSongs, setAddSongs] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
-    const [newAlbum, setNewAlbum] = useState(null)
-    // let albums = useSelector(state => state.albums.all)
+    const [myAlbum, setMyAlbum] = useState(false)
+    const { isLoading, setIsLoading } = useLoading()
+    let albums = useSelector(state => state.albums.all)
+    let user = useSelector(state => state.session.user)
+    let navigate = useNavigate()
+    let dispatch = useDispatch()
     const ulRef = useRef()
-    // let navigate = useNavigate()
-    // const recentAlbumRef = useRef(null);
+    let albumArr = Object.values(albums)
+
+    const [ownersAlbums] = useState(
+        albumArr?.filter((album) => {
+            return album.artist_id === user?.id
+    }))
+
+    useEffect(() => {
+        dispatch(thunkAllAlbums())
+            .then(() => setIsLoading(false))
+    }, [dispatch, setIsLoading]);
 
 
     let refresh = () => {
         setHelpWithRefresh(prev => prev + 1)
     }
 
-    let addSong = (album) => {
-        setAddSongs(true)
-        setNewAlbum(album)
-    }
-
-
     const isAlbum = () => {
         setAlbum(true)
         setPlaylist(false)
+        setMyAlbum(false)
     }
+
     const isPlaylist = () => {
         setPlaylist(true)
         setAlbum(false)
+        setMyAlbum(false)
     }
+
+    const isMyAlbum = () => {
+        setPlaylist(false)
+        setAlbum(false)
+        setMyAlbum(true)
+    }
+
 
     const toggleMenu = (e) => {
         e.stopPropagation();
@@ -62,10 +79,13 @@ function Sidebar() {
     }, [showForms])
 
     const closeForm = () => setShowForms(false)
-    const closeAddSong = () => {
-        setAddSongs(false)
-        setNewAlbum(null)
-    }
+
+    let handleClick = (id) => {
+        dispatch(thunkOneAlbum(id))
+            .then(() => navigate(`/albums/${id}`))
+
+    };
+
 
     return (
         <>
@@ -73,57 +93,72 @@ function Sidebar() {
                 <div className="side-head">
                     <h3>Library</h3>
                     <FiPlus onClick={toggleMenu} className="faplus" />
-
-                    {showForms && album && (
-                        <div>
-                            <OpenModalMenuItem
-                                itemText='Create Album'
-                                onItemClick={closeForm}
-                                modalComponent={<AlbumFormModal addSong={addSong} refresh={refresh} />}
-                            />
-                        </div>
-                    )}
-
-                    {showForms && playlist && (
-                        <div>
-                            <OpenModalMenuItem
-                                itemText='Create Playlist'
-                                onItemClick={closeForm}
-                                modalComponent={<CreatePlaylistForm/>}
-                            />
-                        </div>
-                    )}
-
-
-                    {addSongs && newAlbum && (
-                        <div>
-                            <OpenModalMenuItem
-                                itemText='Add Song to Album'
-                                onItemClick={closeAddSong}
-                                modalComponent={<AlbumAddSongModal newAlbum={newAlbum}/>}
-                            />
-                        </div>
-                    )}
-
                 </div>
 
+                {showForms && playlist && (
+                    <div>
+                        <OpenModalMenuItem
+                            itemText={<span className="create-playlist-text">Create Playlist</span>}
+                            onItemClick={closeForm}
+                            modalComponent={<CreatePlaylistForm />}
+                            newClass={"create-playlist-open-modal-button"}
+                        />
+                    </div>
+                )}
+
+                {showForms && (album || myAlbum) && (
+                    <div>
+                        <OpenModalMenuItem
+                            itemText='Create Album'
+                            onItemClick={closeForm}
+                            modalComponent={<AlbumFormModal refresh={refresh} />}
+                            newClass={"create-album-open-modal-button"}
+                        />
+                    </div>
+                )}
 
                 <div className="side-filters">
-                    <button onClick={isPlaylist} className="filter-buttons">
-                        Playlists
-                    </button>
-                    <button onClick={isAlbum} className="filter-buttons">
+                    <button onClick={isAlbum} className={album ? 'filter-button-selected' : 'filter-buttons'}>
                         Albums
                     </button>
+                    {user && (
+                        <button onClick={isMyAlbum} className={myAlbum ? 'filter-button-selected' : 'filter-buttons'}>
+                            My Albums
+                        </button>
+                    )}
+                    <button onClick={isPlaylist} className={playlist ? 'filter-button-selected' : 'filter-buttons'}>
+                        Playlists
+                    </button>
+
+
+
                 </div>
             </div>
             <div>
-                {album === true ? (
+                {!isLoading && album === true && (
                     <AlbumTile
+                        albums={albums}
                         helpWithRefresh={helpWithRefresh}
                     />
-                ) : (
+                )}
+
+                {!isLoading && playlist === true && (
                     <PlaylistPage />
+                )}
+
+                {!isLoading && ownersAlbums && myAlbum === true && (
+                    <div className='div-container-all-albums'>
+                        <h4 className='album-tile-h4-tag'>All Available Albums</h4>
+                        {ownersAlbums.length > 0 ? (
+                            ownersAlbums.map(album => {
+                                return <div key={album.id} className='album-tile'>
+                                    <p onClick={() => handleClick(album.id)} className='select-album'>{album.title}</p>
+                                </div>
+                            })
+                        ) : (
+                            <p>No available albums.</p>
+                        )}
+                    </div>
                 )}
 
             </div>

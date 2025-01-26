@@ -17,6 +17,7 @@ export default function Layout() {
     dispatch(getAllSongs()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
+
   return (
     <>
       <ModalProvider>

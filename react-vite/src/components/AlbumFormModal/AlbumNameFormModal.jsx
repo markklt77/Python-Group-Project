@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkAllAlbums, thunkChangeAlbum } from "../../redux/albums";
 import { useParams } from "react-router-dom";
+import './albumFormModal.css'
 
 function AlbumNameFormModal({ refresh }) {
     const dispatch = useDispatch();
@@ -10,12 +11,9 @@ function AlbumNameFormModal({ refresh }) {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const { albumId } = useParams()
-    // const [disabled, setDisabled] = useState(false)
     const user = useSelector(state => state.session.user)
     const album = useSelector(state => state.albums.all[albumId])
-    // console.log(user.id)
-    // let navigate = useNavigate()
-    // console.log(user.id, album.artist_id)
+
 
     let handleSubmit = async (e) => {
         e.preventDefault()
@@ -27,9 +25,6 @@ function AlbumNameFormModal({ refresh }) {
 
             let res = await dispatch(thunkChangeAlbum(albumName))
             if (res) {
-                // setDeleteRefresh(prev => prev + 1)
-                // dispatch(thunkAllAlbums())
-                // navigate(`/albums/${albumId}`)
                 closeModal()
                 alert('Album\'s name was updated')
             } else if (!user) {
@@ -48,7 +43,6 @@ function AlbumNameFormModal({ refresh }) {
 
     return (
         <>
-            <h1>Create Album</h1>
             {errors.error && <p>{errors.error}</p>}
             {!user && <p>Must be logged in to create an album</p>}
 

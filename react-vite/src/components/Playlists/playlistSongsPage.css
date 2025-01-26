@@ -1,0 +1,92 @@
+.playlist-page {
+    margin-left: 10px;
+}
+
+
+.playlist-tile {
+
+    padding-top: 0.3vmin;
+    padding-left: 10px;
+    margin-top: 2vmin;
+    margin-right: 1.5vmin;
+    display: flex;
+    flex-direction: column;
+    /* transition: background-color 0.05s ease; */
+}
+
+.playlist-tile:hover {
+    background-color: rgba(77, 77, 77, 0.315);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* .playlist-tile:hover .delete-button-playlist{
+    display: block;
+} */
+
+.delete-button-playlist:hover {
+    color: red;
+}
+
+.top-part {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-button-playlist {
+    all: unset;
+    cursor: pointer;
+    /* background-color: transparent; */
+    /* padding-right: 1.5vmin;
+    margin-top: 4vmin; */
+    display: none;
+    position: absolute;
+    /* top: 50%;
+    left: 50%; */
+    transform: translate(-175%, 30%);
+
+}
+
+.parent-div-of-playlist-button {
+    position: relative;
+}
+
+.top-part h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.playlist-tile p {
+    margin: 1vmin 0;
+    /* padding: 0; */
+}
+
+
+/* playlist FORM styling */
+
+.playlist-name-field {
+    color:rgba(204, 196, 196, 0.411)
+}
+
+.playlist-create-form button {
+    color: white;
+    background-color: rgba(204, 196, 196, 0.411);
+}
+
+.playlist-create-form button:hover {
+    cursor: pointer;
+    background-color: rgba(121, 115, 115, 0.411);;
+}
+
+
+.create-playlist-open-modal-button {
+    color: white;
+    background-color: rgba(124, 119, 119, 0.411);
+}
+
+.create-playlist-open-modal-button:hover {
+    color: white;
+    background-color: rgba(66, 64, 64, 0.411);
+    cursor: pointer;
+}

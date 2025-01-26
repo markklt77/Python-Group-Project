@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import { CiCirclePlus } from "react-icons/ci";
+import PlusButton from "../PlusButton";
+import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import "./playback.css"
 
 function Playback() {
@@ -11,9 +12,10 @@ function Playback() {
             <div className="display-song">
                 <h3>{selectedSong.title}</h3>
 
-                <div className="plus-button">
-                    <CiCirclePlus />
-                </div>
+                <PlusButton
+                    modalComponent={<PlaylistSongModal id={selectedSong.id} />}
+                    setClass='plus-button'
+                />
             </div>
 
             <figure className="audio-playback">

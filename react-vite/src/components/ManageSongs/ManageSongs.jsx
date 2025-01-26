@@ -14,6 +14,12 @@ function ManageSongs() {
             <div className="content-header">
                 <h1>Manage Songs</h1>
             </div>
+            <div className="song-labels">
+                <p id="num">#</p>
+                <p>Title</p>
+                <p>Album</p>
+                <p>Date Added</p>
+            </div>
             <div className="container-song-tile">
                 {userSongs.map((song, i) => (
                     <SongTile
