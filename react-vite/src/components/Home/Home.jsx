@@ -1,10 +1,20 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { thunkAllAlbums } from "../../redux/albums"
+import { useLoading } from "../../context/LoadingContext";
 import SongTile from "../SongTile";
 import "./home.css";
 
 function Home() {
+    const {isLoading, setIsLoading} = useLoading()
     const allSongsFlat = useSelector(state => state.songs.all)
     const arrSongs = Object.values(allSongsFlat)
+    let dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(thunkAllAlbums())
+            .then(() => setIsLoading(false))
+    }, [dispatch]);
 
     return (
         <div className="content">

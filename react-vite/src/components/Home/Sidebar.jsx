@@ -1,26 +1,27 @@
-import { FiPlus } from "react-icons/fi";
-import AlbumTile from "../Albums/AlbumTile";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { FiPlus } from "react-icons/fi";
+import { thunkAllAlbums, thunkOneAlbum } from "../../redux/albums";
+import { useLoading } from "../../context/LoadingContext";
+import AlbumTile from "../Albums/AlbumTile";
 import PlaylistPage from "../Playlists/PlaylistsPage";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
-import { useDispatch, useSelector } from "react-redux";
 import CreatePlaylistForm from "../Playlists/PlaylistForm";
-import { useNavigate } from "react-router-dom";
-import { thunkAllAlbums, thunkOneAlbum } from "../../redux/albums";
 
 function Sidebar() {
-    const [album, setAlbum] = useState(false)
-    const [playlist, setPlaylist] = useState(true)
+    const [album, setAlbum] = useState(true)
+    const [playlist, setPlaylist] = useState(false)
     const [showForms, setShowForms] = useState(false)
     const [helpWithRefresh, setHelpWithRefresh] = useState(0)
     const [myAlbum, setMyAlbum] = useState(false)
-    const [isLoaded, setIsLoaded] = useState(false)
+    const { isLoading, setIsLoading } = useLoading()
     let albums = useSelector(state => state.albums.all)
     let user = useSelector(state => state.session.user)
-    const ulRef = useRef()
     let navigate = useNavigate()
     let dispatch = useDispatch()
+    const ulRef = useRef()
     let albumArr = Object.values(albums)
 
     const [ownersAlbums] = useState(
@@ -28,24 +29,22 @@ function Sidebar() {
             return album.artist_id === user?.id
     }))
 
-
     useEffect(() => {
-        dispatch(thunkAllAlbums()).then(() => setIsLoaded(true))
-    }, [dispatch]);
-
+        dispatch(thunkAllAlbums())
+            .then(() => setIsLoading(false))
+    }, [dispatch, setIsLoading]);
 
 
     let refresh = () => {
         setHelpWithRefresh(prev => prev + 1)
     }
 
-
     const isAlbum = () => {
         setAlbum(true)
         setPlaylist(false)
         setMyAlbum(false)
-
     }
+
     const isPlaylist = () => {
         setPlaylist(true)
         setAlbum(false)
@@ -119,9 +118,6 @@ function Sidebar() {
                 )}
 
                 <div className="side-filters">
-                    <button onClick={isPlaylist} className={playlist ? 'filter-button-selected' : 'filter-buttons'}>
-                        Playlists
-                    </button>
                     <button onClick={isAlbum} className={album ? 'filter-button-selected' : 'filter-buttons'}>
                         Albums
                     </button>
@@ -130,24 +126,27 @@ function Sidebar() {
                             My Albums
                         </button>
                     )}
+                    <button onClick={isPlaylist} className={playlist ? 'filter-button-selected' : 'filter-buttons'}>
+                        Playlists
+                    </button>
 
 
 
                 </div>
             </div>
             <div>
-                {album === true && (
+                {!isLoading && album === true && (
                     <AlbumTile
                         albums={albums}
                         helpWithRefresh={helpWithRefresh}
                     />
                 )}
 
-                {playlist === true && (
+                {!isLoading && playlist === true && (
                     <PlaylistPage />
                 )}
 
-                {ownersAlbums && myAlbum === true && isLoaded && (
+                {!isLoading && ownersAlbums && myAlbum === true && (
                     <div className='div-container-all-albums'>
                         <h4 className='album-tile-h4-tag'>All Available Albums</h4>
                         {ownersAlbums.length > 0 ? (
