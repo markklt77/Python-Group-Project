@@ -1,6 +1,8 @@
 .div-container-all-albums {
+    /* height: 500px; */
     overflow-y: auto;
-    height: 500px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(46, 46, 46, 0.738) rgb(0, 0, 0, 0);
 }
 
 .album-tile-h4-tag {
