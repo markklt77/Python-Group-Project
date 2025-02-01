@@ -8,7 +8,6 @@ Spotify2 is a remake of the original Spotify application with the same functiona
 https://spotify2-b6rv.onrender.com
 
 
-# Screenshots of your app in action (once completed)
 ### Home Page
 ![spotify2-homepage](https://github.com/user-attachments/assets/cf8e28ed-7f4a-4eaf-a6ab-3d00f72db497)
 ### A User posting a song
