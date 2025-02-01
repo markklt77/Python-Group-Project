@@ -7,8 +7,6 @@ Spotify2 is a remake of the original Spotify application with the same functiona
 # Link to live site
 https://spotify2-b6rv.onrender.com
 
-# Linkedin
- https://www.linkedin.com/in/abraham-garcia-822a2a344/
 
 # Screenshots of your app in action (once completed)
 ### Home Page
@@ -28,12 +26,6 @@ Postgres
 ### Hosting
 Render
    
-
-# To-dos/future features
-* I would want to add a post feature for brands and categories so that when a user doesn't see the brand/category that matches their drink they are able to select a different option that will allow them to add a new brand/category to make their post for.
-* I want to allow the updating a post feature to be able to update the image being stored in aws.
-* The home page will show the 6 most recent posts, but I also want to add a filter that allows the user to search for: oldest posts, highest and lowest rating drinks.
-
 
 # Endpoints
 All patch, posts and deletes have @login_required and/or flask_login's current_user associated with them for proper authentication that the user is in fact the owner of the post or review and that there is a user.
@@ -145,254 +137,376 @@ email: "demo@aa.io"
 }
 ```
 
- ## Drinks /api/drinks
-   ### Recent Drinks
-   * Purpose: Returns a list of all the drinks from recent to oldest post
+
+
+ ## Songs /api/songs
+   ### All Songs
+   * Purpose: Returns a list of all songs and their likes
    * Method: GET
-   * URL: /api/drinks/
+   * URL: /api/songs/
    * Response:
 ```js
 [
 {
 id: 23,
-user_id: 3,
-brand_id: 1,
-category_id: 2,
-name: 'modelo',
-img: 'https://www.shutterstock.com/image-photo/marinettewiusaaug12019-single-bottle-bud-light-600nw-1469572235.jpg',
-oz: 20,
-alc: 4.4,
-rating: 3,
-cal: 120,
-carbs: 23,
-sodium: 23,
-desc: 'This is a generic desc filler for this readme'
-},
-{
-id: 22,
-user_id: 3,
-brand_id: 1,
-category_id: 2,
-name: 'modelo',
-img: 'https://www.shutterstock.com/image-photo/marinettewiusaaug12019-single-bottle-bud-light-600nw-1469572235.jpg',
-oz: 20,
-alc: 4.4,
-rating: 3,
-cal: 120,
-carbs: 23,
-sodium: 23,
-desc: 'This is a generic desc filler for this readme'
-}
-]
-```
-   * Error Response: Message wfor when there are no drinks posted
-```js
-{'message': 'There are currently no drinks posted'}
-```
-
-   ### All Categories
-   * Purpose: Gets all of the categories
-   * Method: GET
-   * URL: /api/drinks/categories
-   * Response:
-```js
-[
-{
-'id': 1,
-'name': 'Wine'
-},
-{
-'id': 2,
-'name': 'Beer'
-},
-{
-'id': 3,
-'name': 'Vodka'
-}
-]
-```
-   ### Category Selection
-   * Purpose: For when a user selects a category of beverages it will return a list of all the brands associated with that category
-   * Method: GET
-   * URL: /api/drinks/categories/:categoryId
-   * Response:
-```js
-[
-{
-'id': 1,
-'name': 'Modelo'
-},
-{
-'id': 2,
-'name': 'Franzia'
-},
-{
-'id': 3,
-'name': 'Ciroc'
-}
-]
-```
-   * Error Response:
-```js
-{'error': 'There are no categories just yet'} 404
-{'error': 'There are no brands for this category just yet'} 404
-```
-   ### Brand Selection
-   * Purpose: For when a user selects a brand of beverages, it will return a list
-    of all the beverage posts under that brand
-   * Method: GET
-   * URL: /api/drinks/brands/:brandId
-   * Response:
-```js
-[
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [
 {
 id: 1,
-user_id: 3,
-brand_id: 1,
-category_id: 2,
-name: 'modelo',
-img: 'https://www.shutterstock.com/image-photo/marinettewiusaaug12019-single-bottle-bud-light-600nw-1469572235.jpg',
-oz: 20,
-alc: 4.4,
-rating: 3,
-cal: 120,
-carbs: 23,
-sodium: 23,
-desc: 'This is generic filler info for this readme'
+artist_id: 7,
+song_id: 23,
+liked_at: 2025-01-30 12:00:00
 },
 {
 id: 2,
-user_id: 3,
-brand_id: 1,
-category_id: 2,
-name: 'modelo',
-img: 'https://www.shutterstock.com/image-photo/marinettewiusaaug12019-single-bottle-bud-light-600nw-1469572235.jpg',
-oz: 20,
-alc: 4.4,
-rating: 3,
-cal: 120,
-carbs: 23,
-sodium: 23,
-desc: 'This is generic filler info for this readme'
+artist_id: 3,
+song_id: 23,
+liked_at: 2025-01-30 12:00:00
 }
+],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+},
+{
+id: 26,
+title: "The Title of song part 2",
+url: "www.a-url-for-the-song-part-2.com",
+artist_id: 8,
+genre: 'pop',
+album: 'The album name part 2',
+likes: [
+{
+id: 1,
+artist_id: 4,
+song_id: 26,
+liked_at: 2025-01-30 12:00:00
+},
+{
+id: 2,
+artist_id: 10,
+song_id: 26,
+liked_at: 2025-01-30 12:00:00
+}
+],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+},
 ]
 ```
-   * Error Response:
-```js
-{'error': 'No Drinks are available for this brand yet} 404
-{'error': 'there is no such brand just yet'} 404
-```
 
-   ### Selected Drink
-   * Purpose: When a drink is selected then it provides all
-    the details and reviews for that drink
+   ### Specific Song
+   * Purpose: Get a specific song
    * Method: GET
-   * URL: /api/drinks/:drinkId
+   * URL: /api/songs/:songId
    * Response:
 ```js
 {
+id: 23,
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [
+{
 id: 1,
-user_id: 3,
-brand_id: 1,
-category_id: 2,
-name: 'modelo',
-img: 'https://www.shutterstock.com/image-photo/marinettewiusaaug12019-single-bottle-bud-light-600nw-1469572235.jpg',
-oz: 20,
-alc: 4.4,
-rating: 3,
-cal: 120,
-carbs: 23,
-sodium: 23,
-desc: 'This is generic filler info for this readme'
+artist_id: 7,
+song_id: 23,
+liked_at: 2025-01-30 12:00:00
+},
+{
+id: 2,
+artist_id: 3,
+song_id: 23,
+liked_at: 2025-01-30 12:00:00
+}
+],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
 }
 ```
    * Error Response:
 ```js
-{'error': 'How did you get here? A post for this drink does not exist'} 404
+{'errors': {'message': "Couldn't find song"}} 404
 ```
-   ### Update Drink
-   * Purpose: Update a drink post only if it
-    is owned by the user
-   * Method: PATCH
-   * URL: /api/drinks/:drinkId
-   * Response:
-```js
-{'message': 'Your post was update'}
-```
-   * Error Response:  @login_required and flask current_user utilized to secure there is a user and that they own that post
-```js
-{'error': 'Various errors will be listed here if there was incorrect data or no data sent to patch'} 400
-```
-   ### Delete Drink
-   * Purpose: Delete a drink post only if it
-    is owned by the user
-   * Method: GET
-   * URL: /api/drinks/:drinkId
-   * Response:
-```js
-{'message': 'Your post has been deleted'}
-This will also redirect to that post the user just made
-```
-   * Error Response:
-```js
-{'error': 'How did you get here? You need to be logged in to delete YOUR post'} 401
-```
-   ### Create Drink 
-   * Purpose: This is for creating a drink post
-   * Method: POSt
-   * URL: /api/drinks/post-drink
-   * Response:
-```js
-{'message': 'Your post was created'}
-```
-   * Error Response: I placed required tags in the frontend jsx form so that the users will always be required to fill in the data
-```js
-{'error': 'The brand does not match the category of drink'} 400
-{"errors": "Invalid file type"} 400
-{'error': 'Please log in or create an account in order to post your drink'} 401
-```
- ## Reviews /api/reviews
-   ### Post Review
-   * Purpose: This is to make a review when selecting a post that doesn't belong to the user
+   ### Upload Song
+   * Purpose: A logged in user can add a song
    * Method: POST
-   * URL: /api/reviews/:postId
+   * URL: /api/songs/upload-song
    * Response:
 ```js
-{'message': 'Your review was created'}
+{
+id: 23,
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+}
 ```
    * Error Response:
 ```js
-{'error': 'The rating has to be a whole number between 1-5'} 401
-{'error': 'You already have a review for this post'} 403
-{'error': 'You cannot leave a review for your own drink'} 400
-{'error': 'There is no post for you to make a review for'}, 404
-{'error': 'Please log in or create an account in order to post your drink'}, 401
+{'error': 'Various errors that might be brought up from the form submission'} 400
 ```
- ### Update Review
-   * Purpose: This is to update the users review
-   * Method: PATCH
-   * URL: /api/reviews/user/:revId
+   ### Edit a Song 
+   * Purpose: A logged in user can edit/update a song if it is theirs 
+   * Method: PUT
+   * URL: /api/songs/:songId
    * Response:
 ```js
-{'message': 'The review has been updated'}
+{
+id: 23,
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+}
 ```
    * Error Response:
 ```js
-{'error': 'The rating has to be a whole number between 1-5'} 401
-{'error': 'This review does not belong to you'} 403
-{'error': 'There is no review found'} 404
+{'errors': {'message': "Couldn't find song"}}, 404
+{'errors': {'message': 'Unauthorized'}}, 401
+{'error': 'Various errors that might be brought up from the form submission'} 400
+
 ```
 
- ### Delete Review
-   * Purpose: This is to delete the users review
+   ### Delete a Song
+   * Purpose: 
    * Method: DELETE
-   * URL: /api/reviews/user/:revId
+   * URL: /api/songs/:songId
    * Response:
 ```js
-{'message': 'Your review has been deleted'}
+{"message": "Song deleted successfully"}
 ```
    * Error Response:
 ```js
-{'error': 'This review does not belong to you'}), 403
-{'error': 'There is no review found'}), 404
+{"error": {"Song not found"}}, 404
+{"errors": "Failed to remove the file from S3"}, 500
+{"error": {"You do not have permission to delete this song"}}, 403
+```
+   ### Like a song
+   * Purpose: A logged in user can like a song
+   * Method: POST
+   * URL: /api/songs/:songId/likes
+   * Response:
+```js
+{'message': "Success"}
+```
+   ### Unlike a Song
+   * Purpose: A logged in user can unlike a song
+   * Method: DELETE
+   * URL: /api/songs/:songId/likes
+   * Response:
+```js
+{'message': "Successfully deleted"}
+```
+   * Error Response:
+```js
+{"error": {"You do not have permission to delete this like"}}, 403
+{"error": {"Like not found"}}, 404
+```
+
+
+ ## Playlists /api/users/playlists
+   ### Get User's Playlist 
+   * Purpose: Get all playlists for the current user
+   * Method: GET
+   * URL: /api/users/playlists/test
+   * Response:
+```js
+[
+{
+id: 1
+name: 'playlist name 1'
+user_id: 1
+songs: [
+{
+id: 23,
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+},
+{
+id: 24,
+title: "The Title of song2",
+url: "www.a-url-for-the-song2.com",
+artist_id: 3,
+genre: 'rap',
+album: 'The album name2',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+}
+]
+},
+{
+id: 2
+name: 'playlist name 2'
+user_id: 1
+songs: [
+{
+id: 23,
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+},
+{
+id: 24,
+title: "The Title of song2",
+url: "www.a-url-for-the-song2.com",
+artist_id: 3,
+genre: 'rap',
+album: 'The album name2',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+}
+]
+}
+]
+```
+
+ ### Get Specific Playlist
+   * Purpose: Get a single playlist by ID if it belongs to current user
+   * Method: GET
+   * URL: /api/users/playlists/:playlistId
+   * Response:
+```js
+{
+id: 1
+name: 'playlist name 1'
+user_id: 1
+songs: [
+{
+id: 23,
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+},
+{
+id: 24,
+title: "The Title of song2",
+url: "www.a-url-for-the-song2.com",
+artist_id: 3,
+genre: 'rap',
+album: 'The album name2',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+}
+]
+}
+```
+   * Error Response:
+```js
+{'error': 'Playlist not found'}, 404
+```
+
+ ### Create Playlist
+   * Purpose: Create a new Playlist for the current user 
+   * Method: POST
+   * URL: /api/user/playlists/test
+   * Response:
+```js
+{
+id: 1
+name: 'playlist name 1'
+user_id: 1
+songs: []
+}
+```
+   * Error Response:
+```js
+{'error': 'Various errors that might be brought up from the form submission'} 400
+```
+
+ ### Delete Playlist
+   * Purpose: Delete a playlist if the user owns it
+   * Method: DELETE
+   * URL: /api/user/playlists/:playlistId
+   * Response:
+```js
+{'message': 'Playlist deleted successfully'}
+```
+   * Error Response:
+```js
+{'error': 'Playlist not found'}, 404
+{'error': 'You do not have permission to delete this playlist'}, 403
+```
+
+ ### Add a Song to Playlist
+   * Purpose: Add a song to an existing playlist 
+   * Method: POST
+   * URL: /api/user/playlists/:playlistId/songs/:songId
+   * Response:
+```js
+{'message': 'Song added to playlist', 'playlist':{
+id: 1
+name: 'playlist name 1'
+user_id: 1
+songs: [
+{
+id: 24,
+title: "The Title of song2",
+url: "www.a-url-for-the-song2.com",
+artist_id: 3,
+genre: 'rap',
+album: 'The album name2',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+}]
+}}
+```
+   * Error Response:
+```js
+{'error': 'Playlist not found'}, 404
+{'error': 'Song not found'}, 404
+```
+
+ ### Remove a Song to Playlist
+   * Purpose: Remove a song from an existing playlist 
+   * Method: DELETE
+   * URL: /api/user/playlists/:playlistId/songs/:songId
+   * Response:
+```js
+{'message': 'Song removed to playlist', 'playlist':{
+id: 1
+name: 'playlist name 1'
+user_id: 1
+songs: []
+}}
+```
+   * Error Response:
+```js
+{'error': 'Playlist not found'}, 404
+{'error': 'Song not found'}, 404
+{'error': 'Song is not in the specified playlist'}, 404
+{'error': 'You do not have permission to remove songs from this playlist'}, 403
 ```
