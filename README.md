@@ -509,3 +509,159 @@ songs: []
 {'error': 'Song is not in the specified playlist'}, 404
 {'error': 'You do not have permission to remove songs from this playlist'}, 403
 ```
+
+
+ ## Albums /api/albums
+   ### Get all Albums
+   * Purpose: Get all the albums 
+   * Method: GET
+   * URL: /api/albums/
+   * Response:
+```js
+{
+albums: [
+{
+id: 1,
+title: 'Something to say',
+artist_id: 1
+},
+{
+id: 2,
+title: 'Something to say2',
+artist_id: 2
+},
+{
+id: 3,
+title: 'Something to say3',
+artist_id: 3
+},
+{
+id: 4,
+title: 'Something to say4',
+artist_id: 4
+},
+]
+}
+```
+
+   ### Get an Album 
+   * Purpose: Get a specific album
+   * Method: GET
+   * URL: /api/albums/:albumId
+   * Response:
+```js
+{
+id: 1,
+title: 'Something to say',
+artist_id: 1,
+song: [
+{
+id: 23,
+title: "The Title of song",
+url: "www.a-url-for-the-song.com",
+artist_id: 2,
+genre: 'rap',
+album: 'The album name',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+},
+{
+id: 24,
+title: "The Title of song2",
+url: "www.a-url-for-the-song2.com",
+artist_id: 3,
+genre: 'rap',
+album: 'The album name2',
+likes: [],
+created_at: 2025-01-30 12:00:00,
+updated_at: 2025-01-30 12:00:00
+}
+]
+}
+```
+
+   * Error Response:
+```js
+{'error': 'Album does not exist'}, 404
+```
+
+   ### Update Current User Album 
+   * Purpose: Update specific album
+   * Method: PATCH
+   * URL: /api/albums/:albumId
+   * Response:
+```js
+{'message': 'Successfully changed album name'}
+```
+
+   * Error Response:
+```js
+{'error': 'Album does not exist'}, 404
+{'error': 'Album does not belong to you'}, 401
+{'error': 'Various errors that might be brought up from the form submission'}, 400
+```
+
+   ### Create an Album 
+   * Purpose: Create an album for the current user
+   * Method: POST
+   * URL: /api/albums/create-album
+   * Response:
+```js
+{'message': Album {album.title} was created'}
+```
+
+   * Error Response:
+```js
+{'error': 'Various errors that might be brought up from the form submission'}, 400
+```
+
+   ### Delete Current User Album 
+   * Purpose: Delete a specific album
+   * Method: DELETE
+   * URL: /api/albums/:albumId
+   * Response:
+```js
+{"message": "Deleted album"}
+```
+
+   * Error Response:
+```js
+{'error': 'Album does not exist'}, 404
+{'error': 'Album does not belong to you'}, 401
+```
+
+   ### Add Songs to Album
+   * Purpose: Add a song to an album
+   * Method: POST
+   * URL: /api/albums/:albumId/song/:songId
+   * Response:
+```js
+{'message': '{song.title} added to {album.title}'}
+```
+
+   * Error Response:
+```js
+{'error': 'This song is already added to this album'}, 409
+{'error': 'Song does not belong to you'}, 403
+{'error': 'Song does not exist'}, 404
+{'error': 'Album does not belong to you'}, 403
+{'error': 'Album does not exist} 404
+```
+   ### Remove Songs to Album
+   * Purpose: Add a song to an album
+   * Method: DELETE
+   * URL: /api/albums/:albumId/song/:songId
+   * Response:
+```js
+{'message': '{song.title} was removed from {album.title}'}
+```
+
+   * Error Response:
+```js
+{'error': 'Song is not part of the album'}, 404
+{'error': 'Song does not belong to the current user'}, 403
+{'error': 'No song was found'}, 404
+{'error': 'Album does not belong to you'}, 403
+{'error': 'No album was found'}, 404
+```
