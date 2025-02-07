@@ -1,0 +1,14 @@
+.flex-center {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.login-modal {
+    height: 300px;
+    width: 350px;
+}
+
+.input-containers {
+    width: 100%;
+}
