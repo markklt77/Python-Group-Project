@@ -89,11 +89,11 @@ export const deleteSong = (songId) => async dispatch => {
     });
 
     if (response.ok) {
-        const data = response.json()
         dispatch(getAllSongs());
-        return data
+        // return data
 	}
-    return response;
+    const data = await response.json()
+    return data;
 }
 
 const initialState = { all: {}, current: {}}

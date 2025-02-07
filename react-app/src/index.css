@@ -21,3 +21,7 @@ h1 {
     font-size: 70px;
     margin: 20px;
 }
+
+.errors {
+    color: red;
+}

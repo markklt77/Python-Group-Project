@@ -4,10 +4,8 @@ import "./manage-songs.css";
 
 function ManageSongs() {
     const user = useSelector(state => state.session.user)
-    const userSongs = useSelector(state => {
-        const songs = Object.values(state.songs.all)
-        return songs.filter(song => song.artist_id === user.id)
-    })
+    const userSongs = useSelector(state => state.songs.all)
+    const songs = Object.values(userSongs).filter(song => song.artist_id === user.id)
 
     return (
         <div className="content">
@@ -21,7 +19,7 @@ function ManageSongs() {
                 <p>Date Added</p>
             </div>
             <div className="container-song-tile">
-                {userSongs.map((song, i) => (
+                {songs.map((song, i) => (
                     <SongTile
                         song={song}
                         number={i+1}

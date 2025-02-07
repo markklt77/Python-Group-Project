@@ -7,10 +7,14 @@ def seed_users():
     demo = User(username='Demo', email='demo@aa.io', password='password')
     marnie = User(username='marnie', email='marnie@aa.io', password='password')
     bobbie = User(username='bobbie', email='bobbie@aa.io', password='password')
+    anachronism = User(username='AMP', email='amp@music.io', password='password')
+    mangled_digits = User(username='Mangled Digits', email='manager@md.com', password='password')
 
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
+    db.session.add(anachronism)
+    db.session.add(mangled_digits)
     db.session.commit()
 
 
