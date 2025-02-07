@@ -70,8 +70,8 @@ function AlbumAddSongModal({ refresh }) {
 
     return (
         <>
-            {errors.error && <p>{errors.error}</p>}
-            {!user && <p>Must be logged in to create an album</p>}
+            {errors.error && <p className="errors">{errors.error}</p>}
+            {!user && <p className="errors">Must be logged in to create an album</p>}
             {ownerSongs.length > 0 && (
                 <div className="add-songs-new-album-modal">
                     <div >

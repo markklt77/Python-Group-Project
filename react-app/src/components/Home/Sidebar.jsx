@@ -96,23 +96,23 @@ function Sidebar() {
                 </div>
 
                 {showForms && playlist && (
-                    <div>
+                    <div className="sidebar-buttons-container">
                         <OpenModalMenuItem
                             itemText={<span className="create-playlist-text">Create Playlist</span>}
                             onItemClick={closeForm}
                             modalComponent={<CreatePlaylistForm />}
-                            newClass={"create-playlist-open-modal-button"}
+                            newClass={"create-playlist-open-modal-button filter-buttons"}
                         />
                     </div>
                 )}
 
                 {showForms && (album || myAlbum) && (
-                    <div>
+                    <div className="sidebar-buttons-container">
                         <OpenModalMenuItem
                             itemText='Create Album'
                             onItemClick={closeForm}
                             modalComponent={<AlbumFormModal refresh={refresh} />}
-                            newClass={"create-album-open-modal-button"}
+                            newClass={"create-album-open-modal-button filter-buttons"}
                         />
                     </div>
                 )}

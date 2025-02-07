@@ -29,6 +29,7 @@ function SongFormModal() {
             .then(res => res.json())
             // .then(() => closeModal())
             .catch(err => {
+                console.log(err)
                 validate = {...err}
                 return err
             })

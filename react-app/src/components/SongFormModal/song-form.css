@@ -29,12 +29,6 @@
     grid-template-rows: 25% 25% 25% 25%;
 }
 
-.errors {
-    height: 30px;
-    color: red;
-    margin: unset;
-}
-
 input {
     background-color: rgba(170, 170, 170, 0.477);
     border-radius: 8px;
