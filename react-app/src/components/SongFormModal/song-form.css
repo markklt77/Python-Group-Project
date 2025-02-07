@@ -1,13 +1,5 @@
-#modal-content {
-    background-color: rgb(20, 20, 20);
-    border-radius: 10px;
-    padding: 20px;
-    height: fit-content;
-    width: fit-content;
-}
-
 .song-modal {
-    height: 260px;
+    height: fit-content;
     width: 350px;
 }
 
@@ -24,15 +16,9 @@
 
 .form-modal {
     display: grid;
-    height: 80%;
+    height: 100%;
     width: 100%;
     grid-template-rows: 25% 25% 25% 25%;
-}
-
-.errors {
-    height: 30px;
-    color: red;
-    margin: unset;
 }
 
 input {
@@ -42,6 +28,7 @@ input {
     height: 20px;
     margin: 5px;
     padding: 5px;
+    width: 93%;
 }
 
 input::file-selector-button {

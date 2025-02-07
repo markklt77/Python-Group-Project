@@ -21,3 +21,41 @@ h1 {
     font-size: 70px;
     margin: 20px;
 }
+
+#modal-content {
+    background-color: rgb(20, 20, 20);
+    border-radius: 10px;
+    padding: 20px;
+    height: fit-content;
+    width: fit-content;
+}
+
+.errors {
+    color: red;
+    margin: unset;
+}
+
+.white-text {
+    color: white;
+}
+
+
+.filter-buttons {
+    background-color: rgb(46, 46, 46);
+    border: unset;
+    border-radius: 20px;
+    color: white;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}
+
+.filter-button-selected {
+    background-color: white;
+    border: unset;
+    border-radius: 20px;
+    color: rgb(46, 46, 46);
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 12px;
+}

@@ -53,28 +53,6 @@
     font-size: 40px;
 }
 
-
-.filter-buttons {
-    background-color: rgb(46, 46, 46);
-    border: unset;
-    border-radius: 20px;
-    color: white;
-    height: 30px;
-    margin: 0 5px;
-    padding: 0 12px;
-}
-
-.filter-button-selected {
-    background-color: white;
-    border: unset;
-    border-radius: 20px;
-    color: rgb(46, 46, 46);
-    height: 30px;
-    margin: 0 5px;
-    padding: 0 12px;
-}
-
-
 .song-tile-album {
     align-items: center;
     box-sizing: border-box;
@@ -101,4 +79,8 @@
     text-align: center;
     display: flex;
     justify-content: space-evenly;
+}
+
+.sidebar-buttons-container {
+    margin: 8px;
 }

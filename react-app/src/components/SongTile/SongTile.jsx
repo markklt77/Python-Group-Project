@@ -2,20 +2,21 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { likeSong, unlikeSong } from "../../redux/likes";
-import PlusButton from "../PlusButton"
 import { IoTrashSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { IoPlaySharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
-import { getCurrentSong, deleteSong, getAllSongs } from "../../redux/songs";
-import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
+import { getCurrentSong, getAllSongs } from "../../redux/songs";
 import { removeSongFromPlaylist } from "../../redux/playlists";
+import { thunkOneAlbum, thunkRemoveSong } from "../../redux/albums";
+import PlusButton from "../PlusButton"
+import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import OpenModalButton from "../OpenModalButton"
 import UpdateSongModal from "../SongFormModal/UpdateSongModal"
 import DeleteSong from '../Albums/AlbumDeleteSong/AlbumDeleteSongModal'
 import AlbumDeleteQuestion from '../Albums/AlbumDeleteSong/AlbumDeleteQuestion'
 import "./song-tile.css";
-import { thunkOneAlbum, thunkRemoveSong } from "../../redux/albums";
+import DeleteSongModal from "../SongFormModal/DeleteSongModal";
 
 
 function SongTile({ song, number }) {
@@ -106,13 +107,6 @@ function SongTile({ song, number }) {
 
     }
 
-    const deleteASong = async e => {
-        e.preventDefault();
-
-        await dispatch(deleteSong(song.id))
-    }
-
-
     //from AlbumSong
     let handleDeleteSong = async (songId) => {
         let songInfo = {
@@ -164,7 +158,12 @@ function SongTile({ song, number }) {
                             modalComponent={<UpdateSongModal id={song.id} />}
                             addClass="edit-button"
                         />
-                        <IoTrashSharp onClick={deleteASong} />
+                        <OpenModalButton
+                            buttonText={<IoTrashSharp />}
+                            modalComponent={<DeleteSongModal song={song} />}
+                            addClass="edit-button"
+                        />
+
                     </> : ''}
                 {location.pathname.includes('albums') && user && user.id === album.artist_id && (
                     <DeleteSong
