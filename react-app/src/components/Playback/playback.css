@@ -13,6 +13,8 @@ h3 {
     left: 0;
     right: 0;
     height: 80px;
+    margin-bottom: 20px;
+    /* padding-bottom: 0px; */
 }
 
 .display-song {

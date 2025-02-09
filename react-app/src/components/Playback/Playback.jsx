@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import PlusButton from "../PlusButton";
 import PlaylistSongModal from "../PlaylistSongModal/PlaylistSongModal";
 import "./playback.css"
+import Footer from "../../Footer/Footer";
 
 function Playback() {
     const selectedSong = useSelector(state => state.songs.current)
@@ -25,6 +26,10 @@ function Playback() {
                     autoPlay
                 ></audio>
             </figure>
+
+            <div>
+                <Footer className='the-footer'/>
+            </div>
         </div>
     )
 }

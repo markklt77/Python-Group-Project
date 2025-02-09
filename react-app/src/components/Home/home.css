@@ -2,7 +2,7 @@
     color: rgb(170, 170, 170);
     display: grid;
     grid-template-columns: 25% 75%;
-    max-height: 96%;
+    max-height: 80%;
     position: fixed;
     top: 65px;
     bottom: 81px;

@@ -23,7 +23,7 @@ function SongFormModal() {
 
         setIsLoading(true)
 
-        const validate = {};
+        let validate = {};
 
         const res = await dispatch(uploadSong(formData))
             .then(res => res.json())
