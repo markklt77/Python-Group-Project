@@ -22,7 +22,7 @@ function DeleteSongModal({ song }) {
         <>
             {Object.entries(errors).length > 0 &&
                 Object.entries(errors).map(err => (
-                    <p className="errors">{err[1]}</p>
+                    <p key={err[1]} className="errors">{err[1]}</p>
                 ))
             }
             <p>Delete Song?</p>

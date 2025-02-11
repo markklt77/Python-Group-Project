@@ -8,7 +8,6 @@ import Navigation from "../components/Navigation/Navigation";
 import Sidebar from "../components/Home/Sidebar";
 import Playback from "../components/Playback/Playback";
 import "../components/Home/home.css"
-import Footer from "../Footer/Footer";
 
 export default function Layout() {
   const dispatch = useDispatch();
