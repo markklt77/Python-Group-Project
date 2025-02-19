@@ -30,9 +30,10 @@ def seed():
     seed_users()
     seed_songs()
     seed_playlists()
+    seed_albums()
     seed_playlistSongs()
     seed_albumSongs()
-    seed_albums()
+
     # Add other seed functions here
 
 
