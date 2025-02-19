@@ -24,10 +24,10 @@ function Sidebar() {
     const ulRef = useRef()
     let albumArr = Object.values(albums)
 
-    const [ownersAlbums] = useState(
-        albumArr?.filter((album) => {
-            return album.artist_id === user?.id
-    }))
+    const ownersAlbums = albumArr?.filter((album) => {
+        return album.artist_id === user?.id
+    })
+
 
     useEffect(() => {
         dispatch(thunkAllAlbums())

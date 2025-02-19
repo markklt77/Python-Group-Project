@@ -4,6 +4,7 @@ from .songs import seed_songs, undo_songs
 from .albums import seed_albums, undo_albums
 from .playlists import seed_playlists, undo_playlists
 from .playlist_songs import seed_playlistSongs, undo_playlistSongs
+from .album_songs import seed_albumSongs, undo_albumSongs
 
 from app.models.db import db, environment, SCHEMA
 
@@ -24,11 +25,13 @@ def seed():
         undo_songs()
         undo_playlists()
         undo_playlistSongs()
+        undo_albumSongs()
         undo_albums()
     seed_users()
     seed_songs()
     seed_playlists()
     seed_playlistSongs()
+    seed_albumSongs()
     seed_albums()
     # Add other seed functions here
 
@@ -40,5 +43,6 @@ def undo():
     undo_songs()
     undo_playlists()
     undo_playlistSongs()
+    undo_albumSongs()
     undo_albums()
     # Add other undo functions here
