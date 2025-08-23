@@ -9,6 +9,7 @@ import PlaylistPage from "../Playlists/PlaylistsPage";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import AlbumFormModal from "../AlbumFormModal/AlbumFormModal";
 import CreatePlaylistForm from "../Playlists/PlaylistForm";
+// import { fetchUserPlaylists } from "../../redux/playlists";
 
 function Sidebar() {
     const [album, setAlbum] = useState(true)
@@ -27,6 +28,20 @@ function Sidebar() {
     const ownersAlbums = albumArr?.filter((album) => {
         return album.artist_id === user?.id
     })
+    // console.log(user || 0)
+
+    // useEffect(() => {
+    //     if (user) {
+    //         dispatch(fetchUserPlaylists())
+    //     }
+
+    // }, [dispatch, user])
+    //
+
+
+    //trying to update playlists because user
+    //  logs out and another user logs in the playlists
+    //  persist without refresh
 
 
     useEffect(() => {
