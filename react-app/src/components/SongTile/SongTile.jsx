@@ -19,7 +19,7 @@ import "./song-tile.css";
 import DeleteSongModal from "../SongFormModal/DeleteSongModal";
 
 
-function SongTile({ song, number }) {
+function SongTile({ song, number, userMessage }) {
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [hovered, setHovered] = useState(false)
@@ -30,7 +30,7 @@ function SongTile({ song, number }) {
     let { albumId } = useParams()
     let album = useSelector(state => state.albums.all[albumId])
 
-
+    // console.log(userMessage)
     // format month
     const date = new Date(song.created_at)
     const months = [
@@ -146,7 +146,7 @@ function SongTile({ song, number }) {
             </p>
             <div className="actions">
                 <PlusButton
-                    modalComponent={<PlaylistSongModal id={song.id} />}
+                    modalComponent={<PlaylistSongModal userMessage={userMessage} id={song.id} />}
                 />
                 <FaHeart className="like-button" onClick={!liked ? handleLike : handleUnlike} style={liked ? { color: "#4e53ae" } : ''} />
                 <span className="likes-count">{likesCount}</span>

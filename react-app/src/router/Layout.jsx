@@ -8,13 +8,17 @@ import Navigation from "../components/Navigation/Navigation";
 import Sidebar from "../components/Home/Sidebar";
 import Playback from "../components/Playback/Playback";
 import "../components/Home/home.css"
+// import { fetchUserPlaylists } from "../redux/playlists";
 
 export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(thunkAuthenticate())
-    dispatch(getAllSongs()).then(() => setIsLoaded(true));
+    dispatch(getAllSongs())
+      // .then(() => dispatch(fetchUserPlaylists()))
+      .then(() => setIsLoaded(true));
+
   }, [dispatch]);
 
 
@@ -32,10 +36,6 @@ export default function Layout() {
         </div>
 
         <Playback />
-
-
-
-
         <Modal />
       </ModalProvider>
     </>
