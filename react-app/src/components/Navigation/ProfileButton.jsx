@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
@@ -8,6 +8,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 // import SongFormModal from "../SongFormModal";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { resetPlaylists } from "../../redux/playlists";
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -37,9 +38,11 @@ function ProfileButton() {
 
   const closeMenu = () => setShowMenu(false);
 
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
+    dispatch(resetPlaylists());
     closeMenu();
     navigate("/");
   };

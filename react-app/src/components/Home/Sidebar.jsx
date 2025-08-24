@@ -39,7 +39,7 @@ function Sidebar() {
     //
 
 
-    //trying to update playlists because user
+    //trying to update playlists because when user
     //  logs out and another user logs in the playlists
     //  persist without refresh
 

@@ -7,7 +7,9 @@ const SET_SINGLE_PLAYLIST = 'SET_SINGLE_PLAYLIST';
 const ADD_SONG_TO_PLAYLIST = 'ADD_SONG_TO_PLAYLIST';
 const REMOVE_SONG_FROM_PLAYLIST = 'REMOVE_SONG_FROM_PLAYLIST';
 const CREATE_PLAYLIST = 'CREATE_PLAYLIST';
-const DELETE_PLAYLIST = 'DELETE_PLAYLIST'
+const DELETE_PLAYLIST = 'DELETE_PLAYLIST';
+const RESET_PLAYLISTS = "playlists/resetPlaylists"
+
 
 //action creators
 const setPlaylists = (playlists) => ({
@@ -18,7 +20,7 @@ const setPlaylists = (playlists) => ({
 const setSinglePlaylist = (playlist) => ({
     type: SET_SINGLE_PLAYLIST,
     playlist,
-  });
+});
 
 const addSong = (song, playlistId) => ({
     type: ADD_SONG_TO_PLAYLIST,
@@ -42,6 +44,10 @@ const removePlaylist = (playlistId) => ({
     playlistId
 })
 
+const reset = () => ({
+    type: RESET_PLAYLISTS
+})
+
 //thunks
 export const fetchUserPlaylists = () => async (dispatch) => {
     const response = await fetch('/api/users/playlists/test')
@@ -55,10 +61,10 @@ export const fetchUserPlaylists = () => async (dispatch) => {
 export const fetchPlaylistById = (playlistId) => async (dispatch) => {
     const response = await fetch(`/api/users/playlists/${playlistId}`);
     if (response.ok) {
-      const data = await response.json();
-      dispatch(setSinglePlaylist(data));
+        const data = await response.json();
+        dispatch(setSinglePlaylist(data));
     }
-  };
+};
 
 export const addSongToPlaylist = (playlistId, songId) => async (dispatch) => {
     const response = await fetch(`/api/users/playlists/${playlistId}/songs/${songId}`, {
@@ -148,22 +154,25 @@ export const deletePlaylist = (playlistId) => async (dispatch) => {
     }
 };
 
+export const resetPlaylists = () => async (dispatch) => {
+    dispatch(reset())
+}
 
 
 
-const initialState = {allPlaylists: {}, currentPlaylist: null};
+const initialState = { allPlaylists: {}, currentPlaylist: null };
 
 export default function playlistReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_PLAYLISTS:{
-            const newState = { ...state, allPlaylists: {...state.allPlaylists}};
+        case SET_PLAYLISTS: {
+            const newState = { ...state, allPlaylists: { ...state.allPlaylists } };
             action.playlists.forEach((playlist) => {
                 newState.allPlaylists[playlist.id] = playlist;
             });
             return newState;
         }
-        case SET_SINGLE_PLAYLIST:{
-            const newState = { ...state, currentPlaylist: action.playlist}
+        case SET_SINGLE_PLAYLIST: {
+            const newState = { ...state, currentPlaylist: action.playlist }
 
             if (newState.allPlaylists[action.playlist.id]) {
                 newState.allPlaylists[action.playlist.id] = action.playlist
@@ -216,6 +225,10 @@ export default function playlistReducer(state = initialState, action) {
                 newState.currentPlaylist = null;
             }
             return newState
+        }
+
+        case RESET_PLAYLISTS: {
+            return initialState
         }
 
         default:
