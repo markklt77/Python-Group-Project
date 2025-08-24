@@ -28,21 +28,6 @@ function Sidebar() {
     const ownersAlbums = albumArr?.filter((album) => {
         return album.artist_id === user?.id
     })
-    // console.log(user || 0)
-
-    // useEffect(() => {
-    //     if (user) {
-    //         dispatch(fetchUserPlaylists())
-    //     }
-
-    // }, [dispatch, user])
-    //
-
-
-    //trying to update playlists because when user
-    //  logs out and another user logs in the playlists
-    //  persist without refresh
-
 
     useEffect(() => {
         dispatch(thunkAllAlbums())
